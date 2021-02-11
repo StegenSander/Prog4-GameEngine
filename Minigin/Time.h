@@ -38,5 +38,5 @@ private:
 
 	float m_DeltaTime{};
 
-	float m_MsPerFrame = 33; //16 for 60 fps, 33 for 30 fps
+	float m_MsPerFrame = 16; //16 for 60 fps, 33 for 30 fps
 };

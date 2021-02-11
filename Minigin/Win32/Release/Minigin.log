@@ -1,0 +1,30 @@
+﻿  BaseComponent.cpp
+  FPSDisplayScript.cpp
+  GameObject.cpp
+  Minigin.cpp
+  RenderComponent.cpp
+  Renderer.cpp
+  ResourceManager.cpp
+  Scene.cpp
+  SceneManager.cpp
+  TextComponent.cpp
+  TextureComponent.cpp
+     Creating library C:\Users\sande\OneDrive - Hogeschool West-Vlaanderen\Year 2\Semester2\Prog4\Minigin\Minigin\Win32\Release\Minigin.lib and object C:\Users\sande\OneDrive - Hogeschool West-Vlaanderen\Year 2\Semester2\Prog4\Minigin\Minigin\Win32\Release\Minigin.exp
+  Generating code
+  182 of 582 functions (31.3%) were compiled, the rest were copied from previous compilation.
+    95 functions were new in current compilation
+    27 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  Minigin.vcxproj -> C:\Users\sande\OneDrive - Hogeschool West-Vlaanderen\Year 2\Semester2\Prog4\Minigin\Minigin\Win32\Release\Minigin.exe
+  C:\Users\sande\OneDrive - Hogeschool West-Vlaanderen\Year 2\Semester2\Prog4\Minigin\Minigin\3rdParty\SDL2\lib\x86\SDL2.dll
+  1 File(s) copied
+  C:\Users\sande\OneDrive - Hogeschool West-Vlaanderen\Year 2\Semester2\Prog4\Minigin\Minigin\3rdParty\SDL2_image\lib\x86\libjpeg-9.dll
+  C:\Users\sande\OneDrive - Hogeschool West-Vlaanderen\Year 2\Semester2\Prog4\Minigin\Minigin\3rdParty\SDL2_image\lib\x86\libpng16-16.dll
+  C:\Users\sande\OneDrive - Hogeschool West-Vlaanderen\Year 2\Semester2\Prog4\Minigin\Minigin\3rdParty\SDL2_image\lib\x86\libtiff-5.dll
+  C:\Users\sande\OneDrive - Hogeschool West-Vlaanderen\Year 2\Semester2\Prog4\Minigin\Minigin\3rdParty\SDL2_image\lib\x86\libwebp-7.dll
+  C:\Users\sande\OneDrive - Hogeschool West-Vlaanderen\Year 2\Semester2\Prog4\Minigin\Minigin\3rdParty\SDL2_image\lib\x86\SDL2_image.dll
+  C:\Users\sande\OneDrive - Hogeschool West-Vlaanderen\Year 2\Semester2\Prog4\Minigin\Minigin\3rdParty\SDL2_image\lib\x86\zlib1.dll
+  6 File(s) copied
+  C:\Users\sande\OneDrive - Hogeschool West-Vlaanderen\Year 2\Semester2\Prog4\Minigin\Minigin\3rdParty\SDL2_ttf\lib\x86\libfreetype-6.dll
+  C:\Users\sande\OneDrive - Hogeschool West-Vlaanderen\Year 2\Semester2\Prog4\Minigin\Minigin\3rdParty\SDL2_ttf\lib\x86\SDL2_ttf.dll
+  2 File(s) copied

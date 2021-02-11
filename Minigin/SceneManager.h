@@ -11,6 +11,8 @@ namespace dae
 
 		void Update();
 		void Render();
+
+		void HandleEndOfFrame();
 	private:
 		friend class Singleton<SceneManager>;
 		SceneManager() = default;

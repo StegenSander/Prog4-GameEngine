@@ -33,9 +33,6 @@
     <ClInclude Include="MiniginPCH.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Singleton.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -43,9 +40,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Font.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Minigin.h">
@@ -66,9 +60,6 @@
     <ClInclude Include="Time.h">
       <Filter>Singletons</Filter>
     </ClInclude>
-    <ClInclude Include="SceneObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ResourceManager.h">
       <Filter>Singletons</Filter>
     </ClInclude>
@@ -84,14 +75,20 @@
     <ClInclude Include="TextureComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="Test.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="TextObject.h">
       <Filter>Depricated</Filter>
     </ClInclude>
     <ClInclude Include="FPSDisplayScript.h">
       <Filter>Components\Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneObject.h">
+      <Filter>Depricated</Filter>
+    </ClInclude>
+    <ClInclude Include="Font.h">
+      <Filter>RenderClasses</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -105,9 +102,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Font.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp">
@@ -146,14 +140,14 @@
     <ClCompile Include="TextureComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="Test.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="TextObject.cpp">
       <Filter>Depricated</Filter>
     </ClCompile>
     <ClCompile Include="FPSDisplayScript.cpp">
       <Filter>Components\Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="Font.cpp">
+      <Filter>RenderClasses</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

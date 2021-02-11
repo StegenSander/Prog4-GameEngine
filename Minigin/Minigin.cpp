@@ -49,14 +49,14 @@ void dae::Minigin::Initialize()
  */
 void dae::Minigin::LoadGame() const
 {
-	auto& scene = SceneManager::GetInstance().CreateScene("Demo");
+	Scene& scene = SceneManager::GetInstance().CreateScene("Demo");
 
-	auto background = std::make_shared<GameObject>();
+	GameObject* background = new GameObject();
 	TextureComponent* backgroundTexture = new TextureComponent{"background.jpg" };
 	background->AddComponent(backgroundTexture);
 	scene.Add(background);
 
-	auto logo = std::make_shared<GameObject>();
+	GameObject* logo = new GameObject();
 	TextureComponent* logoTexture = new TextureComponent{"logo.png" };
 	logo->AddComponent(logoTexture);
 	logo->SetPosition(216, 180);
@@ -64,13 +64,13 @@ void dae::Minigin::LoadGame() const
 
 	auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
 
-	auto AssignmentText = std::make_shared<GameObject>();
+	GameObject* AssignmentText = new GameObject();
 	auto textComponent = new TextComponent{ "Programming 4 Assignment", font };
 	AssignmentText->AddComponent(textComponent);
 	AssignmentText->SetPosition(80, 20);
 	scene.Add(AssignmentText);
 	
-	auto FPSObject = std::make_shared<GameObject>();
+	GameObject* FPSObject = new GameObject();
 	auto FPSTextComponent = new TextComponent{ "0", font };
 	auto FPSComponent = new FPSDisplayScript{ FPSTextComponent };
 	FPSObject->AddComponent(FPSComponent);
@@ -97,10 +97,10 @@ void dae::Minigin::Run()
 
 	LoadGame();
 	{
-		auto& renderer = Renderer::GetInstance();
-		auto& sceneManager = SceneManager::GetInstance();
-		auto& input = InputManager::GetInstance();
-		auto& time = Time::GetInstance();
+		Renderer& renderer = Renderer::GetInstance();
+		SceneManager& sceneManager = SceneManager::GetInstance();
+		InputManager& input = InputManager::GetInstance();
+		Time& time = Time::GetInstance();
 
 		bool doContinue = true;
 		while (doContinue)
@@ -111,8 +111,10 @@ void dae::Minigin::Run()
 			doContinue = input.ProcessInput();
 			sceneManager.Update();
 			renderer.Render();
+
+			sceneManager.HandleEndOfFrame();
 			
-			auto sleepTime = duration_cast<duration<float>>(currentTime + milliseconds(int(time.GetMsPerFrame())) - high_resolution_clock::now());
+			auto sleepTime = duration_cast<duration<float>>(currentTime + milliseconds(static_cast<int>(time.GetMsPerFrame())) - high_resolution_clock::now());
 			this_thread::sleep_for(sleepTime);
 		}
 	}

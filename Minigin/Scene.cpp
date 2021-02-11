@@ -8,16 +8,22 @@ unsigned int Scene::m_IdCounter = 0;
 
 Scene::Scene(const std::string& name) : m_Name(name) {}
 
-Scene::~Scene() = default;
+Scene::~Scene()
+{
+	for (GameObject*& object : m_Objects)
+	{
+		delete object;
+	}
+}
 
-void Scene::Add(const std::shared_ptr<SceneObject>& object)
+void Scene::Add(GameObject* object)
 {
 	m_Objects.push_back(object);
 }
 
 void Scene::Update()
 {
-	for(auto& object : m_Objects)
+	for(GameObject*& object : m_Objects)
 	{
 		object->Update();
 	}
@@ -25,9 +31,22 @@ void Scene::Update()
 
 void Scene::Render() const
 {
-	for (const auto& object : m_Objects)
+	for (const GameObject* object : m_Objects)
 	{
 		object->Render();
+	}
+}
+
+void Scene::DeleteGameObjects()
+{
+	for (size_t i = 0; i < m_Objects.size(); i++)
+	{
+		if (m_Objects[i]->IsMarkedForDelete())
+		{
+			m_Objects.erase(m_Objects.begin() + i);
+			std::cout << "GameObject Deleted\n";
+			i--;
+		}
 	}
 }
 

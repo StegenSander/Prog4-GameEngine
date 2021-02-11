@@ -11,14 +11,13 @@ dae::GameObject::~GameObject()
 	}
 }
 
-
-
 void dae::GameObject::Update()
 {
 	for (BaseComponent* pComponent : m_Components)
 	{
 		pComponent->Update();
 	}
+	RemoveComponents();
 }
 
 void dae::GameObject::Render() const
@@ -46,5 +45,27 @@ void dae::GameObject::AddComponent(BaseComponent* pComponent)
 	{
 		m_RenderComponents.push_back(pRenderComponent);
 		std::cout << "\t-> Render Component\n";
+	}
+}
+
+void dae::GameObject::RemoveComponents()
+{
+	for (size_t i = 0; i < m_RenderComponents.size(); i++)
+	{
+		if (m_RenderComponents[i]->IsMarkedForDelete())
+		{
+			m_RenderComponents.erase(m_RenderComponents.begin() + i);
+			i--;
+		}
+	}
+
+	for (size_t i =0; i< m_Components.size(); i++)
+	{
+		if (m_Components[i]->IsMarkedForDelete())
+		{
+			m_Components.erase(m_Components.begin()+ i);
+			std::cout << "Component Deleted\n";
+			i--;
+		}
 	}
 }

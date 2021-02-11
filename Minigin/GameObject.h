@@ -8,7 +8,7 @@ class RenderComponent;
 namespace dae
 {
 	class Texture2D;
-	class GameObject : public SceneObject
+	class GameObject
 	{
 	public:
 		GameObject() = default;
@@ -19,19 +19,25 @@ namespace dae
 		GameObject& operator=(const GameObject& other) = delete;
 		GameObject& operator=(GameObject&& other) = delete;
 
-		void Update() override;
-		void Render() const override;
+		void Update();
+		void Render() const;
 
 		void SetPosition(float x, float y);
 
 		Transform GetTransform() const { return m_Transform; };
 
 		void AddComponent(BaseComponent* pComponent);
+
+		void Delete() { m_IsMarkedForDelete = true; };
+		bool IsMarkedForDelete() const { return m_IsMarkedForDelete; } ;
+		void RemoveComponents();
 	private:
 		Transform m_Transform;
 
 		std::vector<BaseComponent*> m_Components;
 		std::vector<RenderComponent*> m_RenderComponents;
+
+		bool m_IsMarkedForDelete = false;
 
 	};
 }
