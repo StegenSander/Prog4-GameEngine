@@ -12,6 +12,10 @@
 #include "Scene.h"
 #include "Time.h"
 
+#include "TextureComponent.h"
+#include "TextComponent.h"
+#include "FPSDisplayScript.h"
+
 using namespace std;
 using namespace std::chrono;
 
@@ -47,19 +51,33 @@ void dae::Minigin::LoadGame() const
 {
 	auto& scene = SceneManager::GetInstance().CreateScene("Demo");
 
-	auto go = std::make_shared<GameObject>();
-	go->SetTexture("background.jpg");
-	scene.Add(go);
+	auto background = std::make_shared<GameObject>();
+	TextureComponent* backgroundTexture = new TextureComponent{"background.jpg" };
+	background->AddComponent(backgroundTexture);
+	scene.Add(background);
 
-	go = std::make_shared<GameObject>();
-	go->SetTexture("logo.png");
-	go->SetPosition(216, 180);
-	scene.Add(go);
+	auto logo = std::make_shared<GameObject>();
+	TextureComponent* logoTexture = new TextureComponent{"logo.png" };
+	logo->AddComponent(logoTexture);
+	logo->SetPosition(216, 180);
+	scene.Add(logo);
 
 	auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
-	auto to = std::make_shared<TextObject>("Programming 4 Assignment", font);
-	to->SetPosition(80, 20);
-	scene.Add(to); 
+
+	auto AssignmentText = std::make_shared<GameObject>();
+	auto textComponent = new TextComponent{ "Programming 4 Assignment", font };
+	AssignmentText->AddComponent(textComponent);
+	AssignmentText->SetPosition(80, 20);
+	scene.Add(AssignmentText);
+	
+	auto FPSObject = std::make_shared<GameObject>();
+	auto FPSTextComponent = new TextComponent{ "0", font };
+	auto FPSComponent = new FPSDisplayScript{ FPSTextComponent };
+	FPSObject->AddComponent(FPSComponent);
+	FPSObject->AddComponent(FPSTextComponent);
+	FPSTextComponent->SetColor({ 255,100,100 });
+	FPSObject->SetPosition(0, 0);
+	scene.Add(FPSObject);
 }
 
 void dae::Minigin::Cleanup()
@@ -94,7 +112,7 @@ void dae::Minigin::Run()
 			sceneManager.Update();
 			renderer.Render();
 			
-			auto sleepTime = duration_cast<duration<float>>(currentTime + milliseconds(time.GetMsPerFrame()) - high_resolution_clock::now());
+			auto sleepTime = duration_cast<duration<float>>(currentTime + milliseconds(int(time.GetMsPerFrame())) - high_resolution_clock::now());
 			this_thread::sleep_for(sleepTime);
 		}
 	}

@@ -17,12 +17,12 @@ public:
 
 	//------PUBLIC FUNCTIONS------
 	void Update();
-	void SetTargetMsPerFrame(int msPerFrame) { m_MsPerFrame = msPerFrame; };
+	void SetTargetFPS(int FPS);
 
 	//------PUBLIC GETTERS------
 	float GetDeltaTime() const {return m_DeltaTime;};
 	float GetFPS() const { return 1 / m_DeltaTime; };
-	int GetMsPerFrame() const { return m_MsPerFrame; };
+	float GetMsPerFrame() const { return m_MsPerFrame; };
 	std::chrono::time_point<std::chrono::steady_clock> GetLatestTime() const { return m_LastTimePoint; };
 
 	//------PUBLIC VARIABLES------
@@ -38,5 +38,5 @@ private:
 
 	float m_DeltaTime{};
 
-	int m_MsPerFrame = 16; //16 for 60 fps, 33 for 30 fps
+	float m_MsPerFrame = 33; //16 for 60 fps, 33 for 30 fps
 };

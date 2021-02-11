@@ -1,19 +1,19 @@
 #pragma once
-namespace dae
-{
-	class GameObject;
-}
+#include "GameObject.h"
+
 class BaseComponent
 {
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
-	BaseComponent(dae::GameObject* pGameObject);
+	BaseComponent()= default;
 	virtual ~BaseComponent() = default;
 	
 	//------PUBLIC FUNCTIONS------
 	virtual void Update() = 0;
 	dae::GameObject* GetGameObject() const { return  m_pGameObject; };
-	void PushComponentToGameObject();
+
+
+	friend void dae::GameObject::AddComponent(BaseComponent* pComponent);
 
 	//------PUBLIC VARIABLES------
 protected:

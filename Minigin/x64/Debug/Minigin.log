@@ -1,8 +1,5 @@
-﻿  BaseComponent.cpp
-  GameObject.cpp
-  Minigin.cpp
+﻿  Minigin.cpp
   RenderComponent.cpp
-  Scene.cpp
   TextureComponent.cpp
   Generating Code...
      Creating library C:\Users\sande\OneDrive - Hogeschool West-Vlaanderen\Year 2\Semester2\Prog4\Minigin\Minigin\x64\Debug\Minigin.lib and object C:\Users\sande\OneDrive - Hogeschool West-Vlaanderen\Year 2\Semester2\Prog4\Minigin\Minigin\x64\Debug\Minigin.exp

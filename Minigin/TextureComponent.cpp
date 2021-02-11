@@ -7,19 +7,12 @@
 #include "GameObject.h"
 using namespace dae;
 
-TextureComponent::TextureComponent(GameObject* pGameObject)
-	: RenderComponent(pGameObject)
-{
-}
-
-TextureComponent::TextureComponent(GameObject* pGameObject, const std::string& filename)
-	: RenderComponent(pGameObject)
+TextureComponent::TextureComponent(const std::string& filename)
 {
 	SetTexture(filename);
 }
 
-TextureComponent::TextureComponent(GameObject* pGameObject, const std::string& filename, glm::vec2 positionOffset)
-	: RenderComponent(pGameObject)
+TextureComponent::TextureComponent(const std::string& filename, glm::vec2 positionOffset)
 {
 	SetTexture(filename);
 	SetPositionOffset(positionOffset);

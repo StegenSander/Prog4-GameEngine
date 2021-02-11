@@ -14,4 +14,9 @@ void Time::Update()
 	m_LastTimePoint = currentTime;
 }
 
+void Time::SetTargetFPS(int FPS)
+{
+	m_MsPerFrame =1.f / float(FPS) * 1000;
+}
+
 

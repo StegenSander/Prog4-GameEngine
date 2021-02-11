@@ -199,6 +199,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
   <ItemGroup>
     <ClInclude Include="BaseComponent.h" />
     <ClInclude Include="Font.h" />
+    <ClInclude Include="FPSDisplayScript.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Minigin.h" />
@@ -221,6 +222,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
   <ItemGroup>
     <ClCompile Include="BaseComponent.cpp" />
     <ClCompile Include="Font.cpp" />
+    <ClCompile Include="FPSDisplayScript.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Main.cpp" />

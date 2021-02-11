@@ -14,9 +14,9 @@ class TextureComponent
 {
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
-	TextureComponent(dae::GameObject* pGameObject);
-	TextureComponent(dae::GameObject* pGameObject, const std::string& filename);
-	TextureComponent(dae::GameObject* pGameObject, const std::string& filename, glm::vec2 positionOffset);
+	TextureComponent() = default;
+	TextureComponent(const std::string& filename);
+	TextureComponent(const std::string& filename, glm::vec2 positionOffset);
 	virtual ~TextureComponent() = default;
 
 	//------COPY CONSTRUCTORS------

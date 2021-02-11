@@ -1,19 +1,16 @@
 #include "MiniginPCH.h"
 #include "GameObject.h"
-#include "ResourceManager.h"
-#include "Renderer.h"
+#include "BaseComponent.h"
+#include "RenderComponent.h"
 
-dae::GameObject::~GameObject() = default;
-
-void dae::GameObject::AddComponent(BaseComponent* pComponent)
+dae::GameObject::~GameObject()
 {
-	m_Components.push_back(pComponent);
+	for (BaseComponent* pComponent : m_Components)
+	{
+		delete pComponent;
+	}
 }
 
-void dae::GameObject::AddRenderComponent(RenderComponent* pRenderComponent)
-{
-	m_RenderComponents.push_back(pRenderComponent);
-}
 
 
 void dae::GameObject::Update()
@@ -35,4 +32,19 @@ void dae::GameObject::Render() const
 void dae::GameObject::SetPosition(float x, float y)
 {
 	m_Transform.SetPosition(x, y, 0.0f);
+}
+
+
+void dae::GameObject::AddComponent(BaseComponent* pComponent)
+{
+	m_Components.push_back(pComponent);
+	pComponent->m_pGameObject = this;
+	std::cout << "Component added\n";
+	
+	RenderComponent* pRenderComponent = dynamic_cast<RenderComponent*> (pComponent);
+	if (pRenderComponent)
+	{
+		m_RenderComponents.push_back(pRenderComponent);
+		std::cout << "\t-> Render Component\n";
+	}
 }
