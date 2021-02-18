@@ -11,5 +11,14 @@ FPSDisplayScript::FPSDisplayScript(TextComponent* pTextComponent)
 
 void FPSDisplayScript::Update()
 {
-	if (m_pTextComponent) m_pTextComponent->SetText(std::to_string(int(std::round(Time::GetInstance().GetFPS()))));
+	Time& pTime = Time::GetInstance();
+	elapsedTime += pTime.GetDeltaTime();
+	elapsedFrames++;
+
+	if (elapsedTime > 1.f)
+	{
+		if (m_pTextComponent) m_pTextComponent->SetText(std::to_string(elapsedFrames));
+		elapsedFrames = 0;
+		elapsedTime -= 1.f;
+	}
 }

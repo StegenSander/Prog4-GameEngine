@@ -15,6 +15,7 @@
 #include "TextureComponent.h"
 #include "TextComponent.h"
 #include "FPSDisplayScript.h"
+#include "UIButtonsScript.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -70,6 +71,7 @@ void dae::Minigin::LoadGame() const
 	AssignmentText->SetPosition(80, 20);
 	scene.Add(AssignmentText);
 	
+	
 	GameObject* FPSObject = new GameObject();
 	auto FPSTextComponent = new TextComponent{ "0", font };
 	auto FPSComponent = new FPSDisplayScript{ FPSTextComponent };
@@ -78,6 +80,10 @@ void dae::Minigin::LoadGame() const
 	FPSTextComponent->SetColor({ 255,100,100 });
 	FPSObject->SetPosition(0, 0);
 	scene.Add(FPSObject);
+
+	GameObject* ui = new GameObject();
+	ui->AddComponent(new UIButtonScript());
+	scene.Add(ui);
 }
 
 void dae::Minigin::Cleanup()
@@ -114,7 +120,8 @@ void dae::Minigin::Run()
 
 			sceneManager.HandleEndOfFrame();
 			
-			auto sleepTime = duration_cast<duration<float>>(currentTime + milliseconds(static_cast<int>(time.GetMsPerFrame())) - high_resolution_clock::now());
+			auto sleepTime = duration_cast<duration<float>>
+				(currentTime + milliseconds(static_cast<int>(time.GetMsPerFrame())) - high_resolution_clock::now());
 			this_thread::sleep_for(sleepTime);
 		}
 	}

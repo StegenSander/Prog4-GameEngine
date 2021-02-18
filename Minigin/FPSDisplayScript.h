@@ -30,5 +30,7 @@ private:
 
 	//------PRIVATE VARIABLES------
 	TextComponent* m_pTextComponent;
+	int elapsedFrames{0};
+	float elapsedTime{0.f};
 };
 

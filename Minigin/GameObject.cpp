@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "BaseComponent.h"
 #include "RenderComponent.h"
+#include "imgui.h"
 
 dae::GameObject::~GameObject()
 {
@@ -17,7 +18,6 @@ void dae::GameObject::Update()
 	{
 		pComponent->Update();
 	}
-	RemoveComponents();
 }
 
 void dae::GameObject::Render() const
@@ -50,22 +50,19 @@ void dae::GameObject::AddComponent(BaseComponent* pComponent)
 
 void dae::GameObject::RemoveComponents()
 {
-	for (size_t i = 0; i < m_RenderComponents.size(); i++)
-	{
-		if (m_RenderComponents[i]->IsMarkedForDelete())
+	m_RenderComponents.erase(std::remove_if(m_RenderComponents.begin()
+		, m_RenderComponents.end(),
+		[](RenderComponent* pComponent)
 		{
-			m_RenderComponents.erase(m_RenderComponents.begin() + i);
-			i--;
-		}
-	}
+			return pComponent->IsMarkedForDelete();
+		}), m_RenderComponents.end());
 
-	for (size_t i =0; i< m_Components.size(); i++)
-	{
-		if (m_Components[i]->IsMarkedForDelete())
+	m_Components.erase(std::remove_if(m_Components.begin()
+		, m_Components.end(),
+		[](BaseComponent* pComponent)
 		{
-			m_Components.erase(m_Components.begin()+ i);
-			std::cout << "Component Deleted\n";
-			i--;
-		}
-	}
+			bool mustDelete = pComponent->IsMarkedForDelete();
+			if (mustDelete) delete pComponent;
+			return mustDelete;
+		}), m_Components.end());
 }

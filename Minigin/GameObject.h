@@ -27,6 +27,8 @@ namespace dae
 		Transform GetTransform() const { return m_Transform; };
 
 		void AddComponent(BaseComponent* pComponent);
+		template <typename T>
+		T* GetComponent();
 
 		void Delete() { m_IsMarkedForDelete = true; };
 		bool IsMarkedForDelete() const { return m_IsMarkedForDelete; } ;
@@ -40,4 +42,18 @@ namespace dae
 		bool m_IsMarkedForDelete = false;
 
 	};
+
+	template<typename T>
+	inline T* GameObject::GetComponent()
+	{
+		for (BaseComponent* pBase : m_Components)
+		{
+			if (dynamic_cast<T*>(pBase))
+			{
+				return T * (pBase);
+			}
+		}
+
+		return nullptr;
+	}
 }

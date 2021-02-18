@@ -39,14 +39,13 @@ void Scene::Render() const
 
 void Scene::DeleteGameObjects()
 {
-	for (size_t i = 0; i < m_Objects.size(); i++)
-	{
-		if (m_Objects[i]->IsMarkedForDelete())
+	m_Objects.erase(std::remove_if(m_Objects.begin()
+		, m_Objects.end(),
+		[](GameObject* pGameObject)
 		{
-			m_Objects.erase(m_Objects.begin() + i);
-			std::cout << "GameObject Deleted\n";
-			i--;
-		}
-	}
+			bool mustDelete = pGameObject->IsMarkedForDelete();
+			if (mustDelete) delete  pGameObject;
+			return mustDelete;
+		}), m_Objects.end());
 }
 
