@@ -1,5 +1,5 @@
 #pragma once
-#include "RenderComponent.h"
+#include "BaseComponent.h"
 
 #pragma warning(push)
 #pragma warning (disable:4201)
@@ -10,7 +10,7 @@ namespace dae {
 	class Texture2D;
 }
 class TextureComponent
-	: public RenderComponent
+	: public BaseComponent
 {
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------

@@ -11,7 +11,7 @@ public:
 
 	virtual ~Command() = default;
 
-	void Execute()
+	virtual void Execute()
 	{
 		m_Function();
 	}

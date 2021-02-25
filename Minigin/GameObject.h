@@ -26,9 +26,9 @@ namespace dae
 
 		Transform GetTransform() const { return m_Transform; };
 
-		void AddComponent(BaseComponent* pComponent);
+		void AddComponent(const std::shared_ptr<BaseComponent>& pComponent);
 		template <typename T>
-		T* GetComponent();
+		std::weak_ptr<T> GetComponent();
 
 		void Delete() { m_IsMarkedForDelete = true; };
 		bool IsMarkedForDelete() const { return m_IsMarkedForDelete; } ;
@@ -36,24 +36,23 @@ namespace dae
 	private:
 		Transform m_Transform;
 
-		std::vector<BaseComponent*> m_Components;
-		std::vector<RenderComponent*> m_RenderComponents;
+		std::vector<std::shared_ptr<BaseComponent>> m_Components;
 
 		bool m_IsMarkedForDelete = false;
 
 	};
 
 	template<typename T>
-	inline T* GameObject::GetComponent()
+	inline std::weak_ptr<T> GameObject::GetComponent()
 	{
-		for (BaseComponent* pBase : m_Components)
+		for (std::shared_ptr<BaseComponent> pBase : m_Components)
 		{
-			if (dynamic_cast<T*>(pBase))
+			if (std::dynamic_pointer_cast<T>(pBase))
 			{
-				return T * (pBase);
+				return std::dynamic_pointer_cast<T> (pBase);
 			}
 		}
 
-		return nullptr;
+		return std::shared_ptr<T>(nullptr);
 	}
 }

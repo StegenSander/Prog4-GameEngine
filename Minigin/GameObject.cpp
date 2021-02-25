@@ -1,20 +1,16 @@
 #include "MiniginPCH.h"
 #include "GameObject.h"
 #include "BaseComponent.h"
-#include "RenderComponent.h"
+#include "BaseComponent.h"
 #include "imgui.h"
 
 dae::GameObject::~GameObject()
 {
-	for (BaseComponent* pComponent : m_Components)
-	{
-		delete pComponent;
-	}
 }
 
 void dae::GameObject::Update()
 {
-	for (BaseComponent* pComponent : m_Components)
+	for (const std::shared_ptr<BaseComponent>& pComponent : m_Components)
 	{
 		pComponent->Update();
 	}
@@ -22,9 +18,9 @@ void dae::GameObject::Update()
 
 void dae::GameObject::Render() const
 {
-	for (RenderComponent* pRenderComponent : m_RenderComponents)
+	for (const std::shared_ptr<BaseComponent>& pComponent : m_Components)
 	{
-		pRenderComponent->Render();
+		pComponent->Render();
 	}
 }
 
@@ -34,35 +30,19 @@ void dae::GameObject::SetPosition(float x, float y)
 }
 
 
-void dae::GameObject::AddComponent(BaseComponent* pComponent)
+void dae::GameObject::AddComponent(const std::shared_ptr<BaseComponent>& pComponent)
 {
 	m_Components.push_back(pComponent);
 	pComponent->m_pGameObject = this;
 	std::cout << "Component added\n";
-	
-	RenderComponent* pRenderComponent = dynamic_cast<RenderComponent*> (pComponent);
-	if (pRenderComponent)
-	{
-		m_RenderComponents.push_back(pRenderComponent);
-		std::cout << "\t-> Render Component\n";
-	}
 }
 
 void dae::GameObject::RemoveComponents()
 {
-	m_RenderComponents.erase(std::remove_if(m_RenderComponents.begin()
-		, m_RenderComponents.end(),
-		[](RenderComponent* pComponent)
-		{
-			return pComponent->IsMarkedForDelete();
-		}), m_RenderComponents.end());
-
 	m_Components.erase(std::remove_if(m_Components.begin()
 		, m_Components.end(),
-		[](BaseComponent* pComponent)
+		[](std::shared_ptr<BaseComponent> pComponent)
 		{
-			bool mustDelete = pComponent->IsMarkedForDelete();
-			if (mustDelete) delete pComponent;
-			return mustDelete;
+			return pComponent->IsMarkedForDelete();
 		}), m_Components.end());
 }

@@ -4,7 +4,7 @@
 #include "TextComponent.h"
 #include "Time.h"
 
-FPSDisplayScript::FPSDisplayScript(TextComponent* pTextComponent)
+FPSDisplayScript::FPSDisplayScript(const std::shared_ptr<TextComponent>& pTextComponent)
 	: m_pTextComponent(pTextComponent)
 {
 }
@@ -17,7 +17,7 @@ void FPSDisplayScript::Update()
 
 	if (elapsedTime > 1.f)
 	{
-		if (m_pTextComponent) m_pTextComponent->SetText(std::to_string(elapsedFrames));
+		if (!m_pTextComponent.expired()) m_pTextComponent.lock()->SetText(std::to_string(elapsedFrames));
 		elapsedFrames = 0;
 		elapsedTime -= 1.f;
 	}

@@ -1,5 +1,5 @@
 #pragma once
-#include "RenderComponent.h"
+#include "BaseComponent.h"
 #include "Transform.h"
 
 #include <SDL_pixels.h>
@@ -14,7 +14,7 @@ namespace dae
 	class Texture2D;
 }
 class TextComponent
-	: public RenderComponent
+	: public BaseComponent
 {
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------

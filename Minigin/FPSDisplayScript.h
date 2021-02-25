@@ -7,7 +7,7 @@ class FPSDisplayScript
 {
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
-	FPSDisplayScript(TextComponent* pTextComponent);
+	FPSDisplayScript(const std::shared_ptr<TextComponent>& pTextComponent);
 	virtual ~FPSDisplayScript() = default;
 
 	//------COPY CONSTRUCTORS------
@@ -29,7 +29,7 @@ private:
 	//------PRIVATE FUNCTIONS------
 
 	//------PRIVATE VARIABLES------
-	TextComponent* m_pTextComponent;
+	std::weak_ptr<TextComponent> m_pTextComponent;
 	int elapsedFrames{0};
 	float elapsedTime{0.f};
 };

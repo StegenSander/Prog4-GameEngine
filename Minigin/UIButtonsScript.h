@@ -1,8 +1,8 @@
 #pragma once
-#include "RenderComponent.h"
+#include "BaseComponent.h"
 
 class UIButtonScript
-	:public RenderComponent
+	:public BaseComponent
 {
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
