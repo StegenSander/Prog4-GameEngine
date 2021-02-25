@@ -207,6 +207,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     <ClInclude Include="..\3rdParty\imgui-master\imstb_truetype.h" />
     <ClInclude Include="BaseComponent.h" />
     <ClInclude Include="Commands.h" />
+    <ClInclude Include="Controller.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="FPSDisplayScript.h" />
     <ClInclude Include="GameObject.h" />
@@ -272,7 +273,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="BaseComponent.cpp" />
-    <ClCompile Include="Commands.cpp" />
+    <ClCompile Include="Controller.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="FPSDisplayScript.cpp" />
     <ClCompile Include="GameObject.cpp" />

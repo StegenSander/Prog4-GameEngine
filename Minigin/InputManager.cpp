@@ -5,63 +5,42 @@
 
 bool dae::InputManager::ProcessInput()
 {
-	//PBYTE keyboardState{};
-	//GetKeyboardState(keyboardState);
-
-	//bool result = GetKeyState(0x41) & 0x8000;
-
-	//std::cout << result;
-
-	bool a = ProcessControllerInput();
-	bool b = ProcessKeyBoardInput();
-	bool c = ProcessCommands();
-
-	return  !(!a || !b || !c);
-}
-
-bool dae::InputManager::ProcessControllerInput()
-{
-	DWORD result{};
-	DWORD dword{ 0 };
-
-	m_pPreviousInputState = std::move(m_pInputState);
-	ZeroMemory(&m_pInputState, sizeof(m_pInputState));
-	result = XInputGetState(dword, &m_pInputState);
-
-	if (result == ERROR_SUCCESS)
+	for (Controller* pController : m_pControllers)
 	{
-		//Controller connected
-	}
-	else
-	{
-		//No controller found
+		if (pController)
+		{
+			pController->ProcessXINPUTInput();
+		}
 	}
 
-	return true;
+	ProcessCommands();
+
+	return ProcessSDLInput();
 }
 
-bool dae::InputManager::ProcessKeyBoardInput()
+bool dae::InputManager::ProcessSDLInput()
 {
 	SDL_Event e;
 	while (SDL_PollEvent(&e)) {
 		if (e.type == SDL_QUIT) {
 			return false;
 		}
-		if (e.type == SDL_KEYDOWN) {
-			switch (e.key.keysym.scancode)
-			{
-			case SDL_SCANCODE_KP_1:
-				break;
-			case SDL_SCANCODE_KP_2:
-				break;
-			case SDL_SCANCODE_KP_3:
-				break;
-			default:
-				break;
-			}
+		if (e.type == SDL_KEYDOWN && e.key.repeat == 0) {
+
+			HandleKeyPressed(e.key.keysym.scancode);
+			std::cout << "KeyDown\n";
+		}
+		if (e.type == SDL_KEYUP && e.key.repeat == 0)
+		{
+			HandleKeyReleased(e.key.keysym.scancode);
+			std::cout << "KeyUp\n";
 		}
 
 		if (e.type == SDL_MOUSEBUTTONDOWN) {
+
+		}
+		if (e.type == SDL_MOUSEMOTION)
+		{
 
 		}
 	}
@@ -71,48 +50,83 @@ bool dae::InputManager::ProcessKeyBoardInput()
 
 bool dae::InputManager::ProcessCommands()
 {
-	for (ControllerCommandMap::iterator mapIt = m_ControllerCommandMap.begin();
-		mapIt != m_ControllerCommandMap.end(); mapIt++)
+	for (Controller* pController : m_pControllers)
 	{
-		switch ((*mapIt).first.buttonState)
+		if (pController)
 		{
-		case ControllerButtonState::Down:
-			if (IsButtonDown((*mapIt).first.buttonType)) (*mapIt).second->Execute();
-			break;
-		case ControllerButtonState::OnRelease:
-			if (IsButtonReleased((*mapIt).first.buttonType)) (*mapIt).second->Execute();
-			break;
-		case ControllerButtonState::OnPress:
-			if (IsButtonPressed((*mapIt).first.buttonType)) (*mapIt).second->Execute();
-			break;
-		case ControllerButtonState::OnPressAndRelease:
-			if (IsButtonReleased((*mapIt).first.buttonType)
-				|| IsButtonPressed((*mapIt).first.buttonType)) (*mapIt).second->Execute();
-			break;
+			pController->ProcessCommands();
+		}
+	}
+
+	//Pair: KeyboardKeyData, Command
+	for (const auto& pair : m_KeyboardCommandMap)
+	{
+		if (pair.first.buttonState == ButtonState::Down)
+		{
+			if (IsKeyDown(pair.first.SDLScancode)) pair.second->Execute();
 		}
 	}
 
 	return true;
 }
 
-bool dae::InputManager::IsButtonPressed(ControllerButton button) const
+bool dae::InputManager::IsKeyDown(int SDLScancode)
 {
-	return  m_pInputState.Gamepad.wButtons & WORD(button)
-		&& !(m_pPreviousInputState.Gamepad.wButtons & WORD(button));
+	const Uint8* pStates = SDL_GetKeyboardState(nullptr);
+	return pStates[SDLScancode];
 }
 
-bool dae::InputManager::IsButtonReleased(ControllerButton button) const
+void dae::InputManager::AddCommand(ControllerButtonData buttonData, Command* pCommand, DWORD controllerIndex)
 {
-	return  !(m_pInputState.Gamepad.wButtons & WORD(button))
-		&& m_pPreviousInputState.Gamepad.wButtons & WORD(button);
+	if (controllerIndex < m_AmountOfControllers)
+	{
+		m_pControllers[controllerIndex]->AddCommand(buttonData, pCommand);
+	}
 }
 
-bool dae::InputManager::IsButtonDown(ControllerButton button) const
+void dae::InputManager::AddCommand(KeyboardKeyData keyData, Command* pCommand)
 {
-	return m_pInputState.Gamepad.wButtons & WORD(button);
+	m_KeyboardCommandMap.insert(std::make_pair(keyData, pCommand));
 }
 
-void dae::InputManager::AddCommand(ControllerButtonData buttonData, Command* pCommand)
+void dae::InputManager::SetAmountOfControllers(DWORD amount)
 {
-	m_ControllerCommandMap.insert(std::make_pair(buttonData, pCommand));
+	m_AmountOfControllers = amount;
+	for (size_t i = 0; i < m_pControllers.size(); i++)
+	{
+		if (m_pControllers[i]) delete m_pControllers[i];
+	}
+	m_pControllers.clear();
+	for (DWORD i = 0; i < amount; i++)
+	{
+		m_pControllers.push_back(new Controller(i));
+	}
+}
+
+void dae::InputManager::HandleKeyPressed(int SDLScancode)
+{
+	//Pair: KeyboardKeyData, Command
+	for (const auto& pair : m_KeyboardCommandMap)
+	{
+		if ( (pair.first.buttonState == ButtonState::OnPress
+			|| pair.first.buttonState == ButtonState::OnPressAndRelease)
+			&& pair.first.SDLScancode == SDLScancode)
+		{
+			pair.second->Execute();
+		}
+	}
+}
+
+void dae::InputManager::HandleKeyReleased(int SDLScancode)
+{
+	//Pair: KeyboardKeyData, Command
+	for (const auto& pair : m_KeyboardCommandMap)
+	{
+		if ((pair.first.buttonState == ButtonState::OnRelease
+			|| pair.first.buttonState == ButtonState::OnPressAndRelease)
+			&& pair.first.SDLScancode == SDLScancode)
+		{
+			pair.second->Execute();
+		}
+	}
 }

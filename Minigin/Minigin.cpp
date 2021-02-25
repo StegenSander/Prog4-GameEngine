@@ -97,6 +97,13 @@ void dae::Minigin::Cleanup()
 void dae::Minigin::Run()
 {
 	Initialize();
+	InputManager::GetInstance().SetAmountOfControllers(1);
+	//example on how to create a input command
+	InputManager::GetInstance().AddCommand(KeyboardKeyData{ SDL_SCANCODE_B,ButtonState::OnPressAndRelease }
+	, new Command(&Commands::Spawn));
+
+	InputManager::GetInstance().AddCommand(ControllerButtonData{ControllerButton::ButtonB,ButtonState::OnPressAndRelease }
+	, new Command(&Commands::Spawn));
 
 	// tell the resource manager where he can find the game data
 	ResourceManager::GetInstance().Init("../Data/");

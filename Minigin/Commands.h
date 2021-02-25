@@ -1,60 +1,41 @@
 #pragma once
 #include <iostream>
+#include <functional>
+
 class Command
 {
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
-	Command() = default;
+	Command(std::function<void()> function)
+		: m_Function{ function } {}
+
 	virtual ~Command() = default;
 
-	virtual void Execute() = 0;
-};
-
-class CommandFire final: public Command
-{
-public:
-	CommandFire() : Command() {}
-	~CommandFire() = default;
-
-	void Execute() override
+	void Execute()
 	{
-		std::cout << "Fire\n";
+		m_Function();
 	}
+
+private:
+	std::function<void()> m_Function;
 };
 
-class CommandDuck final : public Command
-{
-public:
-	CommandDuck() : Command() {}
-	~CommandDuck() = default;
 
-	void Execute() override
+/*Disabling a warning
+* Warning is visual studio not understanding what's happend
+* 'unreferenced local function has been removed'
+* precompiler things this function will never be called
+* but is wrong since we're working with function pointer
+*/
+#pragma warning(push)
+#pragma warning (disable:4505)
+namespace Commands {
+
+	static void Spawn()
 	{
-		std::cout << "Duck\n";
+		std::cout << "Spawn\n";
 	}
-};
 
-class CommandJump final : public Command
-{
-public:
-	CommandJump() : Command() {}
-	~CommandJump() = default;
 
-	void Execute() override
-	{
-		std::cout << "Jump\n";
-	}
-};
-
-class CommandFart final : public Command
-{
-public:
-	CommandFart() : Command() {}
-	~CommandFart() = default;
-
-	void Execute() override
-	{
-		std::cout << "Fart\n";
-	}
-};
-
+}
+#pragma warning(pop)

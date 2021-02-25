@@ -5,68 +5,53 @@
 #include <map>
 #include "Commands.h"
 
+#include "Controller.h"
+
 namespace dae
 {
-    enum class ControllerButton
-    {
-        ButtonA = XINPUT_GAMEPAD_A,
-        ButtonB = XINPUT_GAMEPAD_B,
-        ButtonX = XINPUT_GAMEPAD_X,
-        ButtonY = XINPUT_GAMEPAD_Y,
-        Up = XINPUT_GAMEPAD_DPAD_UP,
-        Down = XINPUT_GAMEPAD_DPAD_DOWN,
-        Left = XINPUT_GAMEPAD_DPAD_LEFT,
-        Right = XINPUT_GAMEPAD_DPAD_RIGHT,
-        LeftThumb = XINPUT_GAMEPAD_LEFT_THUMB,
-        RightThumb = XINPUT_GAMEPAD_RIGHT_THUMB,
-        LeftShoulder = XINPUT_GAMEPAD_LEFT_SHOULDER,
-        RightShoulder = XINPUT_GAMEPAD_RIGHT_SHOULDER,
-        Start = XINPUT_GAMEPAD_START,
-        Back = XINPUT_GAMEPAD_BACK
-    };
 
-    enum class ControllerButtonState
+    struct KeyboardKeyData
     {
-        OnPress,
-        OnRelease,
-        OnPressAndRelease,
-        Down,
+        int SDLScancode;
+        ButtonState buttonState = ButtonState::Down;
     };
-
-    struct ControllerButtonData
-    {
-        ControllerButton buttonType;
-        ControllerButtonState buttonState = ControllerButtonState::Down;
-    };
-
     //We are using map so comparison needs to be supported
-    inline bool operator< (const ControllerButtonData& lhs, const ControllerButtonData& rhs)
+    inline bool operator< (const KeyboardKeyData& lhs, const KeyboardKeyData& rhs)
     {
-        return WORD(lhs.buttonType) < WORD(rhs.buttonType);
+        return lhs.SDLScancode < rhs.SDLScancode;
     }
+        
+
+    
 
 	class InputManager final : public Singleton<InputManager>
 	{
 	public:
+        //General Functions
 		bool ProcessInput();
-        bool ProcessControllerInput();
-        bool ProcessKeyBoardInput();
-
+        bool ProcessSDLInput();
         bool ProcessCommands();
 
-		bool IsButtonPressed(ControllerButton button) const;
-		bool IsButtonReleased(ControllerButton button) const;
-		bool IsButtonDown(ControllerButton button) const;
+        //KeyBoard functions
+        bool IsKeyDown(int SDLScancode);
 
-		void AddCommand(ControllerButtonData buttonData, Command* pCommand);
+        //Command functions
+		void AddCommand(ControllerButtonData buttonData, Command* pCommand,DWORD controllerIndex = 0);
+        void AddCommand(KeyboardKeyData keyData, Command* pCommand);
+
+        void SetAmountOfControllers(DWORD amount);
 
 	private:
-        //Controller input
-		XINPUT_STATE m_pPreviousInputState;
-		XINPUT_STATE m_pInputState;
-		using ControllerCommandMap = std::map<ControllerButtonData, std::unique_ptr<Command>>;
-		ControllerCommandMap m_ControllerCommandMap{};
 
+        void HandleKeyPressed(int SDLScancode);
+        void HandleKeyReleased(int SDLScancode);
+
+        std::vector<Controller*> m_pControllers;
+
+        using KeyboardCommandMap = std::map<KeyboardKeyData, std::unique_ptr<Command>>;
+        KeyboardCommandMap m_KeyboardCommandMap{};
+
+        DWORD m_AmountOfControllers = 0;
 	};
 
 }

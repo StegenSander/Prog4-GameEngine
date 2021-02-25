@@ -31,6 +31,9 @@
     <Filter Include="IMGUI">
       <UniqueIdentifier>{9ff32409-02bb-4655-a4e8-152e1d6dc4d0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Input">
+      <UniqueIdentifier>{1a990f29-5fa0-4f21-bcfc-7e9a3fa2486b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Texture2D.h">
@@ -40,9 +43,6 @@
       <Filter>RenderClasses</Filter>
     </ClInclude>
     <ClInclude Include="SceneManager.h">
-      <Filter>Singletons</Filter>
-    </ClInclude>
-    <ClInclude Include="InputManager.h">
       <Filter>Singletons</Filter>
     </ClInclude>
     <ClInclude Include="Time.h">
@@ -93,9 +93,6 @@
     <ClInclude Include="Transform.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Commands.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\3rdParty\imgui-master\imstb_truetype.h">
       <Filter>IMGUI</Filter>
     </ClInclude>
@@ -122,6 +119,15 @@
     </ClInclude>
     <ClInclude Include="UIButtonsScript.h">
       <Filter>Components\Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Commands.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller.h">
+      <Filter>Input</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -152,9 +158,6 @@
     <ClCompile Include="SceneManager.cpp">
       <Filter>Singletons</Filter>
     </ClCompile>
-    <ClCompile Include="InputManager.cpp">
-      <Filter>Singletons</Filter>
-    </ClCompile>
     <ClCompile Include="Time.cpp">
       <Filter>Singletons</Filter>
     </ClCompile>
@@ -182,9 +185,6 @@
     <ClCompile Include="Font.cpp">
       <Filter>RenderClasses</Filter>
     </ClCompile>
-    <ClCompile Include="Commands.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\3rdParty\imgui-master\imgui.cpp">
       <Filter>IMGUI</Filter>
     </ClCompile>
@@ -208,6 +208,12 @@
     </ClCompile>
     <ClCompile Include="UIButtonsScript.cpp">
       <Filter>Components\Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Controller.cpp">
+      <Filter>Input</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
