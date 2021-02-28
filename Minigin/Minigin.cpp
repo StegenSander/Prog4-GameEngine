@@ -56,12 +56,12 @@ void dae::Minigin::LoadGame()
 {
 	Scene& scene = SceneManager::GetInstance().CreateScene("Demo");
 
-	GameObject* background = new GameObject();
+	std::shared_ptr<GameObject> background{ new GameObject() };
 	std::shared_ptr<TextureComponent> backgroundTexture (new TextureComponent{"background.jpg" });
 	background->AddComponent(backgroundTexture);
 	scene.Add(background);
 
-	GameObject* logo = new GameObject();
+	std::shared_ptr<GameObject> logo{ new GameObject() };
 	std::shared_ptr<TextureComponent> logoTexture (new TextureComponent{"logo.png" });
 	logo->AddComponent(logoTexture);
 	logo->SetPosition(216, 180);
@@ -69,14 +69,14 @@ void dae::Minigin::LoadGame()
 
 	auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
 
-	GameObject* AssignmentText = new GameObject();
+	std::shared_ptr<GameObject> AssignmentText{ new GameObject() };
 	std::shared_ptr<TextComponent> textComponent{new TextComponent{ "Programming 4 Assignment", font } };
 	AssignmentText->AddComponent(textComponent);
 	AssignmentText->SetPosition(80, 20);
 	scene.Add(AssignmentText);
 	
 	
-	GameObject* FPSObject = new GameObject();
+	std::shared_ptr<GameObject> FPSObject{ new GameObject() };
 
 	std::shared_ptr<TextComponent> FPSTextComponent{ new TextComponent{ "0", font }};
 	std::shared_ptr<FPSDisplayScript> FPSComponent{ new FPSDisplayScript{ FPSTextComponent } };
@@ -86,25 +86,25 @@ void dae::Minigin::LoadGame()
 	FPSObject->SetPosition(0, 0);
 	scene.Add(FPSObject);
 
-	m_pPlayer1 = CreatePlayer(0);
-	scene.Add(m_pPlayer1);
-	m_pPlayer2 = CreatePlayer(1);
-	scene.Add(m_pPlayer2);
+	std::shared_ptr<GameObject> p1 = CreatePlayer(0);
+	m_Player1 = p1;
+	scene.Add(p1);
+	std::shared_ptr<GameObject> p2 = CreatePlayer(1);
+	m_Player2 = p2;
+	scene.Add(p2);
 
-	GameObject* Scoreboard = new GameObject();
-	std::shared_ptr<PlayerUIComponent> UIComponent{new PlayerUIComponent(m_pPlayer1,m_pPlayer2)};
+	std::shared_ptr<GameObject> Scoreboard{ new GameObject() };
+	std::shared_ptr<PlayerUIComponent> UIComponent{new PlayerUIComponent(p1,p2)};
 	Scoreboard->AddComponent(UIComponent);
 	scene.Add(Scoreboard);
 
-
+	InputManager::GetInstance().AddCommand(ControllerButtonData{ ControllerButton::ButtonA,ButtonState::OnPress }
+	, new Command(std::bind(&HealthComponent::DealDamage, p1->GetComponent<HealthComponent>().lock(), 1)),0);
 
 	InputManager::GetInstance().AddCommand(ControllerButtonData{ ControllerButton::ButtonA,ButtonState::OnPress }
-	, new Command(std::bind(&HealthComponent::DealDamage, m_pPlayer1->GetComponent<HealthComponent>().lock(), 1)),0);
+	, new Command(std::bind(&HealthComponent::DealDamage, p2->GetComponent<HealthComponent>().lock(), 1)), 1);
 
-	InputManager::GetInstance().AddCommand(ControllerButtonData{ ControllerButton::ButtonA,ButtonState::OnPress }
-	, new Command(std::bind(&HealthComponent::DealDamage, m_pPlayer2->GetComponent<HealthComponent>().lock(), 1)), 1);
-
-	GameObject* ui = new GameObject();
+	std::shared_ptr<GameObject> ui{ new GameObject() };
 
 	std::shared_ptr<UIButtonScript> uiButtonScript{ new UIButtonScript() };
 	ui->AddComponent(uiButtonScript);
@@ -113,9 +113,9 @@ void dae::Minigin::LoadGame()
 
 
 
-dae::GameObject* dae::Minigin::CreatePlayer(int index)
+std::shared_ptr<dae::GameObject> dae::Minigin::CreatePlayer(int index)
 {
-	GameObject* player = new GameObject();
+	std::shared_ptr<GameObject> player{ new GameObject() };
 
 	std::shared_ptr<TextureComponent> QBertTexture{ new TextureComponent{ "QBert.png" } };
 	player->AddComponent(QBertTexture);
@@ -162,6 +162,8 @@ void dae::Minigin::Run()
 	ResourceManager::GetInstance().Init("../Data/");
 
 	LoadGame();
+
+	PrintHowToPlay();
 	{
 		Renderer& renderer = Renderer::GetInstance();
 		SceneManager& sceneManager = SceneManager::GetInstance();
@@ -175,10 +177,11 @@ void dae::Minigin::Run()
 			const auto currentTime = time.GetLatestTime();
 			
 			doContinue = input.ProcessInput();
-			sceneManager.Update();
-			renderer.Render();
 
-			sceneManager.HandleEndOfFrame();
+			sceneManager.Update();
+			sceneManager.DestroyMarkedObjects();
+
+			renderer.Render();
 			
 			auto sleepTime = duration_cast<duration<float>>
 				(currentTime + milliseconds(static_cast<int>(time.GetMsPerFrame())) - high_resolution_clock::now());
@@ -187,4 +190,14 @@ void dae::Minigin::Run()
 	}
 
 	Cleanup();
+}
+
+void dae::Minigin::PrintHowToPlay() const
+{
+	std::cout << "-----QBERT-----\nHow to play:\n";
+	std::cout << "Deal damage to the player: Controller button A\n";
+	std::cout << "Score points:\n";
+	std::cout << "\tController button B: 10 points\n";
+	std::cout << "\tController button X: 50 points\n";
+	std::cout << "\tController button Y: 100 points\n";
 }

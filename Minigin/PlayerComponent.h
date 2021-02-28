@@ -6,7 +6,10 @@ class PlayerComponent
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
 	PlayerComponent(int playerIndex);
-	virtual ~PlayerComponent() = default;
+	virtual ~PlayerComponent() {
+		std::cout << "Player component deleted\n";
+	}
+	;;
 
 	//------COPY CONSTRUCTORS------
 	PlayerComponent(const PlayerComponent&) = delete;

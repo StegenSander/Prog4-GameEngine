@@ -1,7 +1,6 @@
 #pragma once
 #include <iostream>
 #include <functional>
-
 class Command
 {
 public:
@@ -11,10 +10,7 @@ public:
 
 	virtual ~Command() = default;
 
-	virtual void Execute()
-	{
-		m_Function();
-	}
+	virtual void Execute();
 
 private:
 	std::function<void()> m_Function;

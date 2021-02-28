@@ -11,11 +11,13 @@ namespace dae
 		void LoadGame();
 		void Cleanup();
 		void Run();
+
+		void PrintHowToPlay() const;
 	private:
 		SDL_Window* m_Window{};
-		GameObject* m_pPlayer1 = nullptr;
-		GameObject* m_pPlayer2 = nullptr;
+		std::weak_ptr<GameObject> m_Player1{};
+		std::weak_ptr<GameObject> m_Player2{};
 
-		GameObject* CreatePlayer(int index);
+		std::shared_ptr<dae::GameObject> CreatePlayer(int index);
 	};
 }

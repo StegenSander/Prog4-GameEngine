@@ -1,5 +1,6 @@
 #pragma once
 #include "Singleton.h"
+#include <map>
 
 namespace dae
 {
@@ -8,14 +9,17 @@ namespace dae
 	{
 	public:
 		Scene& CreateScene(const std::string& name);
+		Scene& GetScene(const std::string& name);
 
 		void Update();
 		void Render();
+		void SetActiveScene(const std::shared_ptr<Scene>& activeScene);
 
-		void HandleEndOfFrame();
+		void DestroyMarkedObjects();
 	private:
 		friend class Singleton<SceneManager>;
 		SceneManager() = default;
-		std::vector<std::shared_ptr<Scene>> m_Scenes;
+		std::shared_ptr<Scene> m_ActiveScene;
+		std::map<std::string, std::shared_ptr<Scene>> m_SceneMap;
 	};
 }

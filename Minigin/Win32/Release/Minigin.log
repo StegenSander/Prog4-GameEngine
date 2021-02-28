@@ -7,26 +7,47 @@
   imgui_tables.cpp
   imgui_widgets.cpp
   BaseComponent.cpp
-  Commands.cpp
+  Controller.cpp
   Font.cpp
   FPSDisplayScript.cpp
   GameObject.cpp
+  HealthComponent.cpp
   InputManager.cpp
+  ListenerComponent.cpp
   Main.cpp
   Minigin.cpp
-  RenderComponent.cpp
+  Observer.cpp
+  PlayerComponent.cpp
+  PlayerListenerComponent.cpp
+  PlayerUIComponent.cpp
   Renderer.cpp
   ResourceManager.cpp
   Scene.cpp
   SceneManager.cpp
+  ScoreboardComponent.cpp
   TextComponent.cpp
+  Compiling...
   TextObject.cpp
   Texture2D.cpp
   TextureComponent.cpp
   Time.cpp
   Transform.cpp
   UIButtonsScript.cpp
-InputManager.obj : error LNK2005: "void __cdecl Commands::Fire(void)" (?Fire@Commands@@YAXXZ) already defined in Commands.obj
-Minigin.obj : error LNK2005: "void __cdecl Commands::Fire(void)" (?Fire@Commands@@YAXXZ) already defined in Commands.obj
      Creating library C:\Users\sande\OneDrive - Hogeschool West-Vlaanderen\Year 2\Semester2\Prog4\Minigin\Minigin\Win32\Release\Minigin.lib and object C:\Users\sande\OneDrive - Hogeschool West-Vlaanderen\Year 2\Semester2\Prog4\Minigin\Minigin\Win32\Release\Minigin.exp
-C:\Users\sande\OneDrive - Hogeschool West-Vlaanderen\Year 2\Semester2\Prog4\Minigin\Minigin\Win32\Release\Minigin.exe : fatal error LNK1169: one or more multiply defined symbols found
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+  All 2234 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  Minigin.vcxproj -> C:\Users\sande\OneDrive - Hogeschool West-Vlaanderen\Year 2\Semester2\Prog4\Minigin\Minigin\Win32\Release\Minigin.exe
+  C:\Users\sande\OneDrive - Hogeschool West-Vlaanderen\Year 2\Semester2\Prog4\Minigin\Minigin\3rdParty\SDL2\lib\x86\SDL2.dll
+  1 File(s) copied
+  C:\Users\sande\OneDrive - Hogeschool West-Vlaanderen\Year 2\Semester2\Prog4\Minigin\Minigin\3rdParty\SDL2_image\lib\x86\libjpeg-9.dll
+  C:\Users\sande\OneDrive - Hogeschool West-Vlaanderen\Year 2\Semester2\Prog4\Minigin\Minigin\3rdParty\SDL2_image\lib\x86\libpng16-16.dll
+  C:\Users\sande\OneDrive - Hogeschool West-Vlaanderen\Year 2\Semester2\Prog4\Minigin\Minigin\3rdParty\SDL2_image\lib\x86\libtiff-5.dll
+  C:\Users\sande\OneDrive - Hogeschool West-Vlaanderen\Year 2\Semester2\Prog4\Minigin\Minigin\3rdParty\SDL2_image\lib\x86\libwebp-7.dll
+  C:\Users\sande\OneDrive - Hogeschool West-Vlaanderen\Year 2\Semester2\Prog4\Minigin\Minigin\3rdParty\SDL2_image\lib\x86\SDL2_image.dll
+  C:\Users\sande\OneDrive - Hogeschool West-Vlaanderen\Year 2\Semester2\Prog4\Minigin\Minigin\3rdParty\SDL2_image\lib\x86\zlib1.dll
+  6 File(s) copied
+  C:\Users\sande\OneDrive - Hogeschool West-Vlaanderen\Year 2\Semester2\Prog4\Minigin\Minigin\3rdParty\SDL2_ttf\lib\x86\libfreetype-6.dll
+  C:\Users\sande\OneDrive - Hogeschool West-Vlaanderen\Year 2\Semester2\Prog4\Minigin\Minigin\3rdParty\SDL2_ttf\lib\x86\SDL2_ttf.dll
+  2 File(s) copied

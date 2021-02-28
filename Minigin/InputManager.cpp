@@ -28,12 +28,10 @@ bool dae::InputManager::ProcessSDLInput()
 		if (e.type == SDL_KEYDOWN && e.key.repeat == 0) {
 
 			HandleKeyPressed(e.key.keysym.scancode);
-			std::cout << "KeyDown\n";
 		}
 		if (e.type == SDL_KEYUP && e.key.repeat == 0)
 		{
 			HandleKeyReleased(e.key.keysym.scancode);
-			std::cout << "KeyUp\n";
 		}
 
 		if (e.type == SDL_MOUSEBUTTONDOWN) {

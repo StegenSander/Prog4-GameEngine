@@ -6,7 +6,10 @@ class PlayerListenerComponent
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
 	PlayerListenerComponent();
-	virtual ~PlayerListenerComponent() = default;
+	virtual ~PlayerListenerComponent() {
+		std::cout << "PlayerListener Component deleted\n";
+	}
+	;;
 
 	//------COPY CONSTRUCTORS------
 	PlayerListenerComponent(const PlayerListenerComponent&) = delete;

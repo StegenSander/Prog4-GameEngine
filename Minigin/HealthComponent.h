@@ -6,7 +6,10 @@ class HealthComponent
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
 	HealthComponent(int totalHealth);
-	virtual ~HealthComponent() = default;
+	virtual ~HealthComponent() {
+		std::cout << "Health Component deleted\n";
+	}
+	;
 
 	//------COPY CONSTRUCTORS------
 	HealthComponent(const HealthComponent&) = delete;

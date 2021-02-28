@@ -70,6 +70,5 @@ bool Controller::IsControllerButtonDown(ControllerButton button) const
 
 void Controller::AddCommand(ControllerButtonData buttonData, Command* pCommand)
 {
-	std::cout << "Command added\n";
 	m_ControllerCommandMap.insert(std::make_pair(buttonData, pCommand));
 }

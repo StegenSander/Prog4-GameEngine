@@ -19,7 +19,7 @@ void HealthComponent::DealDamage(int amount)
 	{
 		EventData eventData{ m_pGameObject };
 		Observer::GetInstance().Notify(EventType::PlayerDied, &eventData);
-		//m_pGameObject->Delete();
+		m_pGameObject->Delete();
 		std::cout << "Deleting objects";
 	}
 }

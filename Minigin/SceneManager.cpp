@@ -1,34 +1,40 @@
 #include "MiniginPCH.h"
 #include "SceneManager.h"
 #include "Scene.h"
+#include <assert.h>
 
 void dae::SceneManager::Update()
 {
-	for(auto& scene : m_Scenes)
-	{
-		scene->Update();
-	}
+	assert(m_ActiveScene);
+	m_ActiveScene->Update();
 }
 
 void dae::SceneManager::Render()
 {
-	for (const auto& scene : m_Scenes)
-	{
-		scene->Render();
-	}
+	assert(m_ActiveScene);
+	m_ActiveScene->Render();
 }
 
-void dae::SceneManager::HandleEndOfFrame()
+void dae::SceneManager::SetActiveScene(const std::shared_ptr<Scene>& activeScene)
 {
-	for (const auto& scene : m_Scenes)
-	{
-		scene->DeleteGameObjects();
-	}
+	m_ActiveScene = activeScene;
+}
+
+void dae::SceneManager::DestroyMarkedObjects()
+{
+	m_ActiveScene->DestroyMarkedObjects();
 }
 
 dae::Scene& dae::SceneManager::CreateScene(const std::string& name)
 {
 	const auto scene = std::shared_ptr<Scene>(new Scene(name));
-	m_Scenes.push_back(scene);
+
+	if (!m_ActiveScene) m_ActiveScene = scene;
+	m_SceneMap.insert(std::make_pair(name, scene));
 	return *scene;
+}
+
+dae::Scene& dae::SceneManager::GetScene(const std::string& name)
+{
+	return *m_SceneMap[name].get();
 }

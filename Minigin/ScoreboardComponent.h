@@ -7,7 +7,10 @@ class ScoreboardComponent
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
 	ScoreboardComponent();
-	virtual ~ScoreboardComponent() = default;
+	virtual ~ScoreboardComponent() {
+		std::cout << "Scoreboard component deleted\n";
+	}
+	;;
 
 	//------COPY CONSTRUCTORS------
 	ScoreboardComponent(const ScoreboardComponent&) = delete;

@@ -37,6 +37,9 @@
     <Filter Include="Observer">
       <UniqueIdentifier>{b2455809-0158-46e9-b8f8-817cd6e197d6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Gameobjects">
+      <UniqueIdentifier>{38c6029b-1f29-4e6e-bdbe-ab8fc701cd0a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Texture2D.h">
@@ -77,9 +80,6 @@
     </ClInclude>
     <ClInclude Include="Font.h">
       <Filter>RenderClasses</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Minigin.h">
       <Filter>Source Files</Filter>
@@ -150,12 +150,12 @@
     <ClInclude Include="PlayerUIComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Gameobjects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MiniginPCH.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Transform.cpp">
@@ -253,6 +253,12 @@
     </ClCompile>
     <ClCompile Include="PlayerUIComponent.cpp">
       <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Gameobjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Commands.cpp">
+      <Filter>Input</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

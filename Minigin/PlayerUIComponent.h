@@ -7,8 +7,11 @@ class PlayerUIComponent
 {
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
-	PlayerUIComponent(dae::GameObject* pPlayer1, dae::GameObject* pPlayer2);
-	virtual ~PlayerUIComponent() = default;
+	PlayerUIComponent(const std::weak_ptr<dae::GameObject>& pPlayer1, const std::weak_ptr<dae::GameObject>& pPlayer2);
+	virtual ~PlayerUIComponent() {
+		std::cout << "PlayerUI Component deleted\n";
+	}
+	;;
 
 	//------COPY CONSTRUCTORS------
 	PlayerUIComponent(const PlayerUIComponent&) = delete;
@@ -32,7 +35,7 @@ private:
 
 
 	//------PRIVATE VARIABLES------	
-	dae::GameObject* m_pPlayer1;
-	dae::GameObject* m_pPlayer2;
+	std::weak_ptr<dae::GameObject> m_pPlayer1;
+	std::weak_ptr<dae::GameObject> m_pPlayer2;
 };
 
