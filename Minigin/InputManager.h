@@ -20,9 +20,6 @@ namespace dae
     {
         return lhs.SDLScancode < rhs.SDLScancode;
     }
-        
-
-    
 
 	class InputManager final : public Singleton<InputManager>
 	{
@@ -38,6 +35,8 @@ namespace dae
         //Command functions
 		void AddCommand(ControllerButtonData buttonData, Command* pCommand,DWORD controllerIndex = 0);
         void AddCommand(KeyboardKeyData keyData, Command* pCommand);
+        void MarkForDeleteByIdentifier(void* target);
+        void RemoveMarkedCommands();
 
         void SetAmountOfControllers(DWORD amount);
 

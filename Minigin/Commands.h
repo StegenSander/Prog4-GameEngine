@@ -1,19 +1,30 @@
 #pragma once
 #include <iostream>
 #include <functional>
+
+class BaseComponent;
+
 class Command
 {
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
-	Command(std::function<void()> function)
-		: m_Function{ function } {}
+	Command(std::function<void()> function,void* identifier)
+		: m_Function{ function }
+		, m_Identifier{ identifier }
+	{}
 
 	virtual ~Command() = default;
 
 	virtual void Execute();
+	virtual void* GetTarget() { return m_Identifier; };
+
+	void Delete() { m_IsMarkedForDelete = true; };
+	bool IsMarkedForDelete() { return m_IsMarkedForDelete; };
 
 private:
 	std::function<void()> m_Function;
+	void* m_Identifier;
+	bool m_IsMarkedForDelete{ false };
 };
 
 

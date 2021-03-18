@@ -17,21 +17,26 @@
 #include "FPSDisplayScript.h"
 #include "UIButtonsScript.h"
 #include "HealthComponent.h"
-#include "PlayerListenerComponent.h"
 #include "PlayerComponent.h"
-#include "ScoreboardComponent.h"
 #include "PlayerUIComponent.h"
+#include "ScoreComponent.h"
+
+#include "SDLSoundSystem.h"
+
 
 using namespace std;
 using namespace std::chrono;
 
 void dae::Minigin::Initialize()
 {
-	if (SDL_Init(SDL_INIT_VIDEO) != 0) 
+	_putenv("SDL_AUDIODRIVER=DirectSound");
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0) 
 	{
 		throw std::runtime_error(std::string("SDL_Init Error: ") + SDL_GetError());
 	}
 
+	
+	
 	m_Window = SDL_CreateWindow(
 		"Programming 4 assignment",
 		SDL_WINDOWPOS_CENTERED,
@@ -98,12 +103,6 @@ void dae::Minigin::LoadGame()
 	Scoreboard->AddComponent(UIComponent);
 	scene.Add(Scoreboard);
 
-	InputManager::GetInstance().AddCommand(ControllerButtonData{ ControllerButton::ButtonA,ButtonState::OnPress }
-	, new Command(std::bind(&HealthComponent::DealDamage, p1->GetComponent<HealthComponent>().lock(), 1)),0);
-
-	InputManager::GetInstance().AddCommand(ControllerButtonData{ ControllerButton::ButtonA,ButtonState::OnPress }
-	, new Command(std::bind(&HealthComponent::DealDamage, p2->GetComponent<HealthComponent>().lock(), 1)), 1);
-
 	std::shared_ptr<GameObject> ui{ new GameObject() };
 
 	std::shared_ptr<UIButtonScript> uiButtonScript{ new UIButtonScript() };
@@ -123,14 +122,22 @@ std::shared_ptr<dae::GameObject> dae::Minigin::CreatePlayer(int index)
 	std::shared_ptr<HealthComponent> QBertHealth{ new HealthComponent(3) };
 	player->AddComponent(QBertHealth);
 
-	std::shared_ptr<PlayerListenerComponent> QBertListener(new PlayerListenerComponent());
-	player->AddComponent(QBertListener);
+	std::shared_ptr<ScoreComponent> scoreComp{ new ScoreComponent() };
+	player->AddComponent(scoreComp);
 
 	std::shared_ptr<PlayerComponent> playerComp{ new PlayerComponent(index) };
 	player->AddComponent(playerComp);
 
-	std::shared_ptr<ScoreboardComponent> scoreBoardComponent{ new ScoreboardComponent() };
-	player->AddComponent(scoreBoardComponent);
+	InputManager::GetInstance().AddCommand(ControllerButtonData{ ControllerButton::ButtonA,ButtonState::OnPress }
+	, new Command(std::bind(&HealthComponent::DealDamage, QBertHealth, 1), player.get()), index);
+
+	dae::InputManager::GetInstance().AddCommand(ControllerButtonData{ ControllerButton::ButtonB,ButtonState::OnRelease }
+	, new Command{ std::bind(&ScoreComponent::ScorePoint,scoreComp,10),player.get() }, index);
+	dae::InputManager::GetInstance().AddCommand(ControllerButtonData{ ControllerButton::ButtonX,ButtonState::OnRelease }
+	, new Command{ std::bind(&ScoreComponent::ScorePoint,scoreComp,50),player.get() }, index);
+	dae::InputManager::GetInstance().AddCommand(ControllerButtonData{ ControllerButton::ButtonY,ButtonState::OnRelease }
+	, new Command{ std::bind(&ScoreComponent::ScorePoint,scoreComp,100) ,player.get() }, index);
+
 
 	return player;
 }
@@ -142,7 +149,6 @@ void dae::Minigin::Cleanup()
 	m_Window = nullptr;
 	SDL_Quit();
 }
-
 void dae::Minigin::Run()
 {
 	Initialize();
@@ -170,6 +176,9 @@ void dae::Minigin::Run()
 		InputManager& input = InputManager::GetInstance();
 		Time& time = Time::GetInstance();
 
+		SDLSoundSystem soundSystem{};
+		soundSystem.PlayEffect("../Data/door1.wav");
+
 		bool doContinue = true;
 		while (doContinue)
 		{
@@ -179,6 +188,8 @@ void dae::Minigin::Run()
 			doContinue = input.ProcessInput();
 
 			sceneManager.Update();
+
+			input.RemoveMarkedCommands();
 			sceneManager.DestroyMarkedObjects();
 
 			renderer.Render();

@@ -6,11 +6,7 @@ class BaseComponent
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
 	BaseComponent()= default;
-	virtual ~BaseComponent()
-	{
-		std::cout << "Component deleted\n";
-	}
-	;
+	virtual ~BaseComponent();
 	
 	//------PUBLIC FUNCTIONS------
 	virtual void Update() = 0;
@@ -18,7 +14,7 @@ public:
 	dae::GameObject* GetGameObject() const { return m_pGameObject; };
 
 	bool IsMarkedForDelete() const { return m_IsMarkedForDelete; };
-	void Delete() { m_IsMarkedForDelete = true; };
+	void Delete();
 
 
 	friend void dae::GameObject::AddComponent(const std::shared_ptr<BaseComponent>& pComponent);

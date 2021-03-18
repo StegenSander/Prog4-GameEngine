@@ -5,10 +5,6 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
@@ -39,6 +35,13 @@
     </Filter>
     <Filter Include="Gameobjects">
       <UniqueIdentifier>{38c6029b-1f29-4e6e-bdbe-ab8fc701cd0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Sound">
+      <UniqueIdentifier>{6b877694-1e3f-48dd-a815-d3cd5ce9d47e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -129,22 +132,13 @@
     <ClInclude Include="Controller.h">
       <Filter>Input</Filter>
     </ClInclude>
-    <ClInclude Include="Observer.h">
+    <ClInclude Include="StaticObserver.h">
       <Filter>Observer</Filter>
-    </ClInclude>
-    <ClInclude Include="ListenerComponent.h">
-      <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="HealthComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerListenerComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="ScoreboardComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="PlayerUIComponent.h">
@@ -152,6 +146,24 @@
     </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Gameobjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Listener.h">
+      <Filter>Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="Events.h">
+      <Filter>Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLSoundSystem.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="ServiceLocator.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundSystemInterface.h">
+      <Filter>Sound</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -230,25 +242,16 @@
     <ClCompile Include="Controller.cpp">
       <Filter>Input</Filter>
     </ClCompile>
-    <ClCompile Include="Observer.cpp">
+    <ClCompile Include="StaticObserver.cpp">
       <Filter>Observer</Filter>
     </ClCompile>
-    <ClCompile Include="ListenerComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="HealthComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerListenerComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="Renderer.cpp">
       <Filter>RenderClasses</Filter>
     </ClCompile>
     <ClCompile Include="PlayerComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="ScoreboardComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="PlayerUIComponent.cpp">
@@ -259,6 +262,15 @@
     </ClCompile>
     <ClCompile Include="Commands.cpp">
       <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Listener.cpp">
+      <Filter>Observer</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="SDLSoundSystem.cpp">
+      <Filter>Sound</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,6 +1,7 @@
 #include "MiniginPCH.h"
 #include "HealthComponent.h"
-#include "Observer.h"
+#include "StaticObserver.h"
+#include "InputManager.h"
 
 HealthComponent::HealthComponent(int totalHealth)
 	: m_CurrentHealth{totalHealth}
@@ -11,16 +12,17 @@ HealthComponent::HealthComponent(int totalHealth)
 void HealthComponent::DealDamage(int amount)
 {
 	m_CurrentHealth -= amount;
-
+	//std::cout << "called\n";
 	PlayerDamageData damageData{ m_pGameObject,m_CurrentHealth,amount };
-	Observer::GetInstance().Notify(EventType::PlayerDamage, &damageData);
+	StaticObserver::GetInstance().Notify(EventType::PlayerDamage, &damageData);
 
 	if (m_CurrentHealth <= 0)
 	{
 		EventData eventData{ m_pGameObject };
-		Observer::GetInstance().Notify(EventType::PlayerDied, &eventData);
+		StaticObserver::GetInstance().Notify(EventType::PlayerDied, &eventData);
+
+		dae::InputManager::GetInstance().MarkForDeleteByIdentifier(m_pGameObject);
 		m_pGameObject->Delete();
-		std::cout << "Deleting objects";
 	}
 }
 

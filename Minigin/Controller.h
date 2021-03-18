@@ -60,6 +60,8 @@ public:
     bool ProcessXINPUTInput();
 
     void ProcessCommands();
+    void MarkForDeleteByIdentifier(void* target);
+    void RemoveMarkedCommands();
 
     //Controller functions
     bool IsControllerButtonPressed(ControllerButton button) const;

@@ -51,6 +51,37 @@ void Controller::ProcessCommands()
 	}
 }
 
+void Controller::MarkForDeleteByIdentifier(void* identifier)
+{
+	if (identifier == nullptr) return;
+
+	for (const auto& pair : m_ControllerCommandMap)
+	{
+		if (pair.second->GetTarget() == identifier)
+		{
+			pair.second->Delete();
+		}
+	}
+}
+
+void Controller::RemoveMarkedCommands()
+{
+	std::vector<ControllerButtonData> keysToDelete;
+
+	for (const auto& pair : m_ControllerCommandMap)
+	{
+		if (pair.second->IsMarkedForDelete())
+		{
+			keysToDelete.push_back(pair.first);
+		}
+	}
+
+	for (const ControllerButtonData& key : keysToDelete)
+	{
+		m_ControllerCommandMap.erase(key);
+	}
+}
+
 bool Controller::IsControllerButtonPressed(ControllerButton button) const
 {
 	return  m_pInputState.Gamepad.wButtons & WORD(button)

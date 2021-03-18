@@ -86,6 +86,50 @@ void dae::InputManager::AddCommand(KeyboardKeyData keyData, Command* pCommand)
 {
 	m_KeyboardCommandMap.insert(std::make_pair(keyData, pCommand));
 }
+void dae::InputManager::MarkForDeleteByIdentifier(void* identifier)
+{
+	if (identifier == nullptr) return;
+	for (Controller* pController : m_pControllers)
+	{
+		if (pController)
+		{
+			pController->MarkForDeleteByIdentifier(identifier);
+		}
+	}
+
+	for (const auto& pair : m_KeyboardCommandMap)
+	{
+		if (pair.second->GetTarget() == identifier)
+		{
+			pair.second->Delete();
+		}
+	}
+}
+
+void dae::InputManager::RemoveMarkedCommands()
+{
+	for (Controller* pController : m_pControllers)
+	{
+		if (pController)
+		{
+			pController->RemoveMarkedCommands();
+		}
+	}
+
+	std::vector<KeyboardKeyData> keysToDelete;
+	for (const auto& pair : m_KeyboardCommandMap)
+	{
+		if (pair.second->IsMarkedForDelete())
+		{
+			m_KeyboardCommandMap.erase(pair.first);
+		}
+	}
+
+	for (const KeyboardKeyData& key : keysToDelete)
+	{
+		m_KeyboardCommandMap.erase(key);
+	}
+}
 
 void dae::InputManager::SetAmountOfControllers(DWORD amount)
 {

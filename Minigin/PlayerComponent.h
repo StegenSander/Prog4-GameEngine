@@ -19,7 +19,6 @@ public:
 	PlayerComponent& operator=(PlayerComponent&&) = delete;
 
 	//------PUBLIC FUNCTIONS------
-	void ScorePoint(int amount);
 	void Update() override {};
 
 	int GetPlayerIndex() const { return m_PlayerIndex; }
