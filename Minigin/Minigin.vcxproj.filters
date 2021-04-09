@@ -132,9 +132,6 @@
     <ClInclude Include="Controller.h">
       <Filter>Input</Filter>
     </ClInclude>
-    <ClInclude Include="StaticObserver.h">
-      <Filter>Observer</Filter>
-    </ClInclude>
     <ClInclude Include="HealthComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
@@ -163,6 +160,24 @@
       <Filter>Sound</Filter>
     </ClInclude>
     <ClInclude Include="SoundSystemInterface.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="LoggerSoundSystem.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Subject.h">
+      <Filter>Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="SubjectComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticObserver.h">
+      <Filter>Depricated</Filter>
+    </ClInclude>
+    <ClInclude Include="Destroyable.h">
+      <Filter>Gameobjects</Filter>
+    </ClInclude>
+    <ClInclude Include="NullSoundSystem.h">
       <Filter>Sound</Filter>
     </ClInclude>
   </ItemGroup>
@@ -242,9 +257,6 @@
     <ClCompile Include="Controller.cpp">
       <Filter>Input</Filter>
     </ClCompile>
-    <ClCompile Include="StaticObserver.cpp">
-      <Filter>Observer</Filter>
-    </ClCompile>
     <ClCompile Include="HealthComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
@@ -270,6 +282,27 @@
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="SDLSoundSystem.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="LoggerSoundSystem.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="ServiceLocator.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Subject.cpp">
+      <Filter>Observer</Filter>
+    </ClCompile>
+    <ClCompile Include="SubjectComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="StaticObserver.cpp">
+      <Filter>Depricated</Filter>
+    </ClCompile>
+    <ClCompile Include="Destroyable.cpp">
+      <Filter>Gameobjects</Filter>
+    </ClCompile>
+    <ClCompile Include="NullSoundSystem.cpp">
       <Filter>Sound</Filter>
     </ClCompile>
   </ItemGroup>

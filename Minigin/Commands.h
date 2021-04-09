@@ -1,10 +1,12 @@
 #pragma once
 #include <iostream>
 #include <functional>
+#include "Destroyable.h"
 
 class BaseComponent;
 
 class Command
+	: public Destroyable
 {
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
@@ -13,25 +15,21 @@ public:
 		, m_Identifier{ identifier }
 	{}
 
-	virtual ~Command() = default;
+	virtual ~Command();
 
 	virtual void Execute();
-	virtual void* GetTarget() { return m_Identifier; };
-
-	void Delete() { m_IsMarkedForDelete = true; };
-	bool IsMarkedForDelete() { return m_IsMarkedForDelete; };
+	virtual void* GetIdentifier() const { return m_Identifier; };
 
 private:
 	std::function<void()> m_Function;
 	void* m_Identifier;
-	bool m_IsMarkedForDelete{ false };
 };
 
 
 /*Disabling a warning
 * Warning is visual studio not understanding what's happend
 * 'unreferenced local function has been removed'
-* precompiler things this function will never be called
+* precompiler thinks this function will never be called
 * but is wrong since we're working with function pointer
 */
 #pragma warning(push)

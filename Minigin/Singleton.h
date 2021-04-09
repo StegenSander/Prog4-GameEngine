@@ -21,13 +21,3 @@ namespace dae
 		Singleton() = default;
 	};
 }
-
-struct Observerdata
-{
-
-};
-
-struct Pointsdata : Observerdata
-{
-
-};

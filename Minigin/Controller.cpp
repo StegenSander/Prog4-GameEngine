@@ -57,9 +57,9 @@ void Controller::MarkForDeleteByIdentifier(void* identifier)
 
 	for (const auto& pair : m_ControllerCommandMap)
 	{
-		if (pair.second->GetTarget() == identifier)
+		if (pair.second->GetIdentifier() == identifier)
 		{
-			pair.second->Delete();
+			pair.second->MarkForDelete();
 		}
 	}
 }

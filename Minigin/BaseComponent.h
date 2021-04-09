@@ -1,7 +1,10 @@
 #pragma once
+
 #include "GameObject.h"
+#include "Destroyable.h"
 
 class BaseComponent
+	: public Destroyable
 {
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
@@ -13,9 +16,6 @@ public:
 	virtual void Render() {};
 	dae::GameObject* GetGameObject() const { return m_pGameObject; };
 
-	bool IsMarkedForDelete() const { return m_IsMarkedForDelete; };
-	void Delete();
-
 
 	friend void dae::GameObject::AddComponent(const std::shared_ptr<BaseComponent>& pComponent);
 
@@ -25,7 +25,6 @@ protected:
 
 	//------PROTECTED VARIABLES------
 	dae::GameObject* m_pGameObject{};
-	bool m_IsMarkedForDelete = false;
 private:
 	//------PRIVATE FUNCTIONS------
 

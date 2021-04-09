@@ -1,17 +1,16 @@
 #pragma once
 #include "Transform.h"
-#include "SceneObject.h"
+#include "Destroyable.h"
 
 class BaseComponent;
-class RenderComponent;
 
 namespace dae
 {
-	class Texture2D;
 	class GameObject
+		: public Destroyable
 	{
 	public:
-		GameObject() = default;
+		GameObject();
 		virtual ~GameObject();
 
 		GameObject(const GameObject& other) = delete;
@@ -30,15 +29,11 @@ namespace dae
 		template <typename T>
 		std::weak_ptr<T> GetComponent();
 
-		void Delete() { m_IsMarkedForDelete = true; };
-		bool IsMarkedForDelete() const { return m_IsMarkedForDelete; } ;
 		void RemoveComponents();
 	private:
 		Transform m_Transform;
 
 		std::vector<std::shared_ptr<BaseComponent>> m_Components;
-
-		bool m_IsMarkedForDelete = false;
 
 	};
 

@@ -1,9 +1,12 @@
 #pragma once
 #include "SoundSystemInterface.h"
+#include <map>
+#include <queue>
+#include <thread>
+#include <mutex>
 namespace SDLSound {
 #include "../3rdParty/SDL2_audio/audio.h"
 }
-#include <map>
 
 
 class SDLSoundSystem final : public SoundSystemInterface
@@ -30,15 +33,36 @@ public:
 	int GetEffectVolume() override;
 
 	//------PUBLIC VARIABLES------
-protected:
-	//------PROTECTED FUNCTIONS------
-
-	//------PROTECTED VARIABLES------	
 private:
+	enum class AudioType
+	{
+		Music,
+		Effect,
+	};
+	struct AudioData
+	{
+		SDLSound::Audio* pAudio;
+		AudioType audioType;
+		AudioData(SDLSound::Audio* audio, AudioType type)
+			: pAudio{audio}
+			, audioType{type} 
+		{}
+	};
+
 	//------PRIVATE FUNCTIONS------
+	void HandleQueue();
+	void AddToQueue(const std::string& filePath, AudioType audioType);
 
 	//------PRIVATE VARIABLES------	
 	int m_EffectVolume;
 	int m_MusicVolume;
+	bool m_IsPaused;
 	std::map<std::string, SDLSound::Audio*> m_AudioMap{};
+
+	std::queue<AudioData> m_AudioQueue{};
+	bool m_IsRunning;
+
+	std::thread m_ThisThread{};
+	std::mutex m_DataProtectionMutex{};
+	std::mutex m_ThreadSleepMutex{};
 };

@@ -3,6 +3,14 @@
 #include <SDL.h>
 
 
+dae::InputManager::~InputManager()
+{
+	for (Controller* pContoller : m_pControllers)
+	{
+		delete pContoller;
+	}
+}
+
 bool dae::InputManager::ProcessInput()
 {
 	for (Controller* pController : m_pControllers)
@@ -99,9 +107,9 @@ void dae::InputManager::MarkForDeleteByIdentifier(void* identifier)
 
 	for (const auto& pair : m_KeyboardCommandMap)
 	{
-		if (pair.second->GetTarget() == identifier)
+		if (pair.second->GetIdentifier() == identifier)
 		{
-			pair.second->Delete();
+			pair.second->MarkForDelete();
 		}
 	}
 }

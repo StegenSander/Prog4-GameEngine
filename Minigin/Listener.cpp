@@ -1,14 +1,16 @@
 #include "MiniginPCH.h"
 #include "Listener.h"
 #include "StaticObserver.h"
+#include "Subject.h"
 
-Listener::Listener()
+Listener::Listener(Subject* subject)
+	:m_Subject {subject}
 {
-	StaticObserver::GetInstance().AddListener(this);
+	m_Subject->AddListener(this);
 }
 
 Listener::~Listener()
 {
-	StaticObserver::GetInstance().RemoveListener(this);
+	m_Subject->RemoveListener(this);
 }
 

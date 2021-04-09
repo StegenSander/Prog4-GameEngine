@@ -226,6 +226,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64*.dll" "$(OutputPath)" /R /Y</Comm
     <ClInclude Include="BaseComponent.h" />
     <ClInclude Include="Commands.h" />
     <ClInclude Include="Controller.h" />
+    <ClInclude Include="Destroyable.h" />
     <ClInclude Include="Events.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="FPSDisplayScript.h" />
@@ -233,8 +234,10 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64*.dll" "$(OutputPath)" /R /Y</Comm
     <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Listener.h" />
+    <ClInclude Include="LoggerSoundSystem.h" />
     <ClInclude Include="Minigin.h" />
     <ClInclude Include="MiniginPCH.h" />
+    <ClInclude Include="NullSoundSystem.h" />
     <ClInclude Include="ScoreComponent.h" />
     <ClInclude Include="SDLSoundSystem.h" />
     <ClInclude Include="ServiceLocator.h" />
@@ -248,6 +251,8 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64*.dll" "$(OutputPath)" /R /Y</Comm
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Singleton.h" />
+    <ClInclude Include="Subject.h" />
+    <ClInclude Include="SubjectComponent.h" />
     <ClInclude Include="TextComponent.h" />
     <ClInclude Include="TextObject.h" />
     <ClInclude Include="Texture2D.h" />
@@ -302,12 +307,16 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64*.dll" "$(OutputPath)" /R /Y</Comm
     <ClCompile Include="BaseComponent.cpp" />
     <ClCompile Include="Commands.cpp" />
     <ClCompile Include="Controller.cpp" />
+    <ClCompile Include="Destroyable.cpp" />
+    <ClCompile Include="NullSoundSystem.cpp" />
+    <ClCompile Include="ServiceLocator.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="FPSDisplayScript.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="HealthComponent.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Listener.cpp" />
+    <ClCompile Include="LoggerSoundSystem.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Minigin.cpp" />
     <ClCompile Include="MiniginPCH.cpp">
@@ -326,6 +335,8 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64*.dll" "$(OutputPath)" /R /Y</Comm
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="Subject.cpp" />
+    <ClCompile Include="SubjectComponent.cpp" />
     <ClCompile Include="TextComponent.cpp" />
     <ClCompile Include="TextObject.cpp" />
     <ClCompile Include="Texture2D.cpp" />

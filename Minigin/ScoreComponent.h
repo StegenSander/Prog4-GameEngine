@@ -1,6 +1,7 @@
 #pragma once
-
+#include "Listener.h"
 #include "BaseComponent.h"
+
 class ScoreComponent
 	: public BaseComponent
 {

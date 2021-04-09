@@ -7,8 +7,3 @@ BaseComponent::~BaseComponent()
 {
 	std::cout << "Component deleted\n";
 }
-
-void BaseComponent::Delete()
-{
-	m_IsMarkedForDelete = true;
-}

@@ -21,7 +21,11 @@
 #include "PlayerUIComponent.h"
 #include "ScoreComponent.h"
 
+#include "ServiceLocator.h"
 #include "SDLSoundSystem.h"
+#include "LoggerSoundSystem.h"
+
+#include "SubjectComponent.h"
 
 
 using namespace std;
@@ -35,8 +39,6 @@ void dae::Minigin::Initialize()
 		throw std::runtime_error(std::string("SDL_Init Error: ") + SDL_GetError());
 	}
 
-	
-	
 	m_Window = SDL_CreateWindow(
 		"Programming 4 assignment",
 		SDL_WINDOWPOS_CENTERED,
@@ -52,7 +54,11 @@ void dae::Minigin::Initialize()
 
 	Renderer::GetInstance().Init(m_Window);
 	Time::GetInstance();
-	
+
+
+	//Serive Locator Initialise
+	//ServiceLocator::SetSoundSystem(new SDLSoundSystem(100));
+	ServiceLocator::SetSoundSystem(new SDLSoundSystem());
 }
 /**
  * Code constructing the scene world starts here
@@ -138,12 +144,12 @@ std::shared_ptr<dae::GameObject> dae::Minigin::CreatePlayer(int index)
 	dae::InputManager::GetInstance().AddCommand(ControllerButtonData{ ControllerButton::ButtonY,ButtonState::OnRelease }
 	, new Command{ std::bind(&ScoreComponent::ScorePoint,scoreComp,100) ,player.get() }, index);
 
-
 	return player;
 }
 
 void dae::Minigin::Cleanup()
 {
+	if (ServiceLocator::GetSoundSystem()) delete ServiceLocator::GetSoundSystem();
 	Renderer::GetInstance().Destroy();
 	SDL_DestroyWindow(m_Window);
 	m_Window = nullptr;
@@ -161,13 +167,13 @@ void dae::Minigin::Run()
 	InputManager::GetInstance().AddCommand(ControllerButtonData{ControllerButton::ButtonB,ButtonState::OnPressAndRelease }
 	, new Command(&Commands::Spawn));*/
 
-
-
-
 	// tell the resource manager where he can find the game data
 	ResourceManager::GetInstance().Init("../Data/");
 
+
 	LoadGame();
+	
+	ServiceLocator::GetSoundSystem()->PlayEffect("../Data/door1.wav");
 
 	PrintHowToPlay();
 	{
@@ -175,9 +181,6 @@ void dae::Minigin::Run()
 		SceneManager& sceneManager = SceneManager::GetInstance();
 		InputManager& input = InputManager::GetInstance();
 		Time& time = Time::GetInstance();
-
-		SDLSoundSystem soundSystem{};
-		soundSystem.PlayEffect("../Data/door1.wav");
 
 		bool doContinue = true;
 		while (doContinue)

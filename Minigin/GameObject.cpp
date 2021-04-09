@@ -1,9 +1,13 @@
 #include "MiniginPCH.h"
 #include "GameObject.h"
 #include "BaseComponent.h"
-#include "BaseComponent.h"
 #include "imgui.h"
 #include "InputManager.h"
+
+dae::GameObject::GameObject()
+	: Destroyable()
+{
+}
 
 dae::GameObject::~GameObject()
 {

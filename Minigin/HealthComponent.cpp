@@ -22,7 +22,7 @@ void HealthComponent::DealDamage(int amount)
 		StaticObserver::GetInstance().Notify(EventType::PlayerDied, &eventData);
 
 		dae::InputManager::GetInstance().MarkForDeleteByIdentifier(m_pGameObject);
-		m_pGameObject->Delete();
+		m_pGameObject->MarkForDelete();
 	}
 }
 
