@@ -43,6 +43,9 @@
     <Filter Include="Sound">
       <UniqueIdentifier>{6b877694-1e3f-48dd-a815-d3cd5ce9d47e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scenes">
+      <UniqueIdentifier>{36b60b6f-7299-4296-98d3-a12970871abc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Texture2D.h">
@@ -88,9 +91,6 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="MiniginPCH.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Transform.h">
@@ -180,15 +180,18 @@
     <ClInclude Include="NullSoundSystem.h">
       <Filter>Sound</Filter>
     </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="TestScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MiniginPCH.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Transform.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp">
@@ -304,6 +307,12 @@
     </ClCompile>
     <ClCompile Include="NullSoundSystem.cpp">
       <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="TestScene.cpp">
+      <Filter>Scenes</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

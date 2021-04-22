@@ -21,10 +21,11 @@ namespace dae
         return lhs.SDLScancode < rhs.SDLScancode;
     }
 
-	class InputManager final : public Singleton<InputManager>
+	class InputManager final
 	{
 	public:
 
+        InputManager() = default;
         ~InputManager();
         //General Functions
 		bool ProcessInput();
@@ -43,8 +44,6 @@ namespace dae
         void SetAmountOfControllers(DWORD amount);
 
 	private:
-        InputManager() = default;
-        friend class Singleton<InputManager>;
 
         void HandleKeyPressed(int SDLScancode);
         void HandleKeyReleased(int SDLScancode);

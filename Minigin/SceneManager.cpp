@@ -15,23 +15,39 @@ void dae::SceneManager::Render()
 	m_ActiveScene->Render();
 }
 
-void dae::SceneManager::SetActiveScene(const std::shared_ptr<Scene>& activeScene)
+void dae::SceneManager::SetActiveScene(const std::string& name)
 {
-	m_ActiveScene = activeScene;
+	if (m_SceneMap.find(name) != m_SceneMap.end())
+	{
+		m_ActiveScene = m_SceneMap[name];
+	}
+	else
+	{
+		std::cout << "SceneManager: SetActiveScene > Scene doesn't exist";
+	}
+}
+
+dae::Scene& dae::SceneManager::GetActiveScene()
+{
+	return *m_ActiveScene;
+}
+
+void dae::SceneManager::RegisterScene(const std::shared_ptr<Scene>& scene)
+{
+	std::string sceneName = scene->GetName();
+	if (m_SceneMap.find(sceneName) == m_SceneMap.end())
+	{
+		m_SceneMap[sceneName] = scene;
+	}
+	else
+	{
+		std::cout << "SceneManager:RegisterScene > Scene already exists";
+	}
 }
 
 void dae::SceneManager::DestroyMarkedObjects()
 {
 	m_ActiveScene->DestroyMarkedObjects();
-}
-
-dae::Scene& dae::SceneManager::CreateScene(const std::string& name)
-{
-	const auto scene = std::shared_ptr<Scene>(new Scene(name));
-
-	if (!m_ActiveScene) m_ActiveScene = scene;
-	m_SceneMap.insert(std::make_pair(name, scene));
-	return *scene;
 }
 
 dae::Scene& dae::SceneManager::GetScene(const std::string& name)

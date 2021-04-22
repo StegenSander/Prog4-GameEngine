@@ -1,7 +1,8 @@
 #include "MiniginPCH.h"
 #include "HealthComponent.h"
 #include "StaticObserver.h"
-#include "InputManager.h"
+#include "SceneManager.h"
+#include "Scene.h"
 
 HealthComponent::HealthComponent(int totalHealth)
 	: m_CurrentHealth{totalHealth}
@@ -21,7 +22,9 @@ void HealthComponent::DealDamage(int amount)
 		EventData eventData{ m_pGameObject };
 		StaticObserver::GetInstance().Notify(EventType::PlayerDied, &eventData);
 
-		dae::InputManager::GetInstance().MarkForDeleteByIdentifier(m_pGameObject);
+		SceneData* sceneData = dae::SceneManager::GetInstance().GetActiveScene().GetSceneData();
+
+		sceneData->pInputManager->MarkForDeleteByIdentifier(m_pGameObject);
 		m_pGameObject->MarkForDelete();
 	}
 }

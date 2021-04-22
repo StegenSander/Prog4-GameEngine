@@ -1,17 +1,24 @@
 #include "MiniginPCH.h"
 #include "Scene.h"
 #include "GameObject.h"
+#include "InputManager.h"
 
 using namespace dae;
 
-Scene::Scene(const std::string& name) : m_Name(name) {}
+Scene::Scene(const std::string& name) 
+	: m_Name(name) 
+	, m_SceneData{ new SceneData() }
+{
+	m_SceneData->pInputManager = new InputManager();
+	m_SceneData->pInputManager->SetAmountOfControllers(2);
+}
 
 Scene::~Scene()
 {
 	std::cout << "Scene Destructor\n";
 }
 
-void Scene::Add(const std::shared_ptr<GameObject>& object)
+void Scene::AddObject(const std::shared_ptr<GameObject>& object)
 {
 	m_Objects.push_back(object);
 }

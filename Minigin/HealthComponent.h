@@ -7,9 +7,7 @@ public:
 	//------CONSTRUCTOR/DESTRUCTOR------
 	HealthComponent(int totalHealth);
 	virtual ~HealthComponent() {
-		std::cout << "Health Component deleted\n";
-	}
-	;
+		std::cout << "Health Component deleted\n";}
 
 	//------COPY CONSTRUCTORS------
 	HealthComponent(const HealthComponent&) = delete;

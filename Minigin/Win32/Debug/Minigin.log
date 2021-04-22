@@ -1,7 +1,6 @@
-﻿  NullSoundSystem.cpp
-  SDLSoundSystem.cpp
+﻿  HealthComponent.cpp
+  TestScene.cpp
   Generating Code...
-     Creating library C:\Users\sande\OneDrive - Hogeschool West-Vlaanderen\Year 2\Semester2\Prog4\Minigin\Minigin\Win32\Debug\Minigin.lib and object C:\Users\sande\OneDrive - Hogeschool West-Vlaanderen\Year 2\Semester2\Prog4\Minigin\Minigin\Win32\Debug\Minigin.exp
   Minigin.vcxproj -> C:\Users\sande\OneDrive - Hogeschool West-Vlaanderen\Year 2\Semester2\Prog4\Minigin\Minigin\Win32\Debug\Minigin.exe
   C:\Users\sande\OneDrive - Hogeschool West-Vlaanderen\Year 2\Semester2\Prog4\Minigin\Minigin\3rdParty\SDL2\lib\x86\SDL2.dll
   1 File(s) copied

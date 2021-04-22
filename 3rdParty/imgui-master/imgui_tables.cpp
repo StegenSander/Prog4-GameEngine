@@ -2299,7 +2299,7 @@ void ImGui::TableMergeDrawChannels(ImGuiTable* table)
                 merge_group->ClipRect = ImRect(+FLT_MAX, +FLT_MAX, -FLT_MAX, -FLT_MAX);
             merge_group->ChannelsMask.SetBit(channel_no);
             merge_group->ChannelsCount++;
-            merge_group->ClipRect.Add(src_channel->_CmdBuffer[0].ClipRect);
+            merge_group->ClipRect.AddObject(src_channel->_CmdBuffer[0].ClipRect);
             merge_group_mask |= (1 << merge_group_n);
         }
 
