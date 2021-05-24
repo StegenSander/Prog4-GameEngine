@@ -153,6 +153,11 @@ void dae::InputManager::SetAmountOfControllers(DWORD amount)
 	}
 }
 
+JoystickValue dae::InputManager::GetJoystickValue(DWORD index, bool isLeft)
+{
+	return m_pControllers[index]->GetJoystickValues(isLeft);
+}
+
 void dae::InputManager::HandleKeyPressed(int SDLScancode)
 {
 	//Pair: KeyboardKeyData, Command

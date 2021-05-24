@@ -7,7 +7,7 @@ class QBertComponent:
 {
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
-	QBertComponent();
+	QBertComponent(const std::weak_ptr<LevelNavigatorComponent>& navigator, DWORD gamepadIndex);
 	virtual ~QBertComponent();
 
 	//------COPY CONSTRUCTORS------
@@ -18,6 +18,7 @@ public:
 	QBertComponent& operator=(QBertComponent&&) = delete;
 
 	//------PUBLIC FUNCTIONS------
+	void Update() override;
 
 	//------PUBLIC VARIABLES------
 protected:
@@ -28,5 +29,9 @@ private:
 	//------PRIVATE FUNCTIONS------
 
 	//------PRIVATE VARIABLES------	
+	std::weak_ptr<LevelNavigatorComponent> m_pNavigator;
+	DWORD m_GamepadIndex;
+	float m_Timer;
+	float m_MoveCooldown{ 0.4f };
 };
 

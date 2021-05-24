@@ -7,6 +7,7 @@
 #include "TextureComponent.h"
 #include "LevelComponent.h"
 #include "LevelNavigatorComponent.h"
+#include "QBertComponent.h"
 
 GameScene::GameScene()
 	: Scene("GameScene")
@@ -44,10 +45,12 @@ void GameScene::Initialise()
 		using namespace dae;
 		std::shared_ptr<GameObject> qBert{ new GameObject() };
 		std::shared_ptr<LevelNavigatorComponent> navigatorComponent(new LevelNavigatorComponent(levelComponent));
+		std::shared_ptr<QBertComponent> qbertComponent(new QBertComponent(navigatorComponent,0));
 		std::shared_ptr<TextureComponent> textureComponent(new TextureComponent{ "QBert.png",{0,0},{blockSize / 2,blockSize / 2} });
 		AddObject(qBert);
 		qBert->AddComponent(textureComponent);
 		qBert->AddComponent(navigatorComponent);
+		qBert->AddComponent(qbertComponent);
 		navigatorComponent->MoveToSquare(1, 1);
 
 

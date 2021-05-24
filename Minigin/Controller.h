@@ -30,6 +30,12 @@ enum class ButtonState
     Down,
 };
 
+struct JoystickValue
+{
+    float x;
+    float y;
+};
+
 struct ControllerButtonData
 {
     ControllerButton buttonType;
@@ -69,6 +75,8 @@ public:
     bool IsControllerButtonDown(ControllerButton button) const;
 
     void AddCommand(ControllerButtonData buttonData, Command* pCommand);
+
+    JoystickValue GetJoystickValues(bool isLeft = true);
 
 protected:
 

@@ -43,6 +43,8 @@ namespace dae
 
         void SetAmountOfControllers(DWORD amount);
 
+        JoystickValue GetJoystickValue(DWORD index, bool isLeft = true);
+
 	private:
 
         void HandleKeyPressed(int SDLScancode);
