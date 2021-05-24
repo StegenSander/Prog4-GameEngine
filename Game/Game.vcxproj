@@ -196,6 +196,8 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="LevelComponent.cpp" />
+    <ClCompile Include="LevelNavigatorComponent.cpp" />
+    <ClCompile Include="QBertComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Minigin\MiniginPCH.h" />
@@ -205,6 +207,8 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClInclude Include="ExtraMath.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="LevelComponent.h" />
+    <ClInclude Include="LevelNavigatorComponent.h" />
+    <ClInclude Include="QBertComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

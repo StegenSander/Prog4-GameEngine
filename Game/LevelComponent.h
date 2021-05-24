@@ -23,6 +23,10 @@ public:
 	//Object must be part of a scene before calling this function
 	void CreateLevel();
 
+	std::weak_ptr<BlockComponent> GetBlockAtIndex(int index);
+	size_t AmountOfBlocks() { return m_Level.size(); }
+	int AmountOfRows() { return m_Rows; }
+
 	//------PUBLIC VARIABLES------
 protected:
 	//------PROTECTED FUNCTIONS------

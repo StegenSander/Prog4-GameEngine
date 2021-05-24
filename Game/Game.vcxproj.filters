@@ -51,6 +51,12 @@
     <ClCompile Include="ExtraMath.cpp">
       <Filter>Helpers</Filter>
     </ClCompile>
+    <ClCompile Include="QBertComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelNavigatorComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Minigin\MiniginPCH.h">
@@ -73,6 +79,12 @@
     </ClInclude>
     <ClInclude Include="ExtraMath.h">
       <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="QBertComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelNavigatorComponent.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

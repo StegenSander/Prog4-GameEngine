@@ -8,12 +8,14 @@ enum class ColorChangeBehaviour
 	SingleRevertable,
 };
 
+class TextureComponent;
+class LevelComponent;
 class ColorCubeComponent :
 	public BlockComponent
 {
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
-	ColorCubeComponent();
+	ColorCubeComponent(const std::weak_ptr<LevelComponent>& pLevel);
 	virtual ~ColorCubeComponent();
 
 	//------COPY CONSTRUCTORS------
@@ -40,5 +42,7 @@ private:
 	void UnColorCube();
 
 	//------PRIVATE VARIABLES------	
+	std::weak_ptr<LevelComponent> m_pLevel{};
+	std::weak_ptr<TextureComponent> m_pTexture{};
 };
 

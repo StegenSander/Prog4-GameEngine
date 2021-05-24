@@ -3,7 +3,7 @@
 
 int ExtraMath::PyramidAmountOfBlockUntil(int row, int column)noexcept
 {
-    return PyramidAmountOfBlockUntilRow(row) + column;
+    return PyramidAmountOfBlockUntilRow(row-1) + column-1;
 }
 
 int ExtraMath::PyramidAmountOfBlockUntilRow(int row) noexcept

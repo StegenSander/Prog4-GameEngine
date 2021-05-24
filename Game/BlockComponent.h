@@ -11,7 +11,7 @@ class BlockComponent : public BaseComponent
 {
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
-	BlockComponent(int row, int column, bool QBertWalkable = true, bool enemyWalkable = true);
+	BlockComponent(int row, int column,const glm::vec2& standPos, bool QBertWalkable = true, bool enemyWalkable = true);
 	virtual ~BlockComponent();
 
 	//------COPY CONSTRUCTORS------
@@ -22,10 +22,11 @@ public:
 	BlockComponent& operator=(BlockComponent&&) = delete;
 
 	//------PUBLIC FUNCTIONS------
-	virtual void BlockTouched(EntityType type) = 0;
+	virtual void BlockTouched(EntityType ) {};
 	virtual bool IsCompleted() { return true; };
-	virtual void Update() override = 0;
+	virtual void Update() override {};
 	virtual void Render() override {};
+	glm::vec2 GetStandPosition() { return m_StandPosition; }
 
 	//------PUBLIC VARIABLES------
 protected:
@@ -36,6 +37,7 @@ private:
 	//------PRIVATE FUNCTIONS------
 
 	//------PRIVATE VARIABLES------	
+	glm::vec2 m_StandPosition;
 	int m_Row;
 	int m_Column;
 
