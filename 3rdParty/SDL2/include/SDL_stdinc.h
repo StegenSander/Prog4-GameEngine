@@ -434,6 +434,8 @@ SDL_FORCE_INLINE void SDL_memset4(void *dst, Uint32 val, size_t dwords)
     Uint32 _val = (val);
     if (dwords == 0)
         return;
+#pragma warning(push)
+#pragma warning (disable:5051)
     switch (dwords % 4)
     {
 			[[fallthrough]];
@@ -446,6 +448,7 @@ SDL_FORCE_INLINE void SDL_memset4(void *dst, Uint32 val, size_t dwords)
         case 1:         *_p++ = _val;   /* fallthrough */
         } while ( --_n );
     }
+#pragma warning(pop)
 #endif
 }
 

@@ -38,7 +38,7 @@ void TestScene::Initialise()
 	std::shared_ptr<GameObject> logo{ new GameObject() };
 	std::shared_ptr<TextureComponent> logoTexture(new TextureComponent{ "logo.png" });
 	logo->AddComponent(logoTexture);
-	logo->SetPosition(216, 180);
+	logo->GetTransform().SetPosition(216, 180,0);
 	AddObject(logo);
 
 	auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
@@ -46,7 +46,7 @@ void TestScene::Initialise()
 	std::shared_ptr<GameObject> AssignmentText{ new GameObject() };
 	std::shared_ptr<TextComponent> textComponent{ new TextComponent{ "Programming 4 Assignment", font } };
 	AssignmentText->AddComponent(textComponent);
-	AssignmentText->SetPosition(80, 20);
+	AssignmentText->GetTransform().SetPosition(80, 20,0);
 	AddObject(AssignmentText);
 
 
@@ -57,7 +57,7 @@ void TestScene::Initialise()
 	FPSObject->AddComponent(FPSComponent);
 	FPSObject->AddComponent(FPSTextComponent);
 	FPSTextComponent->SetColor({ 255,100,100 });
-	FPSObject->SetPosition(0, 0);
+	FPSObject->GetTransform().SetPosition(0, 0,0);
 	AddObject(FPSObject);
 
 	std::shared_ptr<GameObject> p1 = CreatePlayer(0);

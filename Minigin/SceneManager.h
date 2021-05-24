@@ -10,6 +10,7 @@ namespace dae
 	public:
 		Scene& GetScene(const std::string& name);
 
+		void Initialise();
 		void Update();
 		void Render();
 		void SetActiveScene(const std::string& name);

@@ -16,7 +16,8 @@ public:
 	//------CONSTRUCTOR/DESTRUCTOR------
 	TextureComponent() = default;
 	TextureComponent(const std::string& filename);
-	TextureComponent(const std::string& filename, glm::vec2 positionOffset);
+	TextureComponent(const std::string& filename, const glm::vec2& positionOffset);
+	TextureComponent(const std::string& filename, const glm::vec2& positionOffset, const glm::vec2& size);
 	virtual ~TextureComponent() {
 		std::cout << "Texture Component deleted\n";
 	}
@@ -33,7 +34,9 @@ public:
 	void Update() override {};
 	void Render() override;
 	void SetTexture(const std::string& filename);
-	void SetPositionOffset(glm::vec2 positionOffset);
+	void SetSize(const glm::vec2& size) { m_Size = size; }
+	void SetSizeToTextureSize();
+	void SetPositionOffset(const glm::vec2& positionOffset);
 
 	//------PUBLIC VARIABLES------
 protected:
@@ -42,6 +45,7 @@ protected:
 	//------PROTECTED VARIABLES------
 	std::shared_ptr<dae::Texture2D> m_Texture {nullptr};
 	glm::vec2 m_PositionOffset {0,0};
+	glm::vec2 m_Size{ 0,0 };
 private:
 	//------PRIVATE FUNCTIONS------
 

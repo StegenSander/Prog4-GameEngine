@@ -9,7 +9,7 @@
 #include <SDL.h>
 #include "GameObject.h"
 #include "Scene.h"
-#include "Time.h"
+#include "GameTime.h"
 
 #include "TextureComponent.h"
 #include "TextComponent.h"
@@ -54,20 +54,20 @@ void dae::Minigin::Initialize()
 	}
 
 	Renderer::GetInstance().Init(m_Window);
-	Time::GetInstance();
+	GameTime::GetInstance();
 
 
 	//Serive Locator Initialise
 	//ServiceLocator::SetSoundSystem(new SDLSoundSystem(100));
 	ServiceLocator::SetSoundSystem(new SDLSoundSystem());
+
+
+	ResourceManager::GetInstance().Init("../Data/");
 }
 
 void dae::Minigin::LoadGame()
 {
-	std::shared_ptr<Scene> scene {new TestScene()};
-	scene->Initialise();
-	SceneManager::GetInstance().RegisterScene(scene);
-	SceneManager::GetInstance().SetActiveScene(scene->GetName());
+	SceneManager::GetInstance().Initialise();
 }
 
 void dae::Minigin::Cleanup()
@@ -90,24 +90,23 @@ void dae::Minigin::Run()
 	, new Command(&Commands::Spawn));*/
 
 	// tell the resource manager where he can find the game data
-	ResourceManager::GetInstance().Init("../Data/");
 
 
 	LoadGame();
 	
-	ServiceLocator::GetSoundSystem()->PlayEffect("../Data/door1.wav");
+	//ServiceLocator::GetSoundSystem()->PlayEffect("../Data/door1.wav");
 
 	PrintHowToPlay();
 	{
 		Renderer& renderer = Renderer::GetInstance();
 		SceneManager& sceneManager = SceneManager::GetInstance();
-		Time& time = Time::GetInstance();
+		GameTime& time = GameTime::GetInstance();
 
 		bool doContinue = true;
 		while (doContinue)
 		{
 			SceneData* sceneData = sceneManager.GetActiveScene().GetSceneData();
-			Time::GetInstance().Update();
+			GameTime::GetInstance().Update();
 			const auto currentTime = time.GetLatestTime();
 			
 			doContinue = sceneData->pInputManager->ProcessInput();

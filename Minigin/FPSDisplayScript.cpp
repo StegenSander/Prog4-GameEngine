@@ -2,7 +2,7 @@
 #include "FPSDisplayScript.h"
 
 #include "TextComponent.h"
-#include "Time.h"
+#include "GameTime.h"
 
 FPSDisplayScript::FPSDisplayScript(const std::shared_ptr<TextComponent>& pTextComponent)
 	: m_pTextComponent(pTextComponent)
@@ -11,7 +11,7 @@ FPSDisplayScript::FPSDisplayScript(const std::shared_ptr<TextComponent>& pTextCo
 
 void FPSDisplayScript::Update()
 {
-	Time& pTime = Time::GetInstance();
+	GameTime& pTime = GameTime::GetInstance();
 	elapsedTime += pTime.GetDeltaTime();
 	elapsedFrames++;
 

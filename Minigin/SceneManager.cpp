@@ -3,6 +3,14 @@
 #include "Scene.h"
 #include <assert.h>
 
+void dae::SceneManager::Initialise()
+{
+	for (auto scene : m_SceneMap)
+	{
+		scene.second->Initialise();
+	}
+}
+
 void dae::SceneManager::Update()
 {
 	assert(m_ActiveScene);

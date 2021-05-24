@@ -57,7 +57,7 @@
     <ClInclude Include="SceneManager.h">
       <Filter>Singletons</Filter>
     </ClInclude>
-    <ClInclude Include="Time.h">
+    <ClInclude Include="GameTime.h">
       <Filter>Singletons</Filter>
     </ClInclude>
     <ClInclude Include="ResourceManager.h">
@@ -183,9 +183,6 @@
     <ClInclude Include="Scene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="TestScene.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MiniginPCH.cpp">
@@ -206,7 +203,7 @@
     <ClCompile Include="SceneManager.cpp">
       <Filter>Singletons</Filter>
     </ClCompile>
-    <ClCompile Include="Time.cpp">
+    <ClCompile Include="GameTime.cpp">
       <Filter>Singletons</Filter>
     </ClCompile>
     <ClCompile Include="ResourceManager.cpp">
@@ -309,9 +306,6 @@
       <Filter>Sound</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="TestScene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
   </ItemGroup>

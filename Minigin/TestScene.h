@@ -8,8 +8,6 @@ public:
     TestScene();
 
     void Initialise() override;
-
-
 private:
 
     std::shared_ptr<dae::GameObject> CreatePlayer(int index);

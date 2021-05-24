@@ -1,11 +1,11 @@
 #pragma once
-#include "Transform.h"
 #include "Destroyable.h"
+#include "Transform.h"
 
 class BaseComponent;
-
 namespace dae
 {
+	class Scene;
 	class GameObject
 		: public Destroyable
 	{
@@ -21,18 +21,19 @@ namespace dae
 		void Update();
 		void Render() const;
 
-		void SetPosition(float x, float y);
-
-		Transform GetTransform() const { return m_Transform; };
+		Transform& GetTransform() { return m_Transform; };
 
 		void AddComponent(const std::shared_ptr<BaseComponent>& pComponent);
 		template <typename T>
 		std::weak_ptr<T> GetComponent();
 
 		void RemoveComponents();
-	private:
-		Transform m_Transform;
 
+		void SetScene(Scene* pScene) { m_pScene = pScene; }
+		Scene* GetScene() { return m_pScene; }
+	private:
+		Transform m_Transform{};
+		Scene* m_pScene{};
 		std::vector<std::shared_ptr<BaseComponent>> m_Components;
 
 	};

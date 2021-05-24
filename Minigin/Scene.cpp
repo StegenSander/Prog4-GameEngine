@@ -21,6 +21,7 @@ Scene::~Scene()
 void Scene::AddObject(const std::shared_ptr<GameObject>& object)
 {
 	m_Objects.push_back(object);
+	object->SetScene(this);
 }
 
 void Scene::Update()

@@ -3400,7 +3400,7 @@ ImDrawData* ImGui::GetDrawData()
 
 double ImGui::GetTime()
 {
-    return GImGui->Time;
+    return GImGui->GameTime;
 }
 
 int ImGui::GetFrameCount()
@@ -3606,7 +3606,7 @@ static void ImGui::UpdateMouseInputs()
         g.IO.MouseDoubleClicked[i] = false;
         if (g.IO.MouseClicked[i])
         {
-            if ((float)(g.Time - g.IO.MouseClickedTime[i]) < g.IO.MouseDoubleClickTime)
+            if ((float)(g.GameTime - g.IO.MouseClickedTime[i]) < g.IO.MouseDoubleClickTime)
             {
                 ImVec2 delta_from_click_pos = IsMousePosValid(&g.IO.MousePos) ? (g.IO.MousePos - g.IO.MouseClickedPos[i]) : ImVec2(0.0f, 0.0f);
                 if (ImLengthSqr(delta_from_click_pos) < g.IO.MouseDoubleClickMaxDist * g.IO.MouseDoubleClickMaxDist)
@@ -3615,7 +3615,7 @@ static void ImGui::UpdateMouseInputs()
             }
             else
             {
-                g.IO.MouseClickedTime[i] = g.Time;
+                g.IO.MouseClickedTime[i] = g.GameTime;
             }
             g.IO.MouseClickedPos[i] = g.IO.MousePos;
             g.IO.MouseDownWasDoubleClick[i] = g.IO.MouseDoubleClicked[i];
@@ -3854,7 +3854,7 @@ void ImGui::NewFrame()
     // Load settings on first frame, save settings when modified (after a delay)
     UpdateSettings();
 
-    g.Time += g.IO.DeltaTime;
+    g.GameTime += g.IO.DeltaTime;
     g.WithinFrameScope = true;
     g.FrameCount += 1;
     g.TooltipOverrideCount = 0;
@@ -3984,7 +3984,7 @@ void ImGui::NewFrame()
 
     // Mark all windows as not visible and compact unused memory.
     IM_ASSERT(g.WindowsFocusOrder.Size == g.Windows.Size);
-    const float memory_compact_start_time = (g.GcCompactAll || g.IO.ConfigMemoryCompactTimer < 0.0f) ? FLT_MAX : (float)g.Time - g.IO.ConfigMemoryCompactTimer;
+    const float memory_compact_start_time = (g.GcCompactAll || g.IO.ConfigMemoryCompactTimer < 0.0f) ? FLT_MAX : (float)g.GameTime - g.IO.ConfigMemoryCompactTimer;
     for (int i = 0; i != g.Windows.Size; i++)
     {
         ImGuiWindow* window = g.Windows[i];
@@ -5671,7 +5671,7 @@ bool ImGui::Begin(const char* name, bool* p_open, ImGuiWindowFlags flags)
     {
         window->Flags = (ImGuiWindowFlags)flags;
         window->LastFrameActive = current_frame;
-        window->LastTimeActive = (float)g.Time;
+        window->LastTimeActive = (float)g.GameTime;
         window->BeginOrderWithinParent = 0;
         window->BeginOrderWithinContext = (short)(g.WindowsActiveCount++);
     }

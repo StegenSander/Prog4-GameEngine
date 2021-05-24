@@ -3,9 +3,11 @@
 #include "BaseComponent.h"
 #include "imgui.h"
 #include "InputManager.h"
+#include "Scene.h"
 
 dae::GameObject::GameObject()
 	: Destroyable()
+	,m_Transform {}
 {
 }
 
@@ -27,11 +29,6 @@ void dae::GameObject::Render() const
 	{
 		pComponent->Render();
 	}
-}
-
-void dae::GameObject::SetPosition(float x, float y)
-{
-	m_Transform.SetPosition(x, y, 0.0f);
 }
 
 
