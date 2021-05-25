@@ -1,13 +1,16 @@
 #pragma once
 #include <BaseComponent.h>
+#include "Listener.h"
 
 class LevelNavigatorComponent;
+class HealthComponent;
 class QBertComponent:
 	public BaseComponent 
+	, public Listener
 {
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
-	QBertComponent(const std::weak_ptr<LevelNavigatorComponent>& navigator, DWORD gamepadIndex);
+	QBertComponent(const std::weak_ptr<LevelNavigatorComponent>& navigator, DWORD gamepadIndex, HealthComponent* pHealth);
 	virtual ~QBertComponent();
 
 	//------COPY CONSTRUCTORS------
@@ -19,6 +22,7 @@ public:
 
 	//------PUBLIC FUNCTIONS------
 	void Update() override;
+	void Notify(EventType type, EventData* eventData) override;
 
 	//------PUBLIC VARIABLES------
 protected:

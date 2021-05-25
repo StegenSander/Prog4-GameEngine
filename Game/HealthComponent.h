@@ -1,13 +1,14 @@
 #pragma once
 #include "BaseComponent.h"
+#include "Subject.h"
 class HealthComponent
 	: public BaseComponent
+	, public Subject
 {
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
-	HealthComponent(int totalHealth);
-	virtual ~HealthComponent() {
-		std::cout << "Health Component deleted\n";}
+	HealthComponent(int health);
+	virtual ~HealthComponent();
 
 	//------COPY CONSTRUCTORS------
 	HealthComponent(const HealthComponent&) = delete;
@@ -17,13 +18,9 @@ public:
 	HealthComponent& operator=(HealthComponent&&) = delete;
 
 	//------PUBLIC FUNCTIONS------
+	void Damage();
+	void ResetHealth();
 	void Update() override {};
-
-	void DealDamage(int amount);
-	void Heal(int amount);
-	void SetHealth(int amount);
-
-	int GetHealth() const {return m_CurrentHealth; }
 
 	//------PUBLIC VARIABLES------
 protected:
@@ -34,7 +31,7 @@ private:
 	//------PRIVATE FUNCTIONS------
 
 	//------PRIVATE VARIABLES------	
-	int m_CurrentHealth;
-	int m_MaxHealth;
+	int m_Health;
+	int m_InitialHealth;
 };
 

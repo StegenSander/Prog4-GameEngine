@@ -39,6 +39,12 @@ void ColorCubeComponent::Update()
 {
 }
 
+void ColorCubeComponent::Reset()
+{
+	m_ColorLevel = 0;
+	UpdateTexture();
+}
+
 void ColorCubeComponent::ColorCube()
 {
 	if (m_ColorLevel < m_MaxColorLevel)

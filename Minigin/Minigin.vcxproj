@@ -245,14 +245,12 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)*.dll" "$(OutputPath
     <ClInclude Include="Font.h" />
     <ClInclude Include="FPSDisplayScript.h" />
     <ClInclude Include="GameObject.h" />
-    <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Listener.h" />
     <ClInclude Include="LoggerSoundSystem.h" />
     <ClInclude Include="Minigin.h" />
     <ClInclude Include="MiniginPCH.h" />
     <ClInclude Include="NullSoundSystem.h" />
-    <ClInclude Include="ScoreComponent.h" />
     <ClInclude Include="SDLSoundSystem.h" />
     <ClInclude Include="ServiceLocator.h" />
     <ClInclude Include="SoundSystemInterface.h" />
@@ -327,7 +325,6 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)*.dll" "$(OutputPath
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="FPSDisplayScript.cpp" />
     <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="HealthComponent.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Listener.cpp" />
     <ClCompile Include="LoggerSoundSystem.cpp" />
@@ -340,7 +337,6 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)*.dll" "$(OutputPath
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MiniginPCH.h</PrecompiledHeaderFile>
     </ClCompile>
-    <ClCompile Include="ScoreComponent.cpp" />
     <ClCompile Include="SDLSoundSystem.cpp" />
     <ClCompile Include="StaticObserver.cpp" />
     <ClCompile Include="PlayerComponent.cpp" />

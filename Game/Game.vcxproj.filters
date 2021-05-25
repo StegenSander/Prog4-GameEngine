@@ -25,6 +25,9 @@
     <Filter Include="Helpers">
       <UniqueIdentifier>{891155c0-bb22-49e4-a345-1cc920a2cbd2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components\LevelBlocks">
+      <UniqueIdentifier>{127b9f3d-2e89-40c0-a684-3dfb4e4b6395}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -42,12 +45,6 @@
     <ClCompile Include="LevelComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="ColorCubeComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="BlockComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="ExtraMath.cpp">
       <Filter>Helpers</Filter>
     </ClCompile>
@@ -56,6 +53,18 @@
     </ClCompile>
     <ClCompile Include="LevelNavigatorComponent.cpp">
       <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="HealthComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="BlockComponent.cpp">
+      <Filter>Components\LevelBlocks</Filter>
+    </ClCompile>
+    <ClCompile Include="ColorCubeComponent.cpp">
+      <Filter>Components\LevelBlocks</Filter>
+    </ClCompile>
+    <ClCompile Include="VoidBlockComponent.cpp">
+      <Filter>Components\LevelBlocks</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -71,12 +80,6 @@
     <ClInclude Include="LevelComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="BlockComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="ColorCubeComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="ExtraMath.h">
       <Filter>Helpers</Filter>
     </ClInclude>
@@ -85,6 +88,21 @@
     </ClInclude>
     <ClInclude Include="LevelNavigatorComponent.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthEvents.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockComponent.h">
+      <Filter>Components\LevelBlocks</Filter>
+    </ClInclude>
+    <ClInclude Include="ColorCubeComponent.h">
+      <Filter>Components\LevelBlocks</Filter>
+    </ClInclude>
+    <ClInclude Include="VoidBlockComponent.h">
+      <Filter>Components\LevelBlocks</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

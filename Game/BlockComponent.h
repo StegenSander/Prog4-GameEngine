@@ -17,10 +17,11 @@ public:
 	BlockComponent& operator=(BlockComponent&&) = delete;
 
 	//------PUBLIC FUNCTIONS------
-	virtual void BlockTouched(EntityType ) {};
+	virtual void BlockTouched(EntityType ) = 0;
 	virtual bool IsCompleted() { return true; };
 	virtual void Update() override {};
 	virtual void Render() override {};
+	virtual void Reset() {};
 	glm::vec2 GetStandPosition() { return m_StandPosition; }
 
 	//------PUBLIC VARIABLES------

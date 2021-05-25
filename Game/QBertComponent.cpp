@@ -4,11 +4,13 @@
 #include "Scene.h"
 #include "GameTime.h"
 #include "LevelNavigatorComponent.h"
+#include "HealthComponent.h"
 
 
-QBertComponent::QBertComponent(const std::weak_ptr<LevelNavigatorComponent>& navigator, DWORD gamepadIndex)
+QBertComponent::QBertComponent(const std::weak_ptr<LevelNavigatorComponent>& navigator, DWORD gamepadIndex, HealthComponent* pHealth)
 	: m_GamepadIndex{gamepadIndex}
 	, m_pNavigator{navigator}
+	, Listener(pHealth)
 {
 	m_Timer = m_MoveCooldown;
 }
@@ -31,23 +33,34 @@ void QBertComponent::Update()
 		m_Timer = m_MoveCooldown;
 	}
 
-	if (value.x < -threshhold && value.y >threshhold && m_Timer < 0)
+	else if (value.x < -threshhold && value.y >threshhold && m_Timer < 0)
 	{
 		m_pNavigator.lock()->Move(Direction::NorthWest);
 		m_Timer = m_MoveCooldown;
 	}
 
-	if (value.x < -threshhold && value.y < -threshhold && m_Timer < 0)
+	else if (value.x < -threshhold && value.y < -threshhold && m_Timer < 0)
 	{
 		m_pNavigator.lock()->Move(Direction::SouthWest);
 		m_Timer = m_MoveCooldown;
 	}
 
-	if (value.x > threshhold && value.y < -threshhold && m_Timer < 0)
+	else if (value.x > threshhold && value.y < -threshhold && m_Timer < 0)
 	{
 		m_pNavigator.lock()->Move(Direction::SouthEast);
 		m_Timer = m_MoveCooldown;
 	}
+}
 
-
+void QBertComponent::Notify(EventType type, EventData*)
+{
+	switch (type)
+	{
+	case EventType::PlayerDamageTaken:
+		m_pNavigator.lock()->MoveToSquare(3, 2);
+		break;
+	case EventType::PlayerKilled:
+		m_pNavigator.lock()->MoveToSquare(3, 2);
+		break;
+	}
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include "BaseComponent.h"
+#include "Listener.h"
 
 enum class EntityType
 {
@@ -8,12 +9,14 @@ enum class EntityType
 	SlickAndSam,
 };
 class BlockComponent;
+class HealthComponent;
 class LevelComponent
 	: public BaseComponent
+	, public Listener
 {
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
-	LevelComponent(int rows, int blockSize);
+	LevelComponent(int rows, int blockSize,const std::weak_ptr<HealthComponent>& healthComp);
 	virtual ~LevelComponent();
 
 	//------COPY CONSTRUCTORS------
@@ -35,6 +38,9 @@ public:
 	void BlockTouched(int row, int column, EntityType type);
 	void BlockTouched(int index, EntityType type);
 	bool IsLevelFinished();
+	void PlayerDamaged();
+
+	void Notify(EventType type, EventData* eventData) override;
 
 	//------PUBLIC VARIABLES------
 protected:
@@ -43,10 +49,13 @@ protected:
 	//------PROTECTED VARIABLES------ 	
 private:
 	//------PRIVATE FUNCTIONS------
+	void CreateColorCube(const std::pair<int,int>& rowColumn, const glm::vec3& pos);
+	void CreateVoidBLock(const std::pair<int, int>& rowColumn, const glm::vec3& pos);
 
 	//------PRIVATE VARIABLES------	
 	int m_Rows;
 	int m_BlockSize;
 	std::vector<std::shared_ptr<BlockComponent>> m_Level;
+	std::weak_ptr<HealthComponent> m_Health;
 };
 

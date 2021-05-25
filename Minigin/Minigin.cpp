@@ -15,10 +15,8 @@
 #include "TextComponent.h"
 #include "FPSDisplayScript.h"
 #include "UIButtonsScript.h"
-#include "HealthComponent.h"
 #include "PlayerComponent.h"
 #include "PlayerUIComponent.h"
-#include "ScoreComponent.h"
 
 #include "ServiceLocator.h"
 #include "SDLSoundSystem.h"

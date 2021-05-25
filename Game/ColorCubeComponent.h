@@ -22,6 +22,7 @@ public:
 	void BlockTouched(EntityType type) override;
 	bool IsCompleted() override;
 	void Update() override;
+	void Reset() override;
 
 	//------PUBLIC VARIABLES------
 protected:

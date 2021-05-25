@@ -8,10 +8,8 @@
 #include "TextComponent.h"
 #include "FPSDisplayScript.h"
 #include "UIButtonsScript.h"
-#include "HealthComponent.h"
 #include "PlayerComponent.h"
 #include "PlayerUIComponent.h"
-#include "ScoreComponent.h"
 
 #include "ServiceLocator.h"
 #include "SDLSoundSystem.h"
@@ -86,25 +84,25 @@ std::shared_ptr<GameObject> TestScene::CreatePlayer(int index)
 	std::shared_ptr<TextureComponent> QBertTexture{ new TextureComponent{ "QBert.png" } };
 	player->AddComponent(QBertTexture);
 
-	std::shared_ptr<HealthComponent> QBertHealth{ new HealthComponent(3) };
-	player->AddComponent(QBertHealth);
+	/*std::shared_ptr<HealthComponent> QBertHealth{ new HealthComponent(3) };
+	player->AddComponent(QBertHealth);*/
 
-	std::shared_ptr<ScoreComponent> scoreComp{ new ScoreComponent() };
-	player->AddComponent(scoreComp);
+	/*std::shared_ptr<ScoreComponent> scoreComp{ new ScoreComponent() };
+	player->AddComponent(scoreComp);*/
 
 	std::shared_ptr<PlayerComponent> playerComp{ new PlayerComponent(index) };
 	player->AddComponent(playerComp);
 
 
-	m_SceneData->pInputManager->AddCommand(ControllerButtonData{ ControllerButton::ButtonA,ButtonState::OnPress }
-	, new Command(std::bind(&HealthComponent::DealDamage, QBertHealth, 1), player.get()), index);
+	/*m_SceneData->pInputManager->AddCommand(ControllerButtonData{ ControllerButton::ButtonA,ButtonState::OnPress }
+	, new Command(std::bind(&HealthComponent::DealDamage, QBertHealth, 1), player.get()), index);*/
 
-	m_SceneData->pInputManager->AddCommand(ControllerButtonData{ ControllerButton::ButtonB,ButtonState::OnRelease }
+	/*m_SceneData->pInputManager->AddCommand(ControllerButtonData{ ControllerButton::ButtonB,ButtonState::OnRelease }
 	, new Command{ std::bind(&ScoreComponent::ScorePoint,scoreComp,10),player.get() }, index);
 	m_SceneData->pInputManager->AddCommand(ControllerButtonData{ ControllerButton::ButtonX,ButtonState::OnRelease }
 	, new Command{ std::bind(&ScoreComponent::ScorePoint,scoreComp,50),player.get() }, index);
 	m_SceneData->pInputManager->AddCommand(ControllerButtonData{ ControllerButton::ButtonY,ButtonState::OnRelease }
-	, new Command{ std::bind(&ScoreComponent::ScorePoint,scoreComp,100) ,player.get() }, index);
+	, new Command{ std::bind(&ScoreComponent::ScorePoint,scoreComp,100) ,player.get() }, index);*/
 
 	return player;
 }
