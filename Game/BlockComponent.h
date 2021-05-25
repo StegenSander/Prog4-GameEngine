@@ -1,12 +1,7 @@
 #pragma once
 #include "BaseComponent.h"
 
-enum class EntityType
-{
-	QBert,
-	Purple,
-	Green,
-};
+enum class EntityType;
 class BlockComponent : public BaseComponent
 {
 public:

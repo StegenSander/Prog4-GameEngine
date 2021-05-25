@@ -8,14 +8,14 @@ enum class Direction
 	SouthWest,
 	NorthWest,
 };
-
+enum class EntityType;
 class LevelComponent;
 class LevelNavigatorComponent
 	: public BaseComponent
 {
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
-	LevelNavigatorComponent(const std::weak_ptr<LevelComponent>& pLevel);
+	LevelNavigatorComponent(const std::weak_ptr<LevelComponent>& pLevel, EntityType type);
 	virtual ~LevelNavigatorComponent();
 
 	//------COPY CONSTRUCTORS------
@@ -42,5 +42,6 @@ private:
 	std::weak_ptr<LevelComponent> m_pLevel{};
 	int m_CurrentRow{1};
 	int m_CurrentColumn{1};
+	EntityType m_Type;
 };
 

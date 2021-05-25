@@ -8,6 +8,7 @@
 #include "LevelComponent.h"
 #include "LevelNavigatorComponent.h"
 #include "QBertComponent.h"
+#include <SDL_scancode.h>
 
 GameScene::GameScene()
 	: Scene("GameScene")
@@ -44,7 +45,7 @@ void GameScene::Initialise()
 	{
 		using namespace dae;
 		std::shared_ptr<GameObject> qBert{ new GameObject() };
-		std::shared_ptr<LevelNavigatorComponent> navigatorComponent(new LevelNavigatorComponent(levelComponent));
+		std::shared_ptr<LevelNavigatorComponent> navigatorComponent(new LevelNavigatorComponent(levelComponent, EntityType::QBert));
 		std::shared_ptr<QBertComponent> qbertComponent(new QBertComponent(navigatorComponent,0));
 		std::shared_ptr<TextureComponent> textureComponent(new TextureComponent{ "QBert.png",{0,0},{blockSize / 2,blockSize / 2} });
 		AddObject(qBert);
@@ -54,16 +55,16 @@ void GameScene::Initialise()
 		navigatorComponent->MoveToSquare(1, 1);
 
 
-		m_SceneData->pInputManager->AddCommand(ControllerButtonData{ ControllerButton::ButtonY,ButtonState::OnPress }
-		, new Command(std::bind(&LevelNavigatorComponent::Move, navigatorComponent, Direction::NorthEast), qBert.get()), 0);
+		m_SceneData->pInputManager->AddCommand(KeyboardKeyData{ SDL_SCANCODE_W, ButtonState::OnPress }
+		, new Command(std::bind(&LevelNavigatorComponent::Move, navigatorComponent, Direction::NorthEast), qBert.get()));
 
-		m_SceneData->pInputManager->AddCommand(ControllerButtonData{ ControllerButton::ButtonX,ButtonState::OnPress }
-		, new Command(std::bind(&LevelNavigatorComponent::Move, navigatorComponent, Direction::NorthWest), qBert.get()), 0);
+		m_SceneData->pInputManager->AddCommand(KeyboardKeyData{ SDL_SCANCODE_A, ButtonState::OnPress }
+		, new Command(std::bind(&LevelNavigatorComponent::Move, navigatorComponent, Direction::NorthWest), qBert.get()));
 
-		m_SceneData->pInputManager->AddCommand(ControllerButtonData{ ControllerButton::ButtonA,ButtonState::OnPress }
-		, new Command(std::bind(&LevelNavigatorComponent::Move, navigatorComponent, Direction::SouthWest), qBert.get()), 0);
+		m_SceneData->pInputManager->AddCommand(KeyboardKeyData{ SDL_SCANCODE_S, ButtonState::OnPress }
+		, new Command(std::bind(&LevelNavigatorComponent::Move, navigatorComponent, Direction::SouthWest), qBert.get()));
 
-		m_SceneData->pInputManager->AddCommand(ControllerButtonData{ ControllerButton::ButtonB,ButtonState::OnPress }
-		, new Command(std::bind(&LevelNavigatorComponent::Move, navigatorComponent, Direction::SouthEast), qBert.get()), 0);
+		m_SceneData->pInputManager->AddCommand(KeyboardKeyData{ SDL_SCANCODE_D, ButtonState::OnPress }
+		, new Command(std::bind(&LevelNavigatorComponent::Move, navigatorComponent, Direction::SouthEast), qBert.get()));
 	}
 }

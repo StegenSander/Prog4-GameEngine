@@ -5,8 +5,9 @@
 #include "Transform.h"
 #include "BlockComponent.h"
 
-LevelNavigatorComponent::LevelNavigatorComponent(const std::weak_ptr<LevelComponent>& pLevel)
+LevelNavigatorComponent::LevelNavigatorComponent(const std::weak_ptr<LevelComponent>& pLevel, EntityType type)
 	: m_pLevel{pLevel}
+	, m_Type{type}
 {
 }
 
@@ -16,14 +17,19 @@ LevelNavigatorComponent::~LevelNavigatorComponent()
 
 void LevelNavigatorComponent::MoveToSquare(int row, int column)
 {
+	if (row < 1 
+		|| column < 1 
+		|| row > m_pLevel.lock().get()->AmountOfRows() 
+		|| column > row) return;
+
 	int index = ExtraMath::PyramidAmountOfBlockUntil(row, column);
-	if (row < 1 || column < 1 || row > m_pLevel.lock().get()->AmountOfRows() ||column > m_pLevel.lock().get()->AmountOfRows()) return;
 	auto block = m_pLevel.lock().get()->GetBlockAtIndex(index);
 	auto standPos = block.lock().get()->GetStandPosition(); 
 	m_pGameObject->GetTransform().SetPosition({ standPos.x,standPos.y,0 });
 
 	m_CurrentRow = row;
 	m_CurrentColumn = column;
+	m_pLevel.lock()->BlockTouched(m_CurrentRow,m_CurrentColumn,m_Type);
 }
 
 void LevelNavigatorComponent::Move(Direction dir)

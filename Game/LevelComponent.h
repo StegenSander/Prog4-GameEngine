@@ -1,6 +1,12 @@
 #pragma once
 #include "BaseComponent.h"
 
+enum class EntityType
+{
+	QBert,
+	UggAndWrongway,
+	SlickAndSam,
+};
 class BlockComponent;
 class LevelComponent
 	: public BaseComponent
@@ -26,6 +32,8 @@ public:
 	std::weak_ptr<BlockComponent> GetBlockAtIndex(int index);
 	size_t AmountOfBlocks() { return m_Level.size(); }
 	int AmountOfRows() { return m_Rows; }
+	void BlockTouched(int row, int column, EntityType type);
+	void BlockTouched(int index, EntityType type);
 
 	//------PUBLIC VARIABLES------
 protected:

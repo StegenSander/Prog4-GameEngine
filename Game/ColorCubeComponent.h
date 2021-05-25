@@ -1,13 +1,6 @@
 #pragma once
 #include "BlockComponent.h"
 
-enum class ColorChangeBehaviour
-{
-	SingleTouch,
-	DoubleTouch,
-	SingleRevertable,
-};
-
 class TextureComponent;
 class LevelComponent;
 class ColorCubeComponent :
@@ -15,7 +8,7 @@ class ColorCubeComponent :
 {
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
-	ColorCubeComponent(const std::weak_ptr<LevelComponent>& pLevel);
+	ColorCubeComponent(int row, int column, const glm::vec2& standPos, LevelComponent* pLevel, const std::weak_ptr<TextureComponent>& pTexture);
 	virtual ~ColorCubeComponent();
 
 	//------COPY CONSTRUCTORS------
@@ -28,7 +21,6 @@ public:
 	//------PUBLIC FUNCTIONS------
 	void BlockTouched(EntityType type) override;
 	bool IsCompleted() override;
-	void Render() override;
 	void Update() override;
 
 	//------PUBLIC VARIABLES------
@@ -40,9 +32,14 @@ private:
 	//------PRIVATE FUNCTIONS------
 	void ColorCube();
 	void UnColorCube();
+	void UpdateTexture();
 
 	//------PRIVATE VARIABLES------	
-	std::weak_ptr<LevelComponent> m_pLevel{};
+	LevelComponent* m_pLevel{};
 	std::weak_ptr<TextureComponent> m_pTexture{};
+
+	int m_ColorLevel = 0;
+	int m_MaxColorLevel = 1;
+	bool m_IsRevertable = true;
 };
 
