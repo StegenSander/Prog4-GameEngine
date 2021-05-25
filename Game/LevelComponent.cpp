@@ -54,6 +54,11 @@ std::weak_ptr<BlockComponent> LevelComponent::GetBlockAtIndex(int index)
 void LevelComponent::BlockTouched(int row, int column, EntityType type)
 {
 	BlockTouched(ExtraMath::PyramidAmountOfBlockUntil(row, column), type);
+
+	if (IsLevelFinished())
+	{
+		std::cout << "Level Finished\n";
+	}
 }
 
 void LevelComponent::BlockTouched(int index, EntityType type)
@@ -61,6 +66,15 @@ void LevelComponent::BlockTouched(int index, EntityType type)
 	assert(index < m_Level.size());
 	assert(index >= 0);
 	m_Level[index]->BlockTouched(type);
+}
+
+bool LevelComponent::IsLevelFinished()
+{
+	for (auto block : m_Level)
+	{
+		if (!block->IsCompleted()) return false;
+	}
+	return true;
 }
 
 LevelComponent::~LevelComponent()

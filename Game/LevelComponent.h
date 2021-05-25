@@ -34,6 +34,7 @@ public:
 	int AmountOfRows() { return m_Rows; }
 	void BlockTouched(int row, int column, EntityType type);
 	void BlockTouched(int index, EntityType type);
+	bool IsLevelFinished();
 
 	//------PUBLIC VARIABLES------
 protected:

@@ -27,25 +27,25 @@ void QBertComponent::Update()
 	const float threshhold = 0.3f;
 	if (value.x > threshhold && value.y > threshhold && m_Timer < 0)
 	{
-		m_pNavigator.lock().get()->Move(Direction::NorthEast);
+		m_pNavigator.lock()->Move(Direction::NorthEast);
 		m_Timer = m_MoveCooldown;
 	}
 
 	if (value.x < -threshhold && value.y >threshhold && m_Timer < 0)
 	{
-		m_pNavigator.lock().get()->Move(Direction::NorthWest);
+		m_pNavigator.lock()->Move(Direction::NorthWest);
 		m_Timer = m_MoveCooldown;
 	}
 
 	if (value.x < -threshhold && value.y < -threshhold && m_Timer < 0)
 	{
-		m_pNavigator.lock().get()->Move(Direction::SouthWest);
+		m_pNavigator.lock()->Move(Direction::SouthWest);
 		m_Timer = m_MoveCooldown;
 	}
 
 	if (value.x > threshhold && value.y < -threshhold && m_Timer < 0)
 	{
-		m_pNavigator.lock().get()->Move(Direction::SouthEast);
+		m_pNavigator.lock()->Move(Direction::SouthEast);
 		m_Timer = m_MoveCooldown;
 	}
 
