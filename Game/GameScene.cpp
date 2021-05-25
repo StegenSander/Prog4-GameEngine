@@ -28,8 +28,12 @@ void GameScene::Initialise()
 		background->AddComponent(backgroundTexture);
 		AddObject(background);
 	}
-
-	std::shared_ptr<HealthComponent> healthComponent(new HealthComponent(3));
+	std::shared_ptr<GameObject> health{ new GameObject() };
+	std::shared_ptr<TextureComponent> healthTextureComponent(new TextureComponent{ "Health/Health_3.png" });
+	std::shared_ptr<HealthComponent> healthComponent(new HealthComponent(3, healthTextureComponent));
+	health->AddComponent(healthTextureComponent);
+	health->AddComponent(healthComponent);
+	AddObject(health);
 
 	std::shared_ptr<GameObject> level{ new GameObject() };
 	const int blockSize{ 64 };
@@ -53,7 +57,6 @@ void GameScene::Initialise()
 		qBert->AddComponent(textureComponent);
 		qBert->AddComponent(navigatorComponent);
 		qBert->AddComponent(qbertComponent);
-		qBert->AddComponent(healthComponent);
 		navigatorComponent->MoveToSquare(3, 2);
 
 		m_SceneData->pInputManager->AddCommand(KeyboardKeyData{ SDL_SCANCODE_W, ButtonState::OnPress }

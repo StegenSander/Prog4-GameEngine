@@ -1,13 +1,14 @@
 #pragma once
 #include "BaseComponent.h"
 #include "Subject.h"
+class TextureComponent;
 class HealthComponent
 	: public BaseComponent
 	, public Subject
 {
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
-	HealthComponent(int health);
+	HealthComponent(int health, std::weak_ptr<TextureComponent> pTexture);
 	virtual ~HealthComponent();
 
 	//------COPY CONSTRUCTORS------
@@ -21,6 +22,7 @@ public:
 	void Damage();
 	void ResetHealth();
 	void Update() override {};
+	void UpdateTexture();
 
 	//------PUBLIC VARIABLES------
 protected:
@@ -31,6 +33,7 @@ private:
 	//------PRIVATE FUNCTIONS------
 
 	//------PRIVATE VARIABLES------	
+	std::weak_ptr<TextureComponent> m_pTexture;
 	int m_Health;
 	int m_InitialHealth;
 };
