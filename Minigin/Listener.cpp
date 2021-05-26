@@ -3,14 +3,17 @@
 #include "StaticObserver.h"
 #include "Subject.h"
 
-Listener::Listener(Subject* subject)
+Listener::Listener(const std::weak_ptr<Subject>& subject)
 	:m_Subject {subject}
 {
-	m_Subject->AddListener(this);
+	m_Subject.lock()->AddListener(this);
 }
 
 Listener::~Listener()
 {
-	m_Subject->RemoveListener(this);
+	if (!m_Subject.expired())
+	{
+		m_Subject.lock()->RemoveListener(this);
+	}
 }
 

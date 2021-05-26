@@ -8,7 +8,7 @@ class Subject
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
 	Subject() = default;
-	virtual ~Subject() = default;
+	virtual ~Subject() { std::cout << "Subject destructor\n"; };
 
 	//------PUBLIC FUNCTIONS------
 	void Notify(EventType type, EventData* eventData = nullptr);

@@ -1,14 +1,16 @@
 #pragma once
 #include "BaseComponent.h"
-#include "Subject.h"
+#include "Listener.h"
 class TextureComponent;
+class GameControllerComponent;
 class HealthComponent
 	: public BaseComponent
-	, public Subject
+	, public Listener
 {
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
-	HealthComponent(int health, std::weak_ptr<TextureComponent> pTexture);
+	HealthComponent(int health,const std::weak_ptr<TextureComponent>& pTexture
+		,const std::weak_ptr<GameControllerComponent>& pGameController);
 	virtual ~HealthComponent();
 
 	//------COPY CONSTRUCTORS------
@@ -24,6 +26,8 @@ public:
 	void Update() override {};
 	void UpdateTexture();
 
+	void Notify(EventType type, EventData* eventData) override;
+
 	//------PUBLIC VARIABLES------
 protected:
 	//------PROTECTED FUNCTIONS------
@@ -34,6 +38,7 @@ private:
 
 	//------PRIVATE VARIABLES------	
 	std::weak_ptr<TextureComponent> m_pTexture;
+	std::weak_ptr<GameControllerComponent> m_pGameController;
 	int m_Health;
 	int m_InitialHealth;
 };

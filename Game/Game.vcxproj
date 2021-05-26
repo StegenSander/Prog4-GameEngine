@@ -198,7 +198,11 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClCompile Include="HealthComponent.cpp" />
     <ClCompile Include="LevelComponent.cpp" />
     <ClCompile Include="LevelNavigatorComponent.cpp" />
+    <ClCompile Include="GameControllerComponent.cpp" />
     <ClCompile Include="QBertComponent.cpp" />
+    <ClCompile Include="SlickAndSamComponent.cpp" />
+    <ClCompile Include="SpawnedObjectComponent.cpp" />
+    <ClCompile Include="SpawnerComponent.cpp" />
     <ClCompile Include="VoidBlockComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -212,7 +216,11 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClInclude Include="HealthEvents.h" />
     <ClInclude Include="LevelComponent.h" />
     <ClInclude Include="LevelNavigatorComponent.h" />
+    <ClInclude Include="GameControllerComponent.h" />
     <ClInclude Include="QBertComponent.h" />
+    <ClInclude Include="SlickAndSamComponent.h" />
+    <ClInclude Include="SpawnedObjectComponent.h" />
+    <ClInclude Include="SpawnerComponent.h" />
     <ClInclude Include="VoidBlockComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -4,26 +4,28 @@
 
 class LevelNavigatorComponent;
 class GameControllerComponent;
-class QBertComponent:
-	public BaseComponent 
+class SlickAndSamComponent
+	: public BaseComponent
 	, public Listener
 {
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
-	QBertComponent(const std::weak_ptr<LevelNavigatorComponent>& pNavigator
-		, DWORD gamepadIndex, const std::weak_ptr<GameControllerComponent>& pGameController, int spawnIndex);
-	virtual ~QBertComponent();
+	SlickAndSamComponent(const std::weak_ptr<LevelNavigatorComponent>& pNavigator
+		,const std::weak_ptr<GameControllerComponent>& pGameController, int spawnIndex);
+	virtual ~SlickAndSamComponent();
 
 	//------COPY CONSTRUCTORS------
-	QBertComponent(const QBertComponent&) = delete;
-	QBertComponent(QBertComponent&&) = delete;
+	SlickAndSamComponent(const SlickAndSamComponent&) = delete;
+	SlickAndSamComponent(SlickAndSamComponent&&) = delete;
 	//------ASSIGNMENT OPERATORS------
-	QBertComponent operator=(const QBertComponent&) = delete;
-	QBertComponent& operator=(QBertComponent&&) = delete;
+	SlickAndSamComponent operator=(const SlickAndSamComponent&) = delete;
+	SlickAndSamComponent& operator=(SlickAndSamComponent&&) = delete;
 
 	//------PUBLIC FUNCTIONS------
 	void Update() override;
+
 	void Reset();
+	void Despawn();
 	void Notify(EventType type, EventData* eventData) override;
 
 	//------PUBLIC VARIABLES------
@@ -36,9 +38,8 @@ private:
 
 	//------PRIVATE VARIABLES------	
 	std::weak_ptr<LevelNavigatorComponent> m_pNavigator;
-	DWORD m_GamepadIndex;
-	float m_Timer;
-	float m_MoveCooldown{ 0.4f };
+	const float m_TimeBetweenMoves = 0.5f;
+	float m_TimeUntilNextMove;
 	int m_SpawnIndex;
 };
 

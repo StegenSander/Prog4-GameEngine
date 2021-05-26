@@ -9,5 +9,6 @@ enum class EventType
 {
 	PlayerDamageTaken,
 	PlayerKilled,
+	PlayerFallen,
 };
 

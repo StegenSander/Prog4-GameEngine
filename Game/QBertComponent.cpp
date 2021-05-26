@@ -5,12 +5,15 @@
 #include "GameTime.h"
 #include "LevelNavigatorComponent.h"
 #include "HealthComponent.h"
+#include "GameControllerComponent.h"
 
 
-QBertComponent::QBertComponent(const std::weak_ptr<LevelNavigatorComponent>& navigator, DWORD gamepadIndex, HealthComponent* pHealth)
+QBertComponent::QBertComponent(const std::weak_ptr<LevelNavigatorComponent>& pNavigator
+	, DWORD gamepadIndex, const std::weak_ptr<GameControllerComponent>& pGameController, int spawnIndex)
 	: m_GamepadIndex{gamepadIndex}
-	, m_pNavigator{navigator}
-	, Listener(pHealth)
+	, m_pNavigator{pNavigator}
+	, Listener(pGameController)
+	, m_SpawnIndex{spawnIndex}
 {
 	m_Timer = m_MoveCooldown;
 }
@@ -52,15 +55,20 @@ void QBertComponent::Update()
 	}
 }
 
+void QBertComponent::Reset()
+{
+	m_pNavigator.lock()->MoveToSquare(m_SpawnIndex);
+}
+
 void QBertComponent::Notify(EventType type, EventData*)
 {
 	switch (type)
 	{
 	case EventType::PlayerDamageTaken:
-		m_pNavigator.lock()->MoveToSquare(3, 2);
+		Reset();
 		break;
 	case EventType::PlayerKilled:
-		m_pNavigator.lock()->MoveToSquare(3, 2);
+		Reset();
 		break;
 	}
 }

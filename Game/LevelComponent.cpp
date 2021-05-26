@@ -12,12 +12,13 @@
 #include "ColorCubeComponent.h"
 #include "VoidBlockComponent.h"
 #include "HealthComponent.h"
+#include "GameControllerComponent.h"
 
-LevelComponent::LevelComponent(int rows, int blockSize, const std::weak_ptr<HealthComponent>& healthComp)
+LevelComponent::LevelComponent(int rows, int blockSize, const std::weak_ptr<GameControllerComponent>& pGameController)
 	: m_Rows{rows +2}
 	, m_BlockSize{blockSize}
-	, m_Health{healthComp}
-	, Listener(healthComp.lock().get())
+	, m_pGameController(pGameController)
+	, Listener(pGameController)
 {
 }
 
@@ -117,7 +118,7 @@ bool LevelComponent::IsLevelFinished()
 void LevelComponent::PlayerDamaged()
 {
 	std::cout << "player hit\n";
-	m_Health.lock()->Damage();
+	m_pGameController.lock()->PlayerDamaged();
 }
 void LevelComponent::Notify(EventType type, EventData* )
 {

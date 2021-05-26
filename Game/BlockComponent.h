@@ -18,6 +18,7 @@ public:
 
 	//------PUBLIC FUNCTIONS------
 	virtual void BlockTouched(EntityType ) = 0;
+	bool IsWalkable(EntityType type);
 	virtual bool IsCompleted() { return true; };
 	virtual void Update() override {};
 	virtual void Render() override {};

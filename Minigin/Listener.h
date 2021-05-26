@@ -6,7 +6,7 @@ class Listener
 {
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
-	Listener(Subject* subject);
+	Listener(const std::weak_ptr<Subject>& subject);
 	virtual ~Listener();
 
 	//------COPY CONSTRUCTORS------
@@ -19,6 +19,6 @@ public:
 	//------PUBLIC FUNCTIONS------
 	virtual void Notify(EventType type, EventData* eventData) = 0;
 private:
-	Subject* m_Subject;
+	std::weak_ptr<Subject> m_Subject;
 };
 

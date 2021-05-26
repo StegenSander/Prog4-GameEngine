@@ -10,6 +10,11 @@
 #include "QBertComponent.h"
 #include <SDL_scancode.h>
 #include "HealthComponent.h"
+#include "ExtraMath.h"
+#include "SpawnerComponent.h"
+#include "GameControllerComponent.h"
+#include "LevelNavigatorComponent.h"
+#include "SlickAndSamComponent.h"
 
 GameScene::GameScene()
 	: Scene("GameScene")
@@ -22,22 +27,35 @@ void GameScene::Initialise()
 	std::cout << "GameScene Initialised\n";
 
 
+	//Background
 	{
 		std::shared_ptr<GameObject> background{ new GameObject() };
 		std::shared_ptr<TextureComponent> backgroundTexture(new TextureComponent{ "background.jpg" });
 		background->AddComponent(backgroundTexture);
 		AddObject(background);
 	}
-	std::shared_ptr<GameObject> health{ new GameObject() };
-	std::shared_ptr<TextureComponent> healthTextureComponent(new TextureComponent{ "Health/Health_3.png" });
-	std::shared_ptr<HealthComponent> healthComponent(new HealthComponent(3, healthTextureComponent));
-	health->AddComponent(healthTextureComponent);
-	health->AddComponent(healthComponent);
-	AddObject(health);
 
+	//Game Controller
+	std::shared_ptr<GameObject> gameController{ new GameObject() };
+	std::shared_ptr<GameControllerComponent> gameControllerComponent(new GameControllerComponent{});
+	m_pGameController = gameControllerComponent;
+	gameController->AddComponent(gameControllerComponent);
+	AddObject(gameController);
+
+	//Health
+	{
+		std::shared_ptr<GameObject> health{ new GameObject() };
+		std::shared_ptr<TextureComponent> healthTextureComponent(new TextureComponent{ "Health/Health_3.png" });
+		std::shared_ptr<HealthComponent> healthComponent(new HealthComponent(3, healthTextureComponent, gameControllerComponent));
+		health->AddComponent(healthTextureComponent);
+		health->AddComponent(healthComponent);
+		AddObject(health);
+	}
+
+	//Level
 	std::shared_ptr<GameObject> level{ new GameObject() };
-	const int blockSize{ 64 };
-	std::shared_ptr<LevelComponent> levelComponent(new LevelComponent{ 7,blockSize,healthComponent });
+	std::shared_ptr<LevelComponent> levelComponent(new LevelComponent{ 7,m_BlockSize,gameControllerComponent });
+	m_pLevel = levelComponent;
 	{
 		level->AddComponent(levelComponent);
 		AddObject(level);
@@ -47,17 +65,20 @@ void GameScene::Initialise()
 		levelComponent->CreateLevel();
 	}
 
+
+	//QBert
 	{
 		using namespace dae;
 		std::shared_ptr<GameObject> qBert{ new GameObject() };
 		std::shared_ptr<LevelNavigatorComponent> navigatorComponent(new LevelNavigatorComponent(levelComponent, EntityType::QBert));
-		std::shared_ptr<QBertComponent> qbertComponent(new QBertComponent(navigatorComponent,0,healthComponent.get()));
-		std::shared_ptr<TextureComponent> textureComponent(new TextureComponent{ "QBert.png",{0,0},{blockSize / 2,blockSize / 2} });
+		int spawnIndexQBert = ExtraMath::PyramidAmountOfBlockUntil(3, 2);
+		std::shared_ptr<QBertComponent> qbertComponent(new QBertComponent(navigatorComponent,0, gameControllerComponent,spawnIndexQBert));
+		std::shared_ptr<TextureComponent> textureComponent(new TextureComponent{ "QBert.png",{0,0},{m_BlockSize / 2,m_BlockSize / 2} });
 		AddObject(qBert);
 		qBert->AddComponent(textureComponent);
 		qBert->AddComponent(navigatorComponent);
 		qBert->AddComponent(qbertComponent);
-		navigatorComponent->MoveToSquare(3, 2);
+		qbertComponent->Reset();
 
 		m_SceneData->pInputManager->AddCommand(KeyboardKeyData{ SDL_SCANCODE_W, ButtonState::OnPress }
 		, new Command(std::bind(&LevelNavigatorComponent::Move, navigatorComponent, Direction::NorthEast), qBert.get()));
@@ -71,4 +92,33 @@ void GameScene::Initialise()
 		m_SceneData->pInputManager->AddCommand(KeyboardKeyData{ SDL_SCANCODE_D, ButtonState::OnPress }
 		, new Command(std::bind(&LevelNavigatorComponent::Move, navigatorComponent, Direction::SouthEast), qBert.get()));
 	}
+
+	//Spawners
+	{
+		std::shared_ptr<GameObject> spawner{ new GameObject() };
+
+		//SlickAndSamSpawner
+		{
+			std::function<std::shared_ptr<dae::GameObject>()> spawnFunction = std::bind(&GameScene::SpawnSlickAndSam, this);
+			std::shared_ptr<SpawnerComponent> spawnerComponent(new SpawnerComponent(spawnFunction, 1, 1, 2));
+			spawner->AddComponent(spawnerComponent);
+			AddObject(spawner);
+		}
+	}
+}
+
+std::shared_ptr<dae::GameObject> GameScene::SpawnSlickAndSam()
+{
+	std::cout << "Spawn Slick And Sam called\n";
+	std::shared_ptr<dae::GameObject> obj{ new dae::GameObject };
+	std::shared_ptr<LevelNavigatorComponent> levelNavComponent(new LevelNavigatorComponent(m_pLevel, EntityType::SlickAndSam));
+	int spawnIndexSandS = ExtraMath::PyramidAmountOfBlockUntil(3, 2);
+	std::shared_ptr<SlickAndSamComponent> SandSComponent(new SlickAndSamComponent(levelNavComponent,m_pGameController, spawnIndexSandS));
+	std::shared_ptr<TextureComponent> textureComponent(new TextureComponent{ "Enemies/Sam.png",{0,0},{m_BlockSize / 2,m_BlockSize / 2} });
+	obj->AddComponent(levelNavComponent);
+	obj->AddComponent(SandSComponent);
+	obj->AddComponent(textureComponent);
+	SandSComponent->Reset();
+	
+	return obj;
 }

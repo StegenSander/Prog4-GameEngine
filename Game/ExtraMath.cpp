@@ -38,3 +38,8 @@ std::pair<int, int> ExtraMath::PyramidGetCoordFromIndex(int index) noexcept
 		else return std::pair<int,int>(row,index + row);
 	}
 }
+
+float ExtraMath::RandomFloat(int min, int max, int precision)
+{
+	return	(rand() % ((max - min) * precision)) / float(precision) + min;
+}

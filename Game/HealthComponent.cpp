@@ -1,36 +1,33 @@
 #include "MiniginPCH.h"
 #include "HealthComponent.h"
-#include "HealthEvents.h"
 #include "TextureComponent.h"
+#include "GameControllerComponent.h"
 
-HealthComponent::HealthComponent(int health, std::weak_ptr<TextureComponent> pTexture)
+HealthComponent::HealthComponent(int health,const std::weak_ptr<TextureComponent>& pTexture
+	, const std::weak_ptr<GameControllerComponent>& pGameController)
 	: m_InitialHealth{health}
 	, m_Health{health}
-	, Subject()
 	, m_pTexture{pTexture}
+	, m_pGameController{pGameController}
+	, Listener(pGameController)
 {
 }
 
 HealthComponent::~HealthComponent()
 {
+	std::cout << "Health component desturctor\n";
 }
 
 void HealthComponent::Damage()
 {
 	m_Health--;
+	UpdateTexture();
 	if (m_Health <= 0)
 	{
-		Notify(EventType::PlayerKilled);
 		ResetHealth();
+		if (m_pGameController.expired()) return;
+		m_pGameController.lock()->PlayerKilled();
 	}
-	else
-	{
-		DamageTakenEvent event{};
-		event.Sender = this;
-		event.healthRemaining = m_Health;
-		Notify(EventType::PlayerDamageTaken, &event);
-	}
-	UpdateTexture();
 }
 
 void HealthComponent::ResetHealth()
@@ -42,6 +39,14 @@ void HealthComponent::ResetHealth()
 void HealthComponent::UpdateTexture()
 {
 	if (m_pTexture.expired()) return;
-	if (m_Health < 1 && m_Health > 3) return;
+	if (m_Health < 1 || m_Health > 3) return;
 	m_pTexture.lock()->SetTexture("Health/Health_" + std::to_string(m_Health) + ".png");
+}
+
+void HealthComponent::Notify(EventType type, EventData*)
+{
+	if (type == EventType::PlayerFallen || type == EventType::PlayerDamageTaken)
+	{
+		Damage();
+	}
 }

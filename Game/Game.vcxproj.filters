@@ -66,6 +66,18 @@
     <ClCompile Include="VoidBlockComponent.cpp">
       <Filter>Components\LevelBlocks</Filter>
     </ClCompile>
+    <ClCompile Include="SlickAndSamComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="SpawnerComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="GameControllerComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="SpawnedObjectComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Minigin\MiniginPCH.h">
@@ -103,6 +115,18 @@
     </ClInclude>
     <ClInclude Include="VoidBlockComponent.h">
       <Filter>Components\LevelBlocks</Filter>
+    </ClInclude>
+    <ClInclude Include="SlickAndSamComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="SpawnerComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GameControllerComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="SpawnedObjectComponent.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

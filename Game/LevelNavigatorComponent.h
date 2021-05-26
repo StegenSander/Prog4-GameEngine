@@ -10,6 +10,7 @@ enum class Direction
 };
 enum class EntityType;
 class LevelComponent;
+class BlockComponent;
 class LevelNavigatorComponent
 	: public BaseComponent
 {
@@ -26,8 +27,12 @@ public:
 	LevelNavigatorComponent& operator=(LevelNavigatorComponent&&) = delete;
 
 	//------PUBLIC FUNCTIONS------
-	void MoveToSquare(int row, int column);
-	void Move(Direction dir);
+	//Return if move was succesfull or not
+	BlockComponent* MoveToSquare(int row, int column);
+	//Return if move was succesfull or not
+	BlockComponent* MoveToSquare(int index);
+	//Return if move was succesfull or not
+	BlockComponent* Move(Direction dir);
 	void Update() override {};
 
 	//------PUBLIC VARIABLES------

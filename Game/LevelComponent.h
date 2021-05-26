@@ -5,18 +5,19 @@
 enum class EntityType
 {
 	QBert,
+	Coily,
 	UggAndWrongway,
 	SlickAndSam,
 };
 class BlockComponent;
-class HealthComponent;
+class GameControllerComponent;
 class LevelComponent
 	: public BaseComponent
 	, public Listener
 {
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
-	LevelComponent(int rows, int blockSize,const std::weak_ptr<HealthComponent>& healthComp);
+	LevelComponent(int rows, int blockSize,const std::weak_ptr<GameControllerComponent>& pGameController);
 	virtual ~LevelComponent();
 
 	//------COPY CONSTRUCTORS------
@@ -56,6 +57,6 @@ private:
 	int m_Rows;
 	int m_BlockSize;
 	std::vector<std::shared_ptr<BlockComponent>> m_Level;
-	std::weak_ptr<HealthComponent> m_Health;
+	std::weak_ptr<GameControllerComponent> m_pGameController;
 };
 
