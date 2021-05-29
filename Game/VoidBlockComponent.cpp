@@ -2,8 +2,8 @@
 #include "VoidBlockComponent.h"
 #include "LevelComponent.h"
 
-VoidBlockComponent::VoidBlockComponent(int row, int column, const glm::vec2& standPos, LevelComponent* pLevel)
-	: BlockComponent(row,column,standPos,true,false)
+VoidBlockComponent::VoidBlockComponent(int row, int column, const glm::vec2& blockPos, int blockSize, LevelComponent* pLevel)
+	: BlockComponent(row,column, blockPos,blockSize,true,false)
 	, m_pLevel{pLevel}
 {
 }

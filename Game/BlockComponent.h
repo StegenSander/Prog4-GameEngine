@@ -1,12 +1,19 @@
 #pragma once
 #include "BaseComponent.h"
 
+enum class BlockSide
+{
+	Top,
+	Left,
+	Right,
+};
+
 enum class EntityType;
 class BlockComponent : public BaseComponent
 {
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
-	BlockComponent(int row, int column,const glm::vec2& standPos, bool QBertWalkable = true, bool enemyWalkable = true);
+	BlockComponent(int row, int column,const glm::vec2& blockPos, int blockSize, bool QBertWalkable = true, bool enemyWalkable = true);
 	virtual ~BlockComponent();
 
 	//------COPY CONSTRUCTORS------
@@ -23,7 +30,7 @@ public:
 	virtual void Update() override {};
 	virtual void Render() override {};
 	virtual void Reset() {};
-	glm::vec2 GetStandPosition() { return m_StandPosition; }
+	glm::vec2 GetStandPosition(BlockSide side = BlockSide::Top);
 
 	//------PUBLIC VARIABLES------
 protected:
@@ -34,9 +41,10 @@ private:
 	//------PRIVATE FUNCTIONS------
 
 	//------PRIVATE VARIABLES------	
-	glm::vec2 m_StandPosition;
+	glm::vec2 m_BlockPosition;
 	int m_Row;
 	int m_Column;
+	int m_BlockSize;
 
 	bool m_QBertWalkable;
 	bool m_EnemyWalkable;

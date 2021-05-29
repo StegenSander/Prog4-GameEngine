@@ -8,7 +8,7 @@ class ColorCubeComponent :
 {
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
-	ColorCubeComponent(int row, int column, const glm::vec2& standPos, LevelComponent* pLevel, const std::weak_ptr<TextureComponent>& pTexture);
+	ColorCubeComponent(int row, int column, const glm::vec2& blockPos, int blockSize, LevelComponent* pLevel, const std::weak_ptr<TextureComponent>& pTexture);
 	virtual ~ColorCubeComponent();
 
 	//------COPY CONSTRUCTORS------
@@ -40,7 +40,7 @@ private:
 	std::weak_ptr<TextureComponent> m_pTexture{};
 
 	int m_ColorLevel = 0;
-	int m_MaxColorLevel = 1;
-	bool m_IsRevertable = true;
+	int m_MaxColorLevel = 2;
+	bool m_IsRevertable = false;
 };
 

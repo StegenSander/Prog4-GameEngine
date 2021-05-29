@@ -7,7 +7,7 @@ class VoidBlockComponent
 {
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
-	VoidBlockComponent(int row, int column, const glm::vec2& standPos, LevelComponent* pLevel);
+	VoidBlockComponent(int row, int column, const glm::vec2& blockPos, int blockSize, LevelComponent* pLevel);
 	virtual ~VoidBlockComponent();
 
 	//------COPY CONSTRUCTORS------

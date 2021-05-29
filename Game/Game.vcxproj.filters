@@ -28,6 +28,9 @@
     <Filter Include="Components\LevelBlocks">
       <UniqueIdentifier>{127b9f3d-2e89-40c0-a684-3dfb4e4b6395}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components\LevelEntities">
+      <UniqueIdentifier>{0dc83e25-cf27-4e9a-8805-4ef3b7619698}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -48,12 +51,6 @@
     <ClCompile Include="ExtraMath.cpp">
       <Filter>Helpers</Filter>
     </ClCompile>
-    <ClCompile Include="QBertComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="LevelNavigatorComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="HealthComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
@@ -66,9 +63,6 @@
     <ClCompile Include="VoidBlockComponent.cpp">
       <Filter>Components\LevelBlocks</Filter>
     </ClCompile>
-    <ClCompile Include="SlickAndSamComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="SpawnerComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
@@ -77,6 +71,21 @@
     </ClCompile>
     <ClCompile Include="SpawnedObjectComponent.cpp">
       <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelNavigatorComponent.cpp">
+      <Filter>Components\LevelEntities</Filter>
+    </ClCompile>
+    <ClCompile Include="QBertComponent.cpp">
+      <Filter>Components\LevelEntities</Filter>
+    </ClCompile>
+    <ClCompile Include="SlickAndSamComponent.cpp">
+      <Filter>Components\LevelEntities</Filter>
+    </ClCompile>
+    <ClCompile Include="UandWLevelNavigatorComponent.cpp">
+      <Filter>Components\LevelEntities</Filter>
+    </ClCompile>
+    <ClCompile Include="UggAndWrongwayComponent.cpp">
+      <Filter>Components\LevelEntities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -95,12 +104,6 @@
     <ClInclude Include="ExtraMath.h">
       <Filter>Helpers</Filter>
     </ClInclude>
-    <ClInclude Include="QBertComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="LevelNavigatorComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="HealthComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
@@ -116,9 +119,6 @@
     <ClInclude Include="VoidBlockComponent.h">
       <Filter>Components\LevelBlocks</Filter>
     </ClInclude>
-    <ClInclude Include="SlickAndSamComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="SpawnerComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
@@ -127,6 +127,21 @@
     </ClInclude>
     <ClInclude Include="SpawnedObjectComponent.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelNavigatorComponent.h">
+      <Filter>Components\LevelEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="QBertComponent.h">
+      <Filter>Components\LevelEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="SlickAndSamComponent.h">
+      <Filter>Components\LevelEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="UandWLevelNavigatorComponent.h">
+      <Filter>Components\LevelEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="UggAndWrongwayComponent.h">
+      <Filter>Components\LevelEntities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

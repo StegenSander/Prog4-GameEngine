@@ -15,6 +15,9 @@
 #include "GameControllerComponent.h"
 #include "LevelNavigatorComponent.h"
 #include "SlickAndSamComponent.h"
+#include "UandWLevelNavigatorComponent.h"
+#include "UggAndWrongwayComponent.h"
+#include "BlockComponent.h"
 
 GameScene::GameScene()
 	: Scene("GameScene")
@@ -54,7 +57,7 @@ void GameScene::Initialise()
 
 	//Level
 	std::shared_ptr<GameObject> level{ new GameObject() };
-	std::shared_ptr<LevelComponent> levelComponent(new LevelComponent{ 7,m_BlockSize,gameControllerComponent });
+	std::shared_ptr<LevelComponent> levelComponent(new LevelComponent{ m_PyramidSize,m_BlockSize,gameControllerComponent });
 	m_pLevel = levelComponent;
 	{
 		level->AddComponent(levelComponent);
@@ -100,7 +103,14 @@ void GameScene::Initialise()
 		//SlickAndSamSpawner
 		{
 			std::function<std::shared_ptr<dae::GameObject>()> spawnFunction = std::bind(&GameScene::SpawnSlickAndSam, this);
-			std::shared_ptr<SpawnerComponent> spawnerComponent(new SpawnerComponent(spawnFunction, 1, 1, 2));
+			std::shared_ptr<SpawnerComponent> spawnerComponent(new SpawnerComponent(spawnFunction, 2, 4, 8));
+			spawner->AddComponent(spawnerComponent);
+			AddObject(spawner);
+		}
+		//UggAndWrongwaySpawner
+		{
+			std::function<std::shared_ptr<dae::GameObject>()> spawnFunction = std::bind(&GameScene::SpawnUggAndWrongway, this);
+			std::shared_ptr<SpawnerComponent> spawnerComponent(new SpawnerComponent(spawnFunction, 2, 4, 8));
 			spawner->AddComponent(spawnerComponent);
 			AddObject(spawner);
 		}
@@ -112,13 +122,53 @@ std::shared_ptr<dae::GameObject> GameScene::SpawnSlickAndSam()
 	std::cout << "Spawn Slick And Sam called\n";
 	std::shared_ptr<dae::GameObject> obj{ new dae::GameObject };
 	std::shared_ptr<LevelNavigatorComponent> levelNavComponent(new LevelNavigatorComponent(m_pLevel, EntityType::SlickAndSam));
-	int spawnIndexSandS = ExtraMath::PyramidAmountOfBlockUntil(3, 2);
+	int spawnOffset = rand() % 2;
+	int spawnIndexSandS = ExtraMath::PyramidAmountOfBlockUntil(4, 2 + spawnOffset);
 	std::shared_ptr<SlickAndSamComponent> SandSComponent(new SlickAndSamComponent(levelNavComponent,m_pGameController, spawnIndexSandS));
-	std::shared_ptr<TextureComponent> textureComponent(new TextureComponent{ "Enemies/Sam.png",{0,0},{m_BlockSize / 2,m_BlockSize / 2} });
+
+
+	std::shared_ptr<TextureComponent> textureComponent;
+	if (spawnOffset)
+	textureComponent = std::shared_ptr<TextureComponent>(new TextureComponent{ "Enemies/Sam.png",{0,0},{m_BlockSize / 2,m_BlockSize / 2} });
+	else
+	textureComponent = std::shared_ptr<TextureComponent>(new TextureComponent{ "Enemies/Slick.png",{0,0},{m_BlockSize / 2,m_BlockSize / 2} });
 	obj->AddComponent(levelNavComponent);
 	obj->AddComponent(SandSComponent);
 	obj->AddComponent(textureComponent);
 	SandSComponent->Reset();
-	
+	return obj;
+}
+
+std::shared_ptr<dae::GameObject> GameScene::SpawnUggAndWrongway()
+{
+	std::cout << "Spawn Ugg And Wrongway called\n";
+	std::shared_ptr<dae::GameObject> obj{ new dae::GameObject };
+
+	std::shared_ptr<UandWLevelNavigatorComponent> levelNavComponent{};
+	std::shared_ptr<UggAndWrongwayComponent> UandWComponent{};
+	std::shared_ptr<TextureComponent> textureComponent{};
+	const int pyramidSize = m_pLevel.lock()->AmountOfRows();
+	if (m_IsUggLastSpawned) //ugg = right one
+	{
+		levelNavComponent = std::shared_ptr<UandWLevelNavigatorComponent>(
+			new UandWLevelNavigatorComponent(m_pLevel, EntityType::UggAndWrongway, BlockSide::Left));
+		int spawnIndexUandW = ExtraMath::PyramidAmountOfBlockUntil(pyramidSize -1, 2);
+		UandWComponent= std::shared_ptr<UggAndWrongwayComponent>(new UggAndWrongwayComponent(levelNavComponent, m_pGameController, spawnIndexUandW, true));
+		textureComponent = std::shared_ptr<TextureComponent>(new TextureComponent{ "Enemies/Wrongway.png",{0,0},{m_BlockSize / 2,m_BlockSize / 2} });
+		m_IsUggLastSpawned = false;
+	}
+	else
+	{
+		levelNavComponent = std::shared_ptr<UandWLevelNavigatorComponent>(
+			new UandWLevelNavigatorComponent(m_pLevel, EntityType::UggAndWrongway, BlockSide::Right));
+		int spawnIndexUandW = ExtraMath::PyramidAmountOfBlockUntil(pyramidSize -1, pyramidSize -2);
+		UandWComponent = std::shared_ptr<UggAndWrongwayComponent>(new UggAndWrongwayComponent(levelNavComponent, m_pGameController, spawnIndexUandW, false));
+		textureComponent = std::shared_ptr<TextureComponent>(new TextureComponent{ "Enemies/Ugg.png",{0,0},{m_BlockSize / 2,m_BlockSize / 2} });
+		m_IsUggLastSpawned = true;
+	}
+	obj->AddComponent(levelNavComponent);
+	obj->AddComponent(UandWComponent);
+	obj->AddComponent(textureComponent);
+	UandWComponent->Reset();
 	return obj;
 }

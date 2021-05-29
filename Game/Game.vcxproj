@@ -203,6 +203,8 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClCompile Include="SlickAndSamComponent.cpp" />
     <ClCompile Include="SpawnedObjectComponent.cpp" />
     <ClCompile Include="SpawnerComponent.cpp" />
+    <ClCompile Include="UandWLevelNavigatorComponent.cpp" />
+    <ClCompile Include="UggAndWrongwayComponent.cpp" />
     <ClCompile Include="VoidBlockComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -221,6 +223,8 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClInclude Include="SlickAndSamComponent.h" />
     <ClInclude Include="SpawnedObjectComponent.h" />
     <ClInclude Include="SpawnerComponent.h" />
+    <ClInclude Include="UandWLevelNavigatorComponent.h" />
+    <ClInclude Include="UggAndWrongwayComponent.h" />
     <ClInclude Include="VoidBlockComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

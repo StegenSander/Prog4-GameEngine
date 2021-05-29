@@ -18,23 +18,20 @@ LevelNavigatorComponent::~LevelNavigatorComponent()
 
 BlockComponent* LevelNavigatorComponent::MoveToSquare(int row, int column)
 {
-	if (row < 1 
-		|| column < 1 
-		|| row > m_pLevel.lock().get()->AmountOfRows() 
-		|| column > row) return nullptr; //Will return an invalid pointer/nullptr
+	if (!IsValidPyramidCoord(row,column)) return nullptr; //Will return an invalid pointer/nullptr
 
 	int index = ExtraMath::PyramidAmountOfBlockUntil(row, column);
 	auto block = m_pLevel.lock().get()->GetBlockAtIndex(index);
 	if (!block.lock()->IsWalkable(m_Type)) return nullptr;
 
-	auto standPos = block.lock().get()->GetStandPosition(); 
+	auto standPos = block.lock().get()->GetStandPosition(BlockSide::Top); 
 	m_pGameObject->GetTransform().SetPosition({ standPos.x,standPos.y,0 });
 
 	m_CurrentRow = row;
 	m_CurrentColumn = column;
 	m_pLevel.lock()->BlockTouched(m_CurrentRow,m_CurrentColumn,m_Type);
 	
-	//Pointer is not dangling, Copy of the weak pointer does get destroyed
+	//Pointer is not dangling, Copy of the weak/shared pointer does get destroyed
 	//but the raw pointer which gets returned is still a valid pointer
 	return block.lock().get();
 }
@@ -63,4 +60,12 @@ BlockComponent* LevelNavigatorComponent::Move(Direction dir)
 		break;
 	}
 	return nullptr; //Will return an invalid pointer/nullptr
+}
+
+bool LevelNavigatorComponent::IsValidPyramidCoord(int row, int column) noexcept
+{
+	return !(row < 1
+		|| column < 1
+		|| row > m_pLevel.lock().get()->AmountOfRows()
+		|| column > row);
 }

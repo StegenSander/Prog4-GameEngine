@@ -54,7 +54,7 @@ void LevelComponent::CreateColorCube(const std::pair<int, int>& rowColumn,const 
 	block->GetTransform().SetPosition(blockPos);
 
 
-	std::shared_ptr<BlockComponent> blockComponent(new ColorCubeComponent{ rowColumn.first,rowColumn.second,{blockPos.x + m_BlockSize / 4,blockPos.y - m_BlockSize / 4},this,textureComponent });
+	std::shared_ptr<BlockComponent> blockComponent(new ColorCubeComponent{ rowColumn.first,rowColumn.second,{blockPos.x + m_BlockSize / 4,blockPos.y - m_BlockSize / 4},m_BlockSize,this,textureComponent });
 	block->AddComponent(blockComponent);
 	m_Level.push_back(blockComponent);
 }
@@ -71,7 +71,7 @@ void LevelComponent::CreateVoidBLock(const std::pair<int, int>& rowColumn, const
 	block->GetTransform().SetPosition(blockPos);
 
 
-	std::shared_ptr<BlockComponent> blockComponent(new VoidBlockComponent{ rowColumn.first,rowColumn.second,{blockPos.x + m_BlockSize / 4,blockPos.y - m_BlockSize / 4},this });
+	std::shared_ptr<BlockComponent> blockComponent(new VoidBlockComponent{ rowColumn.first,rowColumn.second,{blockPos.x + m_BlockSize / 4,blockPos.y - m_BlockSize / 4},m_BlockSize,this });
 	block->AddComponent(blockComponent);
 	m_Level.push_back(blockComponent);
 }

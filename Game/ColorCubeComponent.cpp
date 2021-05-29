@@ -4,8 +4,8 @@
 #include "TextureComponent.h"
 
 
-ColorCubeComponent::ColorCubeComponent(int row, int column, const glm::vec2& standPos, LevelComponent* pLevel, const std::weak_ptr<TextureComponent>& pTexture)
-	: BlockComponent(row,column,standPos,true,true)
+ColorCubeComponent::ColorCubeComponent(int row, int column, const glm::vec2& blockPos, int blockSize, LevelComponent* pLevel, const std::weak_ptr<TextureComponent>& pTexture)
+	: BlockComponent(row,column, blockPos,blockSize,true,true)
 	, m_pLevel{ pLevel }
 	, m_pTexture{pTexture}
 {
