@@ -6,7 +6,7 @@ class UandWLevelNavigatorComponent final
 {
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
-	UandWLevelNavigatorComponent(const std::weak_ptr<LevelComponent>& pLevel, EntityType type, BlockSide blockside);
+	UandWLevelNavigatorComponent(const std::weak_ptr<LevelComponent>& pLevel, BlockSide blockside);
 	virtual ~UandWLevelNavigatorComponent();
 
 	//------COPY CONSTRUCTORS------
@@ -17,7 +17,7 @@ public:
 	UandWLevelNavigatorComponent& operator=(UandWLevelNavigatorComponent&&) = delete;
 
 	//------PUBLIC FUNCTIONS------
-	BlockComponent* MoveToSquare(int row, int column) override;
+	MoveResult MoveToSquare(int row, int column, EntityComponent* entityComp) override;
 
 	//------PUBLIC VARIABLES------
 protected:

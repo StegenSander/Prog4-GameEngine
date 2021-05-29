@@ -1,13 +1,11 @@
 #pragma once
-#include <BaseComponent.h>
-#include "Listener.h"
+#include "EntityComponent.h"
 
 class LevelNavigatorComponent;
 class GameControllerComponent;
 class TextureComponent;
 class CoilyComponent
-	: public BaseComponent
-	, public Listener
+	: public EntityComponent
 {
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
@@ -28,8 +26,8 @@ public:
 	//------PUBLIC FUNCTIONS------
 	void Update() override;
 
-	void Reset();
-	void Despawn();
+	void Reset() override;
+	void Despawn() override;
 	void Notify(EventType type, EventData* eventData) override;
 
 	//------PUBLIC VARIABLES------

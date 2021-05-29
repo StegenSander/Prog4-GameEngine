@@ -1,6 +1,7 @@
 #include "MiniginPCH.h"
 #include "BlockComponent.h"
 #include "LevelComponent.h"
+#include "EntityComponent.h"
 
 BlockComponent::BlockComponent(int row, int column, const glm::vec2& blockPos,int blockSize, bool QBertWalkable, bool enemyWalkable)
 	: m_Row {row}
@@ -16,9 +17,15 @@ BlockComponent::~BlockComponent()
 {
 }
 
-bool BlockComponent::IsWalkable(EntityType type)
+bool BlockComponent::IsOccupied(EntityInfo info)
 {
-	switch (type)
+	if (info.Type == EntityType::QBert) return false;
+	return false;
+}
+
+bool BlockComponent::IsWalkable(EntityInfo info)
+{
+	switch (info.Type)
 	{
 	case EntityType::QBert:
 		return m_QBertWalkable;

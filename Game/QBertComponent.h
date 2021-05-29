@@ -1,12 +1,10 @@
 #pragma once
-#include <BaseComponent.h>
-#include "Listener.h"
+#include "EntityComponent.h"
 
 class LevelNavigatorComponent;
 class GameControllerComponent;
-class QBertComponent:
-	public BaseComponent 
-	, public Listener
+class QBertComponent final:
+	public EntityComponent
 {
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
@@ -23,7 +21,7 @@ public:
 
 	//------PUBLIC FUNCTIONS------
 	void Update() override;
-	void Reset();
+	void Reset() override;
 	void Notify(EventType type, EventData* eventData) override;
 
 	//------PUBLIC VARIABLES------

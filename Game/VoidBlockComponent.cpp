@@ -1,6 +1,7 @@
 #include "MiniginPCH.h"
 #include "VoidBlockComponent.h"
 #include "LevelComponent.h"
+#include "EntityComponent.h"
 
 VoidBlockComponent::VoidBlockComponent(int row, int column, const glm::vec2& blockPos, int blockSize, LevelComponent* pLevel)
 	: BlockComponent(row,column, blockPos,blockSize,true,false)
@@ -12,9 +13,9 @@ VoidBlockComponent::~VoidBlockComponent()
 {
 }
 
-void VoidBlockComponent::BlockTouched(EntityType type)
+void VoidBlockComponent::BlockTouched(EntityInfo info)
 {
-	if (type == EntityType::QBert)
+	if (info.Type == EntityType::QBert)
 	{
 		m_pLevel->PlayerDamaged();
 	}

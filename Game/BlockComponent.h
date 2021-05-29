@@ -9,6 +9,7 @@ enum class BlockSide
 };
 
 enum class EntityType;
+struct EntityInfo;
 class BlockComponent : public BaseComponent
 {
 public:
@@ -24,8 +25,9 @@ public:
 	BlockComponent& operator=(BlockComponent&&) = delete;
 
 	//------PUBLIC FUNCTIONS------
-	virtual void BlockTouched(EntityType ) = 0;
-	bool IsWalkable(EntityType type);
+	virtual void BlockTouched(EntityInfo info) = 0;
+	bool IsOccupied(EntityInfo info);
+	bool IsWalkable(EntityInfo info);
 	virtual bool IsCompleted() { return true; };
 	virtual void Update() override {};
 	virtual void Render() override {};

@@ -4,10 +4,11 @@
 #include "LevelNavigatorComponent.h"
 #include "GameTime.h"
 #include "BlockComponent.h"
+#include "LevelComponent.h"
 
 SlickAndSamComponent::SlickAndSamComponent(const std::weak_ptr<LevelNavigatorComponent>& pNavigator
 	, const std::weak_ptr<GameControllerComponent>& pGameController, int spawnIndex)
-	: Listener(pGameController)
+	: EntityComponent(pGameController,EntityType::SlickAndSam)
 	, m_pNavigator(pNavigator)
 	, m_SpawnIndex{spawnIndex}
 {
@@ -26,19 +27,24 @@ void SlickAndSamComponent::Update()
 	{
 		bool moveLeft = bool(rand() % 2); //is 0 or 1
 
-		BlockComponent* moveResult;
+		MoveResult moveResult;
 		//If statement can be removed with some bit magic
-		if (moveLeft)
-		{
-			moveResult =m_pNavigator.lock()->Move(Direction::SouthWest);
-		}
-		else
-		{
-			moveResult =m_pNavigator.lock()->Move(Direction::SouthEast);
-		}
+		if (moveLeft) moveResult =m_pNavigator.lock()->Move(Direction::SouthWest, this);
+		else moveResult =m_pNavigator.lock()->Move(Direction::SouthEast, this);
 
 		//Despawn if they did an invalid move (when they are at the bottom of the triangle)
-		if (!moveResult) Despawn();
+		if (!moveResult.validMove)
+		{
+			Despawn();
+			return;
+		}
+
+		if (moveResult.blockOccupied)
+		{
+			moveLeft = !moveLeft;
+			if (moveLeft) moveResult = m_pNavigator.lock()->Move(Direction::SouthWest, this);
+			else moveResult = m_pNavigator.lock()->Move(Direction::SouthEast, this);
+		}
 
 		m_TimeUntilNextMove = m_TimeBetweenMoves;
 	}
@@ -46,7 +52,7 @@ void SlickAndSamComponent::Update()
 
 void SlickAndSamComponent::Reset()
 {
-	m_pNavigator.lock()->MoveToSquare(m_SpawnIndex);
+	m_pNavigator.lock()->MoveToSquare(m_SpawnIndex, this);
 }
 
 void SlickAndSamComponent::Despawn()

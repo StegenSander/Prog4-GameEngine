@@ -18,7 +18,7 @@ public:
 	VoidBlockComponent& operator=(VoidBlockComponent&&) = delete;
 
 	//------PUBLIC FUNCTIONS------
-	void BlockTouched(EntityType type) override;
+	void BlockTouched(EntityInfo info) override;
 
 	//------PUBLIC VARIABLES------
 protected:

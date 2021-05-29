@@ -8,16 +8,23 @@ enum class Direction
 	SouthWest,
 	NorthWest,
 };
-enum class EntityType;
 enum class BlockSide;
 class LevelComponent;
 class BlockComponent;
+class EntityComponent;
+struct MoveResult
+{
+	BlockComponent* blockTouched = nullptr;
+	bool blockOccupied = false;
+	bool didMove= false;
+	bool validMove = false;
+};
 class LevelNavigatorComponent
 	: public BaseComponent
 {
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
-	LevelNavigatorComponent(const std::weak_ptr<LevelComponent>& pLevel, EntityType type);
+	LevelNavigatorComponent(const std::weak_ptr<LevelComponent>& pLevel);
 	virtual ~LevelNavigatorComponent();
 
 	//------COPY CONSTRUCTORS------
@@ -29,11 +36,11 @@ public:
 
 	//------PUBLIC FUNCTIONS------
 	//Return if move was succesfull or not
-	virtual BlockComponent* MoveToSquare(int row, int column);
+	virtual MoveResult MoveToSquare(int row, int column, EntityComponent* entityComp);
 	//Return if move was succesfull or not
-	BlockComponent* MoveToSquare(int index);
+	MoveResult MoveToSquare(int index, EntityComponent* entityComp);
 	//Return if move was succesfull or not
-	BlockComponent* Move(Direction dir);
+	MoveResult Move(Direction dir, EntityComponent* entityComp);
 
 	void Update() override {};
 	bool IsValidPyramidCoord(int row, int column) noexcept;
@@ -49,7 +56,6 @@ protected:
 	std::weak_ptr<LevelComponent> m_pLevel{};
 	int m_CurrentRow{ 1 };
 	int m_CurrentColumn{ 1 };
-	EntityType m_Type;
 private:
 	//------PRIVATE FUNCTIONS------
 

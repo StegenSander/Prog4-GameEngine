@@ -2,6 +2,7 @@
 #include "ColorCubeComponent.h"
 #include "LevelComponent.h"
 #include "TextureComponent.h"
+#include "EntityComponent.h"
 
 
 ColorCubeComponent::ColorCubeComponent(int row, int column, const glm::vec2& blockPos, int blockSize, LevelComponent* pLevel, const std::weak_ptr<TextureComponent>& pTexture)
@@ -15,9 +16,9 @@ ColorCubeComponent::~ColorCubeComponent()
 {
 }
 
-void ColorCubeComponent::BlockTouched(EntityType type)
+void ColorCubeComponent::BlockTouched(EntityInfo info)
 {
-	switch (type)
+	switch (info.Type)
 	{
 	case EntityType::QBert:
 		ColorCube();

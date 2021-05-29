@@ -31,6 +31,9 @@
     <Filter Include="Components\LevelEntities">
       <UniqueIdentifier>{0dc83e25-cf27-4e9a-8805-4ef3b7619698}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components\Navigators">
+      <UniqueIdentifier>{e262a88c-759c-4590-8426-05c7cc2765c0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -72,22 +75,25 @@
     <ClCompile Include="SpawnedObjectComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="LevelNavigatorComponent.cpp">
-      <Filter>Components\LevelEntities</Filter>
-    </ClCompile>
     <ClCompile Include="QBertComponent.cpp">
       <Filter>Components\LevelEntities</Filter>
     </ClCompile>
     <ClCompile Include="SlickAndSamComponent.cpp">
       <Filter>Components\LevelEntities</Filter>
     </ClCompile>
-    <ClCompile Include="UandWLevelNavigatorComponent.cpp">
-      <Filter>Components\LevelEntities</Filter>
-    </ClCompile>
     <ClCompile Include="UggAndWrongwayComponent.cpp">
       <Filter>Components\LevelEntities</Filter>
     </ClCompile>
     <ClCompile Include="CoilyComponent.cpp">
+      <Filter>Components\LevelEntities</Filter>
+    </ClCompile>
+    <ClCompile Include="UandWLevelNavigatorComponent.cpp">
+      <Filter>Components\Navigators</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelNavigatorComponent.cpp">
+      <Filter>Components\Navigators</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityComponent.cpp">
       <Filter>Components\LevelEntities</Filter>
     </ClCompile>
   </ItemGroup>
@@ -131,22 +137,25 @@
     <ClInclude Include="SpawnedObjectComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="LevelNavigatorComponent.h">
-      <Filter>Components\LevelEntities</Filter>
-    </ClInclude>
     <ClInclude Include="QBertComponent.h">
       <Filter>Components\LevelEntities</Filter>
     </ClInclude>
     <ClInclude Include="SlickAndSamComponent.h">
       <Filter>Components\LevelEntities</Filter>
     </ClInclude>
-    <ClInclude Include="UandWLevelNavigatorComponent.h">
-      <Filter>Components\LevelEntities</Filter>
-    </ClInclude>
     <ClInclude Include="UggAndWrongwayComponent.h">
       <Filter>Components\LevelEntities</Filter>
     </ClInclude>
     <ClInclude Include="CoilyComponent.h">
+      <Filter>Components\LevelEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="UandWLevelNavigatorComponent.h">
+      <Filter>Components\Navigators</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelNavigatorComponent.h">
+      <Filter>Components\Navigators</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityComponent.h">
       <Filter>Components\LevelEntities</Filter>
     </ClInclude>
   </ItemGroup>

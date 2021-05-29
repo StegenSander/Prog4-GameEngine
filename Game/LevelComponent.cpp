@@ -13,6 +13,7 @@
 #include "VoidBlockComponent.h"
 #include "HealthComponent.h"
 #include "GameControllerComponent.h"
+#include "EntityComponent.h"
 
 LevelComponent::LevelComponent(int rows, int blockSize, const std::weak_ptr<GameControllerComponent>& pGameController)
 	: m_Rows{rows +2}
@@ -84,9 +85,9 @@ std::weak_ptr<BlockComponent> LevelComponent::GetBlockAtIndex(int index)
 	return m_Level[index];
 }
 
-void LevelComponent::BlockTouched(int row, int column, EntityType type)
+void LevelComponent::BlockTouched(int row, int column, EntityInfo info)
 {
-	BlockTouched(ExtraMath::PyramidAmountOfBlockUntil(row, column), type);
+	BlockTouched(ExtraMath::PyramidAmountOfBlockUntil(row, column),info);
 
 	if (IsLevelFinished())
 	{
@@ -99,11 +100,11 @@ void LevelComponent::BlockTouched(int row, int column, EntityType type)
 	}
 }
 
-void LevelComponent::BlockTouched(int index, EntityType type)
+void LevelComponent::BlockTouched(int index, EntityInfo info)
 {
 	assert(index < m_Level.size());
 	assert(index >= 0);
-	m_Level[index]->BlockTouched(type);
+	m_Level[index]->BlockTouched(info);
 }
 
 bool LevelComponent::IsLevelFinished()

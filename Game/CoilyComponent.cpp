@@ -5,6 +5,7 @@
 #include "GameTime.h"
 #include "BlockComponent.h"
 #include "TextureComponent.h"
+#include "LevelComponent.h"
 
 
 CoilyComponent::CoilyComponent(const std::weak_ptr<LevelNavigatorComponent>& pNavigator
@@ -12,7 +13,7 @@ CoilyComponent::CoilyComponent(const std::weak_ptr<LevelNavigatorComponent>& pNa
 	, const std::weak_ptr<GameControllerComponent>& pGameController
 	, const std::weak_ptr<TextureComponent>& pTexture
 	, int spawnIndex)
-	: Listener(pGameController)
+	: EntityComponent(pGameController,EntityType::Coily)
 	, m_SpawnIndex(spawnIndex)
 	, m_pNavigator{pNavigator}
 	, m_pQBertNavigator{pQBertNavigator}
@@ -35,10 +36,10 @@ void CoilyComponent::Update()
 		{
 			bool moveLeft = bool(rand() % 2); //is 0 or 1
 
-			BlockComponent* moveResult;
-			if (moveLeft) moveResult = m_pNavigator.lock()->Move(Direction::SouthWest);
-			else moveResult = m_pNavigator.lock()->Move(Direction::SouthEast);
-			if (!moveResult) Transform(false);
+			MoveResult moveResult;
+			if (moveLeft) moveResult = m_pNavigator.lock()->Move(Direction::SouthWest,this);
+			else moveResult = m_pNavigator.lock()->Move(Direction::SouthEast, this);
+			if (!moveResult.validMove) Transform(false);
 		}
 		else //Coily movement (chase player)
 		{
@@ -54,12 +55,12 @@ void CoilyComponent::Update()
 				int colDif = qbertCol - coilyCol;
 
 
-				if (colDif == 0 && rowDif < 0)m_pNavigator.lock()->Move(Direction::NorthEast);
-				if (colDif == 0 && rowDif > 0)m_pNavigator.lock()->Move(Direction::SouthWest);
-				if (rowDif <= 0 && colDif > 0) m_pNavigator.lock()->Move(Direction::NorthEast);
-				if (rowDif <= 0 && colDif < 0) m_pNavigator.lock()->Move(Direction::NorthWest);
-				if (rowDif > 0 && colDif > 0) m_pNavigator.lock()->Move(Direction::SouthEast);;
-				if (rowDif > 0 && colDif < 0) m_pNavigator.lock()->Move(Direction::SouthWest);
+				if (colDif == 0 && rowDif < 0)m_pNavigator.lock()->Move(Direction::NorthEast, this);
+				if (colDif == 0 && rowDif > 0)m_pNavigator.lock()->Move(Direction::SouthWest, this);
+				if (rowDif <= 0 && colDif > 0) m_pNavigator.lock()->Move(Direction::NorthEast, this);
+				if (rowDif <= 0 && colDif < 0) m_pNavigator.lock()->Move(Direction::NorthWest, this);
+				if (rowDif > 0 && colDif > 0) m_pNavigator.lock()->Move(Direction::SouthEast, this);;
+				if (rowDif > 0 && colDif < 0) m_pNavigator.lock()->Move(Direction::SouthWest, this);
 			}
 		}
 
@@ -69,7 +70,7 @@ void CoilyComponent::Update()
 
 void CoilyComponent::Reset()
 {
-	m_pNavigator.lock()->MoveToSquare(m_SpawnIndex);
+	m_pNavigator.lock()->MoveToSquare(m_SpawnIndex, this);
 	Transform(true);
 }
 

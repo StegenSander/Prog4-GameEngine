@@ -11,6 +11,7 @@ enum class EntityType
 };
 class BlockComponent;
 class GameControllerComponent;
+struct EntityInfo;
 class LevelComponent
 	: public BaseComponent
 	, public Listener
@@ -36,8 +37,8 @@ public:
 	std::weak_ptr<BlockComponent> GetBlockAtIndex(int index);
 	size_t AmountOfBlocks() { return m_Level.size(); }
 	int AmountOfRows() { return m_Rows; }
-	void BlockTouched(int row, int column, EntityType type);
-	void BlockTouched(int index, EntityType type);
+	void BlockTouched(int row, int column, EntityInfo info);
+	void BlockTouched(int index, EntityInfo info);
 	bool IsLevelFinished();
 	void PlayerDamaged();
 

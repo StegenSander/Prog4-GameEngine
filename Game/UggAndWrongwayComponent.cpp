@@ -4,12 +4,13 @@
 #include "LevelNavigatorComponent.h"
 #include "GameTime.h"
 #include "BlockComponent.h"
+#include "LevelComponent.h"
 
 UggAndWrongwayComponent::UggAndWrongwayComponent(const std::weak_ptr<LevelNavigatorComponent>& pNavigator
 	, const std::weak_ptr<GameControllerComponent>& pGameController, int spawnIndex, bool isLeftSide)
-	: Listener(pGameController)
-	,m_pNavigator{pNavigator}
-	,m_SpawnIndex{spawnIndex}
+	: EntityComponent(pGameController,EntityType::UggAndWrongway)
+	, m_pNavigator{pNavigator}
+	, m_SpawnIndex{spawnIndex}
 	, m_IsLeftSide{isLeftSide}
 {
 	m_TimeUntilNextMove = m_TimeBetweenMoves;
@@ -25,28 +26,25 @@ void UggAndWrongwayComponent::Update()
 	m_TimeUntilNextMove -= deltaTime;
 	if (m_TimeUntilNextMove < 0)
 	{
-		BlockComponent* moveResult;
+		MoveResult moveResult;
 		if (m_IsLeftSide)
 		{
-			moveResult = m_pNavigator.lock()->Move(Direction::NorthEast);
+			moveResult = m_pNavigator.lock()->Move(Direction::NorthEast,this);
 		}
 		else
 		{
 
-			moveResult = m_pNavigator.lock()->Move(Direction::NorthWest);
+			moveResult = m_pNavigator.lock()->Move(Direction::NorthWest, this);
 		}
 
-		if (!moveResult)
-		{
-			Despawn();
-		}
+		if (!moveResult.validMove) Despawn();
 		m_TimeUntilNextMove = m_TimeBetweenMoves;
 	}
 }
 
 void UggAndWrongwayComponent::Reset()
 {
-	m_pNavigator.lock()->MoveToSquare(m_SpawnIndex);
+	m_pNavigator.lock()->MoveToSquare(m_SpawnIndex, this);
 }
 
 void UggAndWrongwayComponent::Despawn()

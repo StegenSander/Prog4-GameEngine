@@ -19,7 +19,7 @@ public:
 	ColorCubeComponent& operator=(ColorCubeComponent&&) = delete;
 
 	//------PUBLIC FUNCTIONS------
-	void BlockTouched(EntityType type) override;
+	void BlockTouched(EntityInfo info) override;
 	bool IsCompleted() override;
 	void Update() override;
 	void Reset() override;

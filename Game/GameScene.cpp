@@ -74,7 +74,7 @@ void GameScene::Initialise()
 	{
 		using namespace dae;
 		std::shared_ptr<GameObject> qBert{ new GameObject() };
-		std::shared_ptr<LevelNavigatorComponent> navigatorComponent(new LevelNavigatorComponent(levelComponent, EntityType::QBert));
+		std::shared_ptr<LevelNavigatorComponent> navigatorComponent(new LevelNavigatorComponent(levelComponent));
 		m_pQbertNavigator = navigatorComponent;
 		int spawnIndexQBert = ExtraMath::PyramidAmountOfBlockUntil(3, 2);
 		std::shared_ptr<QBertComponent> qbertComponent(new QBertComponent(navigatorComponent,0, gameControllerComponent,spawnIndexQBert));
@@ -86,16 +86,16 @@ void GameScene::Initialise()
 		qbertComponent->Reset();
 
 		m_SceneData->pInputManager->AddCommand(KeyboardKeyData{ SDL_SCANCODE_W, ButtonState::OnPress }
-		, new Command(std::bind(&LevelNavigatorComponent::Move, navigatorComponent, Direction::NorthEast), qBert.get()));
+		, new Command(std::bind(&LevelNavigatorComponent::Move, navigatorComponent, Direction::NorthEast, qbertComponent.get()), qBert.get()));
 
 		m_SceneData->pInputManager->AddCommand(KeyboardKeyData{ SDL_SCANCODE_A, ButtonState::OnPress }
-		, new Command(std::bind(&LevelNavigatorComponent::Move, navigatorComponent, Direction::NorthWest), qBert.get()));
+		, new Command(std::bind(&LevelNavigatorComponent::Move, navigatorComponent, Direction::NorthWest, qbertComponent.get()), qBert.get()));
 
 		m_SceneData->pInputManager->AddCommand(KeyboardKeyData{ SDL_SCANCODE_S, ButtonState::OnPress }
-		, new Command(std::bind(&LevelNavigatorComponent::Move, navigatorComponent, Direction::SouthWest), qBert.get()));
+		, new Command(std::bind(&LevelNavigatorComponent::Move, navigatorComponent, Direction::SouthWest, qbertComponent.get()), qBert.get()));
 
 		m_SceneData->pInputManager->AddCommand(KeyboardKeyData{ SDL_SCANCODE_D, ButtonState::OnPress }
-		, new Command(std::bind(&LevelNavigatorComponent::Move, navigatorComponent, Direction::SouthEast), qBert.get()));
+		, new Command(std::bind(&LevelNavigatorComponent::Move, navigatorComponent, Direction::SouthEast, qbertComponent.get()), qBert.get()));
 	}
 
 	//Spawners
@@ -105,7 +105,7 @@ void GameScene::Initialise()
 		//SlickAndSamSpawner
 		{
 			std::function<std::shared_ptr<dae::GameObject>()> spawnFunction = std::bind(&GameScene::SpawnSlickAndSam, this);
-			std::shared_ptr<SpawnerComponent> spawnerComponent(new SpawnerComponent(spawnFunction, 2, 4, 8));
+			std::shared_ptr<SpawnerComponent> spawnerComponent(new SpawnerComponent(spawnFunction, 2, 10, 15));
 			spawner->AddComponent(spawnerComponent);
 			AddObject(spawner);
 		}
@@ -130,7 +130,7 @@ std::shared_ptr<dae::GameObject> GameScene::SpawnSlickAndSam()
 {
 	std::cout << "Spawn Slick And Sam called\n";
 	std::shared_ptr<dae::GameObject> obj{ new dae::GameObject };
-	std::shared_ptr<LevelNavigatorComponent> levelNavComponent(new LevelNavigatorComponent(m_pLevel, EntityType::SlickAndSam));
+	std::shared_ptr<LevelNavigatorComponent> levelNavComponent(new LevelNavigatorComponent(m_pLevel));
 	int spawnOffset = rand() % 2;
 	int spawnIndexSandS = ExtraMath::PyramidAmountOfBlockUntil(4, 2 + spawnOffset);
 	std::shared_ptr<SlickAndSamComponent> SandSComponent(new SlickAndSamComponent(levelNavComponent,m_pGameController, spawnIndexSandS));
@@ -160,7 +160,7 @@ std::shared_ptr<dae::GameObject> GameScene::SpawnUggAndWrongway()
 	if (m_IsUggLastSpawned) //ugg = right one
 	{
 		levelNavComponent = std::shared_ptr<UandWLevelNavigatorComponent>(
-			new UandWLevelNavigatorComponent(m_pLevel, EntityType::UggAndWrongway, BlockSide::Left));
+			new UandWLevelNavigatorComponent(m_pLevel, BlockSide::Left));
 		int spawnIndexUandW = ExtraMath::PyramidAmountOfBlockUntil(pyramidSize -1, 2);
 		UandWComponent= std::shared_ptr<UggAndWrongwayComponent>(new UggAndWrongwayComponent(levelNavComponent, m_pGameController, spawnIndexUandW, true));
 		textureComponent = std::shared_ptr<TextureComponent>(new TextureComponent{ "Enemies/Wrongway.png",{0,0},{m_BlockSize / 2,m_BlockSize / 2} });
@@ -169,7 +169,7 @@ std::shared_ptr<dae::GameObject> GameScene::SpawnUggAndWrongway()
 	else
 	{
 		levelNavComponent = std::shared_ptr<UandWLevelNavigatorComponent>(
-			new UandWLevelNavigatorComponent(m_pLevel, EntityType::UggAndWrongway, BlockSide::Right));
+			new UandWLevelNavigatorComponent(m_pLevel, BlockSide::Right));
 		int spawnIndexUandW = ExtraMath::PyramidAmountOfBlockUntil(pyramidSize -1, pyramidSize -2);
 		UandWComponent = std::shared_ptr<UggAndWrongwayComponent>(new UggAndWrongwayComponent(levelNavComponent, m_pGameController, spawnIndexUandW, false));
 		textureComponent = std::shared_ptr<TextureComponent>(new TextureComponent{ "Enemies/Ugg.png",{0,0},{m_BlockSize / 2,m_BlockSize / 2} });
@@ -186,9 +186,8 @@ std::shared_ptr<dae::GameObject> GameScene::SpawnCoily()
 {
 	std::cout << "Spawn Coily called\n";
 	std::shared_ptr<dae::GameObject> obj{ new dae::GameObject };
-	std::shared_ptr<LevelNavigatorComponent> levelNavComponent(new LevelNavigatorComponent(m_pLevel, EntityType::Coily));
+	std::shared_ptr<LevelNavigatorComponent> levelNavComponent(new LevelNavigatorComponent(m_pLevel));
 	int spawnIndexSandS = ExtraMath::PyramidAmountOfBlockUntil(3, 2);
-
 
 	std::shared_ptr<TextureComponent> textureComponent 
 		= std::shared_ptr<TextureComponent>(new TextureComponent{ "Enemies/Coily1.png",{0,0},{m_BlockSize / 2,m_BlockSize / 2} });
