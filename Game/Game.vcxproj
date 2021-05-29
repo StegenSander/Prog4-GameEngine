@@ -191,6 +191,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     </ClCompile>
     <ClCompile Include="..\Minigin\TestScene.cpp" />
     <ClCompile Include="BlockComponent.cpp" />
+    <ClCompile Include="CoilyComponent.cpp" />
     <ClCompile Include="ColorCubeComponent.cpp" />
     <ClCompile Include="ExtraMath.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -211,6 +212,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClInclude Include="..\Minigin\MiniginPCH.h" />
     <ClInclude Include="..\Minigin\TestScene.h" />
     <ClInclude Include="BlockComponent.h" />
+    <ClInclude Include="CoilyComponent.h" />
     <ClInclude Include="ColorCubeComponent.h" />
     <ClInclude Include="ExtraMath.h" />
     <ClInclude Include="GameScene.h" />

@@ -34,8 +34,12 @@ public:
 	BlockComponent* MoveToSquare(int index);
 	//Return if move was succesfull or not
 	BlockComponent* Move(Direction dir);
+
 	void Update() override {};
 	bool IsValidPyramidCoord(int row, int column) noexcept;
+
+	int GetCurrentRow() { return m_CurrentRow; }
+	int GetCurrentColumn() { return m_CurrentColumn; }
 
 	//------PUBLIC VARIABLES------
 protected:

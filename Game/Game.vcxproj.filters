@@ -87,6 +87,9 @@
     <ClCompile Include="UggAndWrongwayComponent.cpp">
       <Filter>Components\LevelEntities</Filter>
     </ClCompile>
+    <ClCompile Include="CoilyComponent.cpp">
+      <Filter>Components\LevelEntities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Minigin\MiniginPCH.h">
@@ -141,6 +144,9 @@
       <Filter>Components\LevelEntities</Filter>
     </ClInclude>
     <ClInclude Include="UggAndWrongwayComponent.h">
+      <Filter>Components\LevelEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="CoilyComponent.h">
       <Filter>Components\LevelEntities</Filter>
     </ClInclude>
   </ItemGroup>

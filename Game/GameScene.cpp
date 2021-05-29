@@ -18,6 +18,7 @@
 #include "UandWLevelNavigatorComponent.h"
 #include "UggAndWrongwayComponent.h"
 #include "BlockComponent.h"
+#include "CoilyComponent.h"
 
 GameScene::GameScene()
 	: Scene("GameScene")
@@ -74,6 +75,7 @@ void GameScene::Initialise()
 		using namespace dae;
 		std::shared_ptr<GameObject> qBert{ new GameObject() };
 		std::shared_ptr<LevelNavigatorComponent> navigatorComponent(new LevelNavigatorComponent(levelComponent, EntityType::QBert));
+		m_pQbertNavigator = navigatorComponent;
 		int spawnIndexQBert = ExtraMath::PyramidAmountOfBlockUntil(3, 2);
 		std::shared_ptr<QBertComponent> qbertComponent(new QBertComponent(navigatorComponent,0, gameControllerComponent,spawnIndexQBert));
 		std::shared_ptr<TextureComponent> textureComponent(new TextureComponent{ "QBert.png",{0,0},{m_BlockSize / 2,m_BlockSize / 2} });
@@ -111,6 +113,13 @@ void GameScene::Initialise()
 		{
 			std::function<std::shared_ptr<dae::GameObject>()> spawnFunction = std::bind(&GameScene::SpawnUggAndWrongway, this);
 			std::shared_ptr<SpawnerComponent> spawnerComponent(new SpawnerComponent(spawnFunction, 2, 4, 8));
+			spawner->AddComponent(spawnerComponent);
+			AddObject(spawner);
+		}
+		//CoilySpawner
+		{
+			std::function<std::shared_ptr<dae::GameObject>()> spawnFunction = std::bind(&GameScene::SpawnCoily, this);
+			std::shared_ptr<SpawnerComponent> spawnerComponent(new SpawnerComponent(spawnFunction, 1, 3, 6));
 			spawner->AddComponent(spawnerComponent);
 			AddObject(spawner);
 		}
@@ -170,5 +179,24 @@ std::shared_ptr<dae::GameObject> GameScene::SpawnUggAndWrongway()
 	obj->AddComponent(UandWComponent);
 	obj->AddComponent(textureComponent);
 	UandWComponent->Reset();
+	return obj;
+}
+
+std::shared_ptr<dae::GameObject> GameScene::SpawnCoily()
+{
+	std::cout << "Spawn Coily called\n";
+	std::shared_ptr<dae::GameObject> obj{ new dae::GameObject };
+	std::shared_ptr<LevelNavigatorComponent> levelNavComponent(new LevelNavigatorComponent(m_pLevel, EntityType::Coily));
+	int spawnIndexSandS = ExtraMath::PyramidAmountOfBlockUntil(3, 2);
+
+
+	std::shared_ptr<TextureComponent> textureComponent 
+		= std::shared_ptr<TextureComponent>(new TextureComponent{ "Enemies/Coily1.png",{0,0},{m_BlockSize / 2,m_BlockSize / 2} });
+	std::shared_ptr<CoilyComponent> coilyComponent(
+		new CoilyComponent(levelNavComponent, m_pQbertNavigator, m_pGameController,textureComponent, spawnIndexSandS));
+	obj->AddComponent(levelNavComponent);
+	obj->AddComponent(coilyComponent);
+	obj->AddComponent(textureComponent);
+	coilyComponent->Reset();
 	return obj;
 }
