@@ -14,6 +14,7 @@
 #include "HealthComponent.h"
 #include "GameControllerComponent.h"
 #include "EntityComponent.h"
+#include "DiscComponent.h"
 
 LevelComponent::LevelComponent(int rows, int blockSize, const std::weak_ptr<GameControllerComponent>& pGameController)
 	: m_Rows{rows +2}
@@ -34,10 +35,12 @@ void LevelComponent::CreateLevel()
 		auto rowColumn = ExtraMath::PyramidGetCoordFromIndex(i);
 		if (rowColumn.second == 1 || rowColumn.second == rowColumn.first || rowColumn.first == m_Rows)
 		{
-			CreateVoidBLock(rowColumn, pos);
+			CreateVoidBlock(rowColumn, pos);
 		}
 		else CreateColorCube(rowColumn,pos);
 	}
+
+	InitiliazeDiscs(6);
 }
 
 
@@ -60,7 +63,7 @@ void LevelComponent::CreateColorCube(const std::pair<int, int>& rowColumn,const 
 	m_Level.push_back(blockComponent);
 }
 
-void LevelComponent::CreateVoidBLock(const std::pair<int, int>& rowColumn, const glm::vec3& pos)
+void LevelComponent::CreateVoidBlock(const std::pair<int, int>& rowColumn, const glm::vec3& pos)
 {
 	using namespace dae;
 	std::shared_ptr<GameObject> block{ new GameObject() };
@@ -77,12 +80,87 @@ void LevelComponent::CreateVoidBLock(const std::pair<int, int>& rowColumn, const
 	m_Level.push_back(blockComponent);
 }
 
+void LevelComponent::CreateDisc(const std::pair<int, int>& rowColumn, const glm::vec3& pos)
+{
+	using namespace dae;
+	std::shared_ptr<GameObject> block{ new GameObject() };
+	m_pGameObject->GetScene()->AddObject(block);
+
+	std::shared_ptr<TextureComponent> textureComponent(new TextureComponent{ "LevelBlock/Disc.png",{0,0},{m_BlockSize,m_BlockSize} });
+	block->AddComponent(textureComponent);
+	textureComponent->SetSize({32,32});
+	textureComponent->SetPositionOffset({16, 16 });
+
+	glm::vec3 blockPos{ pos.x + (rowColumn.second * m_BlockSize) - (rowColumn.first * m_BlockSize) / 2
+		, pos.y + rowColumn.first * (m_BlockSize / 4 * 3)
+		, pos.z };
+	block->GetTransform().SetPosition(blockPos);
+
+
+	std::shared_ptr<BlockComponent> blockComponent(new DiscComponent{ rowColumn.first,rowColumn.second,{blockPos.x + m_BlockSize / 4,blockPos.y - m_BlockSize / 4},m_BlockSize,this });
+	block->AddComponent(blockComponent);
+	m_Level.push_back(blockComponent);
+}
+
 
 std::weak_ptr<BlockComponent> LevelComponent::GetBlockAtIndex(int index)
 {
 	assert(index < m_Level.size());
 	assert(index >= 0);
 	return m_Level[index];
+}
+
+void LevelComponent::SetBlockToVoid(int row, int column)
+{
+	auto& pos = m_pGameObject->GetTransform().GetPosition();
+
+	using namespace dae;
+	std::shared_ptr<GameObject> block{ new GameObject() };
+	m_pGameObject->GetScene()->AddObject(block);
+
+	glm::vec3 blockPos{ pos.x + (column * m_BlockSize) - (row * m_BlockSize) / 2
+		, pos.y + row * (m_BlockSize / 4 * 3)
+		, pos.z };
+	block->GetTransform().SetPosition(blockPos);
+	std::shared_ptr<BlockComponent> blockComponent(new VoidBlockComponent{ row,column,{blockPos.x + m_BlockSize / 4,blockPos.y - m_BlockSize / 4},m_BlockSize,this });
+	block->AddComponent(blockComponent);
+
+	int index = ExtraMath::PyramidAmountOfBlockUntil(row, column);
+	m_Level[index]->GetGameObject()->MarkForDelete();
+	m_Level[index] = blockComponent;
+}
+
+void LevelComponent::SetBlockToDisc(int row, int column)
+{
+	auto& pos = m_pGameObject->GetTransform().GetPosition();
+
+	using namespace dae;
+	std::shared_ptr<GameObject> block{ new GameObject() };
+	m_pGameObject->GetScene()->AddObject(block);
+
+	std::shared_ptr<TextureComponent> textureComponent(new TextureComponent{ "LevelBlock/Disc.png",{0,0},{m_BlockSize,m_BlockSize} });
+	block->AddComponent(textureComponent);
+	textureComponent->SetSize({ 32,32 });
+	textureComponent->SetPositionOffset({ 16, 16 });
+
+	glm::vec3 blockPos{ pos.x + (column * m_BlockSize) - (row * m_BlockSize) / 2
+		, pos.y + row * (m_BlockSize / 4 * 3)
+		, pos.z };
+	block->GetTransform().SetPosition(blockPos);
+
+
+	std::shared_ptr<BlockComponent> blockComponent(new DiscComponent{ row,column,{blockPos.x + m_BlockSize / 4,blockPos.y - m_BlockSize / 4},m_BlockSize,this });
+	block->AddComponent(blockComponent);
+
+	int index = ExtraMath::PyramidAmountOfBlockUntil(row, column);
+	m_Level[index]->GetGameObject()->MarkForDelete();
+	m_Level[index] = blockComponent;
+}
+
+void LevelComponent::InitiliazeDiscs(int row)
+{
+	SetBlockToDisc(row, 1);
+	SetBlockToDisc(row, row);
 }
 
 void LevelComponent::BlockTouched(int row, int column, const EntityInfo& info)
@@ -134,6 +212,7 @@ void LevelComponent::Notify(EventType type, EventData* )
 		{
 			block->Reset();
 		}
+		InitiliazeDiscs(6);
 		break;
 	}
 }

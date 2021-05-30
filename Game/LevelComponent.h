@@ -30,6 +30,10 @@ public:
 	std::weak_ptr<BlockComponent> GetBlockAtIndex(int index);
 	size_t AmountOfBlocks() { return m_Level.size(); }
 	int AmountOfRows() { return m_Rows; }
+	void SetBlockToVoid(int row, int column);
+	void SetBlockToDisc(int row, int column);
+
+	void InitiliazeDiscs(int row);
 
 	void BlockTouched(int row, int column, const EntityInfo& info);
 	void BlockTouched(int index,const EntityInfo& info);
@@ -50,7 +54,8 @@ protected:
 private:
 	//------PRIVATE FUNCTIONS------
 	void CreateColorCube(const std::pair<int,int>& rowColumn, const glm::vec3& pos);
-	void CreateVoidBLock(const std::pair<int, int>& rowColumn, const glm::vec3& pos);
+	void CreateVoidBlock(const std::pair<int, int>& rowColumn, const glm::vec3& pos);
+	void CreateDisc(const std::pair<int, int>& rowColumn, const glm::vec3& pos);
 
 	//------PRIVATE VARIABLES------	
 	int m_Rows;

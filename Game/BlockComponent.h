@@ -36,13 +36,13 @@ protected:
 
 	//------PROTECTED VARIABLES------	
 	LevelComponent* m_pLevel{};
+	int m_Row;
+	int m_Column;
 private:
 	//------PRIVATE FUNCTIONS------
 
 	//------PRIVATE VARIABLES------	
 	glm::vec2 m_BlockPosition;
-	int m_Row;
-	int m_Column;
 	int m_BlockSize;
 
 	bool m_QBertWalkable;
