@@ -5,5 +5,5 @@
 
 BaseComponent::~BaseComponent()
 {
-	std::cout << "Component deleted\n";
+	//std::cout << "Component deleted\n";
 }

@@ -87,9 +87,6 @@
     <ClCompile Include="CoilyComponent.cpp">
       <Filter>Components\LevelEntities</Filter>
     </ClCompile>
-    <ClCompile Include="UandWLevelNavigatorComponent.cpp">
-      <Filter>Components\Navigators</Filter>
-    </ClCompile>
     <ClCompile Include="LevelNavigatorComponent.cpp">
       <Filter>Components\Navigators</Filter>
     </ClCompile>
@@ -149,14 +146,14 @@
     <ClInclude Include="CoilyComponent.h">
       <Filter>Components\LevelEntities</Filter>
     </ClInclude>
-    <ClInclude Include="UandWLevelNavigatorComponent.h">
-      <Filter>Components\Navigators</Filter>
-    </ClInclude>
     <ClInclude Include="LevelNavigatorComponent.h">
       <Filter>Components\Navigators</Filter>
     </ClInclude>
     <ClInclude Include="EntityComponent.h">
       <Filter>Components\LevelEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="DataStructures.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

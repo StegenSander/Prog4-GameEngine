@@ -15,7 +15,6 @@
 #include "GameControllerComponent.h"
 #include "LevelNavigatorComponent.h"
 #include "SlickAndSamComponent.h"
-#include "UandWLevelNavigatorComponent.h"
 #include "UggAndWrongwayComponent.h"
 #include "BlockComponent.h"
 #include "CoilyComponent.h"
@@ -153,14 +152,14 @@ std::shared_ptr<dae::GameObject> GameScene::SpawnUggAndWrongway()
 	std::cout << "Spawn Ugg And Wrongway called\n";
 	std::shared_ptr<dae::GameObject> obj{ new dae::GameObject };
 
-	std::shared_ptr<UandWLevelNavigatorComponent> levelNavComponent{};
+	std::shared_ptr<LevelNavigatorComponent> levelNavComponent{};
 	std::shared_ptr<UggAndWrongwayComponent> UandWComponent{};
 	std::shared_ptr<TextureComponent> textureComponent{};
 	const int pyramidSize = m_pLevel.lock()->AmountOfRows();
 	if (m_IsUggLastSpawned) //ugg = right one
 	{
-		levelNavComponent = std::shared_ptr<UandWLevelNavigatorComponent>(
-			new UandWLevelNavigatorComponent(m_pLevel, BlockSide::Left));
+		levelNavComponent = std::shared_ptr<LevelNavigatorComponent>(
+			new LevelNavigatorComponent(m_pLevel, BlockSide::Left));
 		int spawnIndexUandW = ExtraMath::PyramidAmountOfBlockUntil(pyramidSize -1, 2);
 		UandWComponent= std::shared_ptr<UggAndWrongwayComponent>(new UggAndWrongwayComponent(levelNavComponent, m_pGameController, spawnIndexUandW, true));
 		textureComponent = std::shared_ptr<TextureComponent>(new TextureComponent{ "Enemies/Wrongway.png",{0,0},{m_BlockSize / 2,m_BlockSize / 2} });
@@ -168,8 +167,8 @@ std::shared_ptr<dae::GameObject> GameScene::SpawnUggAndWrongway()
 	}
 	else
 	{
-		levelNavComponent = std::shared_ptr<UandWLevelNavigatorComponent>(
-			new UandWLevelNavigatorComponent(m_pLevel, BlockSide::Right));
+		levelNavComponent = std::shared_ptr<LevelNavigatorComponent>(
+			new LevelNavigatorComponent(m_pLevel, BlockSide::Right));
 		int spawnIndexUandW = ExtraMath::PyramidAmountOfBlockUntil(pyramidSize -1, pyramidSize -2);
 		UandWComponent = std::shared_ptr<UggAndWrongwayComponent>(new UggAndWrongwayComponent(levelNavComponent, m_pGameController, spawnIndexUandW, false));
 		textureComponent = std::shared_ptr<TextureComponent>(new TextureComponent{ "Enemies/Ugg.png",{0,0},{m_BlockSize / 2,m_BlockSize / 2} });

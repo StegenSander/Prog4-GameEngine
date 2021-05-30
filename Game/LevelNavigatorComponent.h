@@ -1,30 +1,16 @@
 #pragma once
 #include "BaseComponent.h"
+#include "DataStructures.h"
 
-enum class Direction
-{
-	NorthEast,
-	SouthEast,
-	SouthWest,
-	NorthWest,
-};
-enum class BlockSide;
 class LevelComponent;
 class BlockComponent;
 class EntityComponent;
-struct MoveResult
-{
-	BlockComponent* blockTouched = nullptr;
-	bool blockOccupied = false;
-	bool didMove= false;
-	bool validMove = false;
-};
 class LevelNavigatorComponent
 	: public BaseComponent
 {
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
-	LevelNavigatorComponent(const std::weak_ptr<LevelComponent>& pLevel);
+	LevelNavigatorComponent(const std::weak_ptr<LevelComponent>& pLevel, BlockSide blockside = BlockSide::Top);
 	virtual ~LevelNavigatorComponent();
 
 	//------COPY CONSTRUCTORS------
@@ -51,6 +37,9 @@ public:
 	//------PUBLIC VARIABLES------
 protected:
 	//------PROTECTED FUNCTIONS------
+	std::weak_ptr<BlockComponent> GetCorrectBlockAt(int row, int column);
+	void UnRegisterFromBlock();
+	void RegisterOnBlock(EntityComponent* entityComp);
 
 	//------PROTECTED VARIABLES------	
 	std::weak_ptr<LevelComponent> m_pLevel{};
@@ -60,5 +49,6 @@ private:
 	//------PRIVATE FUNCTIONS------
 
 	//------PRIVATE VARIABLES------	
+	BlockSide m_BlockSide;
 };
 

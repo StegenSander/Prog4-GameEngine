@@ -17,10 +17,39 @@ BlockComponent::~BlockComponent()
 {
 }
 
+void BlockComponent::RegisterEntity(EntityInfo info)
+{
+	if (m_CurrentEntity.Behaviour == nullptr)
+	{
+		m_CurrentEntity = info;
+	}
+	else
+	{
+		//m_CurrentEntity = info;
+		//Collision
+		std::cout << "Collision Detected\n";
+	}
+}
+
+void BlockComponent::UnRegisterEntity()
+{
+	m_CurrentEntity.Behaviour = nullptr;
+}
+
 bool BlockComponent::IsOccupied(EntityInfo info)
 {
-	if (info.Type == EntityType::QBert) return false;
-	return false;
+	if (m_CurrentEntity.Behaviour == nullptr) return false;
+	if (info.Type == EntityType::QBert)
+	{ 
+		//The player can move to any square except a square where another QBERT is
+		return m_CurrentEntity.Type == EntityType::QBert;
+	}
+	else //All AI's, Enemies can move to any square that's free or where a Qbert is
+	{
+		if (m_CurrentEntity.Type == EntityType::QBert) return false;
+		return true;
+	}
+	//return false;
 }
 
 bool BlockComponent::IsWalkable(EntityInfo info)

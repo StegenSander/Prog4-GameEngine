@@ -16,7 +16,7 @@ void Subject::AddListener(Listener* pListener)
 	if (std::find(m_pListeners.begin(), m_pListeners.end(), pListener) == m_pListeners.end())
 	{
 		m_pListeners.push_back(pListener);
-		std::cout << "Listener added: " << m_pListeners.size() << " Listeners active\n";
+		//std::cout << "Listener added: " << m_pListeners.size() << " Listeners active\n";
 	}
 }
 
@@ -26,6 +26,6 @@ void Subject::RemoveListener(Listener* pListener)
 	if (vecIt != m_pListeners.end())
 	{
 		m_pListeners.erase(vecIt);
-		std::cout << "Listener removed " << m_pListeners.size() << " Listeners active\n";
+		//std::cout << "Listener removed " << m_pListeners.size() << " Listeners active\n";
 	}
 }

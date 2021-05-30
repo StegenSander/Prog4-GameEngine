@@ -205,7 +205,6 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClCompile Include="SlickAndSamComponent.cpp" />
     <ClCompile Include="SpawnedObjectComponent.cpp" />
     <ClCompile Include="SpawnerComponent.cpp" />
-    <ClCompile Include="UandWLevelNavigatorComponent.cpp" />
     <ClCompile Include="UggAndWrongwayComponent.cpp" />
     <ClCompile Include="VoidBlockComponent.cpp" />
   </ItemGroup>
@@ -215,6 +214,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClInclude Include="BlockComponent.h" />
     <ClInclude Include="CoilyComponent.h" />
     <ClInclude Include="ColorCubeComponent.h" />
+    <ClInclude Include="DataStructures.h" />
     <ClInclude Include="EntityComponent.h" />
     <ClInclude Include="ExtraMath.h" />
     <ClInclude Include="GameScene.h" />
@@ -227,7 +227,6 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClInclude Include="SlickAndSamComponent.h" />
     <ClInclude Include="SpawnedObjectComponent.h" />
     <ClInclude Include="SpawnerComponent.h" />
-    <ClInclude Include="UandWLevelNavigatorComponent.h" />
     <ClInclude Include="UggAndWrongwayComponent.h" />
     <ClInclude Include="VoidBlockComponent.h" />
   </ItemGroup>

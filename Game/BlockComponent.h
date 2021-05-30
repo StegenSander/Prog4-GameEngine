@@ -1,15 +1,8 @@
 #pragma once
 #include "BaseComponent.h"
+#include "EntityComponent.h"
+#include "DataStructures.h"
 
-enum class BlockSide
-{
-	Top,
-	Left,
-	Right,
-};
-
-enum class EntityType;
-struct EntityInfo;
 class BlockComponent : public BaseComponent
 {
 public:
@@ -26,6 +19,8 @@ public:
 
 	//------PUBLIC FUNCTIONS------
 	virtual void BlockTouched(EntityInfo info) = 0;
+	virtual void RegisterEntity(EntityInfo info);
+	virtual void UnRegisterEntity();
 	bool IsOccupied(EntityInfo info);
 	bool IsWalkable(EntityInfo info);
 	virtual bool IsCompleted() { return true; };
@@ -50,5 +45,7 @@ private:
 
 	bool m_QBertWalkable;
 	bool m_EnemyWalkable;
+
+	EntityInfo m_CurrentEntity;
 };
 

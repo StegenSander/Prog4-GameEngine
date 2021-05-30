@@ -1,14 +1,9 @@
 #pragma once
 #include "BaseComponent.h"
 #include "Listener.h"
-enum class EntityType;
+#include "DataStructures.h"
+
 class GameControllerComponent;
-class EntityComponent;
-struct EntityInfo
-{
-	EntityType Type;
-	EntityComponent* Behaviour;
-};
 class EntityComponent
 	:public BaseComponent
 	,public Listener

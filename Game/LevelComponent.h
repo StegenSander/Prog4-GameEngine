@@ -2,13 +2,6 @@
 #include "BaseComponent.h"
 #include "Listener.h"
 
-enum class EntityType
-{
-	QBert,
-	Coily,
-	UggAndWrongway,
-	SlickAndSam,
-};
 class BlockComponent;
 class GameControllerComponent;
 struct EntityInfo;
