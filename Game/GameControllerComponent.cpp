@@ -14,15 +14,15 @@ GameControllerComponent::~GameControllerComponent()
 
 void GameControllerComponent::PlayerKilled()
 {
-	Notify(EventType::PlayerKilled);
+	//Notify(EventType::PlayerKilled);
 }
 
 void GameControllerComponent::PlayerDamaged()
 {
-	Notify(EventType::PlayerDamageTaken);
+	//Notify(EventType::PlayerDamageTaken);
 }
 
 void GameControllerComponent::PlayerOffMap()
 {
-	Notify(EventType::PlayerFallen);
+	//Notify(EventType::PlayerFallen);
 }

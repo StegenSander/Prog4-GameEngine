@@ -27,14 +27,19 @@ void UggAndWrongwayComponent::Update()
 	if (m_TimeUntilNextMove < 0)
 	{
 		MoveResult moveResult;
-		if (m_IsLeftSide)
-		{
-			moveResult = m_pNavigator.lock()->Move(Direction::NorthEast,this);
-		}
-		else
-		{
+		if (m_IsLeftSide) moveResult = m_pNavigator.lock()->Move(Direction::NorthEast,this);
+		else moveResult = m_pNavigator.lock()->Move(Direction::NorthWest, this);
 
-			moveResult = m_pNavigator.lock()->Move(Direction::NorthWest, this);
+		if (moveResult.blockOccupied)
+		{
+			if (m_IsLeftSide) moveResult = 
+				m_pNavigator.lock()->MoveToSquare(
+					m_pNavigator.lock()->GetCurrentRow(), 
+					m_pNavigator.lock()->GetCurrentColumn() +1,this);
+			else moveResult = 
+				m_pNavigator.lock()->MoveToSquare(
+				m_pNavigator.lock()->GetCurrentRow(),
+				m_pNavigator.lock()->GetCurrentColumn() - 1, this);
 		}
 
 		if (!moveResult.validMove) Despawn();

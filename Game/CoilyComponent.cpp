@@ -39,6 +39,14 @@ void CoilyComponent::Update()
 			MoveResult moveResult;
 			if (moveLeft) moveResult = m_pNavigator.lock()->Move(Direction::SouthWest,this);
 			else moveResult = m_pNavigator.lock()->Move(Direction::SouthEast, this);
+
+			if (moveResult.blockOccupied)
+			{
+				moveLeft = !moveLeft;
+				if (moveLeft) moveResult = m_pNavigator.lock()->Move(Direction::SouthWest, this);
+				else moveResult = m_pNavigator.lock()->Move(Direction::SouthEast, this);
+			}
+
 			if (!moveResult.validMove) Transform(false);
 		}
 		else //Coily movement (chase player)
@@ -54,13 +62,29 @@ void CoilyComponent::Update()
 				int rowDif = qbertRow - coilyRow;
 				int colDif = qbertCol - coilyCol;
 
-
-				if (colDif == 0 && rowDif < 0)m_pNavigator.lock()->Move(Direction::NorthEast, this);
-				if (colDif == 0 && rowDif > 0)m_pNavigator.lock()->Move(Direction::SouthWest, this);
-				if (rowDif <= 0 && colDif > 0) m_pNavigator.lock()->Move(Direction::NorthEast, this);
-				if (rowDif <= 0 && colDif < 0) m_pNavigator.lock()->Move(Direction::NorthWest, this);
-				if (rowDif > 0 && colDif > 0) m_pNavigator.lock()->Move(Direction::SouthEast, this);;
-				if (rowDif > 0 && colDif < 0) m_pNavigator.lock()->Move(Direction::SouthWest, this);
+				MoveResult moveResult;
+				if (colDif == 0 && rowDif < 0) m_pNavigator.lock()->Move(Direction::NorthEast, this);
+				if (colDif == 0 && rowDif > 0) m_pNavigator.lock()->Move(Direction::SouthWest, this);
+				if (rowDif <= 0 && colDif > 0)
+				{
+					moveResult  = m_pNavigator.lock()->Move(Direction::NorthEast, this);
+					if (moveResult.blockOccupied) m_pNavigator.lock()->Move(Direction::SouthEast, this);
+				}
+				if (rowDif <= 0 && colDif < 0)
+				{
+					moveResult = m_pNavigator.lock()->Move(Direction::NorthWest, this);
+					if (moveResult.blockOccupied) m_pNavigator.lock()->Move(Direction::NorthEast, this);
+				}
+				if (rowDif > 0 && colDif > 0)  
+				{
+					moveResult = m_pNavigator.lock()->Move(Direction::SouthEast, this);
+					if (moveResult.blockOccupied)m_pNavigator.lock()->Move(Direction::SouthWest, this);
+				}
+				if (rowDif > 0 && colDif < 0)
+				{
+					moveResult =  m_pNavigator.lock()->Move(Direction::SouthWest, this);
+					if (moveResult.blockOccupied) m_pNavigator.lock()->Move(Direction::NorthWest, this);
+				}
 			}
 		}
 

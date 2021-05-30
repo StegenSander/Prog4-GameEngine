@@ -32,18 +32,17 @@ void SlickAndSamComponent::Update()
 		if (moveLeft) moveResult =m_pNavigator.lock()->Move(Direction::SouthWest, this);
 		else moveResult =m_pNavigator.lock()->Move(Direction::SouthEast, this);
 
-		//Despawn if they did an invalid move (when they are at the bottom of the triangle)
-		if (!moveResult.validMove)
-		{
-			Despawn();
-			return;
-		}
-
 		if (moveResult.blockOccupied)
 		{
 			moveLeft = !moveLeft;
 			if (moveLeft) moveResult = m_pNavigator.lock()->Move(Direction::SouthWest, this);
 			else moveResult = m_pNavigator.lock()->Move(Direction::SouthEast, this);
+		}
+		//Despawn if they did an invalid move (when they are at the bottom of the triangle)
+		if (!moveResult.validMove)
+		{
+			Despawn();
+			return;
 		}
 
 		m_TimeUntilNextMove = m_TimeBetweenMoves;
