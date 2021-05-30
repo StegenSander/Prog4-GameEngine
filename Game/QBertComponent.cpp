@@ -25,6 +25,9 @@ QBertComponent::~QBertComponent()
 
 void QBertComponent::Update()
 {
+	m_pNavigator.lock()->UnRegisterFromBlock();
+	m_pNavigator.lock()->RegisterOnBlock(this);
+
 	auto sceneData = m_pGameObject->GetScene()->GetSceneData();
 	JoystickValue value = sceneData->pInputManager->GetJoystickValue(m_GamepadIndex, true);
 
@@ -66,9 +69,11 @@ void QBertComponent::Notify(EventType type, EventData*)
 	switch (type)
 	{
 	case EventType::PlayerDamageTaken:
-		Reset();
 		break;
 	case EventType::PlayerKilled:
+		Reset();
+		break;
+	case EventType::PlayerFallen:
 		Reset();
 		break;
 	}

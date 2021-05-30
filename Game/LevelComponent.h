@@ -36,6 +36,7 @@ public:
 
 	bool IsLevelFinished();
 	void PlayerDamaged();
+	void PlayerFallen();
 
 	void Notify(EventType type, EventData* eventData) override;
 

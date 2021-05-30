@@ -23,7 +23,7 @@ public:
 	//------PUBLIC FUNCTIONS------
 	void Damage();
 	void ResetHealth();
-	void Update() override {};
+	void Update() override;
 	void UpdateTexture();
 
 	void Notify(EventType type, EventData* eventData) override;
@@ -41,5 +41,7 @@ private:
 	std::weak_ptr<GameControllerComponent> m_pGameController;
 	int m_Health;
 	int m_InitialHealth;
+	float m_MinTimeBetweenDamage = 0.2f;
+	float m_Timer = 0.f;
 };
 

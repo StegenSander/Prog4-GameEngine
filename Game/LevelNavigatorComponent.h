@@ -34,12 +34,13 @@ public:
 	int GetCurrentRow() { return m_CurrentRow; }
 	int GetCurrentColumn() { return m_CurrentColumn; }
 
+	void UnRegisterFromBlock();
+	void RegisterOnBlock(EntityComponent* entityComp);
+
 	//------PUBLIC VARIABLES------
 protected:
 	//------PROTECTED FUNCTIONS------
 	std::weak_ptr<BlockComponent> GetCorrectBlockAt(int row, int column);
-	void UnRegisterFromBlock();
-	void RegisterOnBlock(EntityComponent* entityComp);
 
 	//------PROTECTED VARIABLES------	
 	std::weak_ptr<LevelComponent> m_pLevel{};

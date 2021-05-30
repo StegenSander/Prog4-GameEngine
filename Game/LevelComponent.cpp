@@ -121,12 +121,14 @@ void LevelComponent::PlayerDamaged()
 	std::cout << "player hit\n";
 	m_pGameController.lock()->PlayerDamaged();
 }
+void LevelComponent::PlayerFallen()
+{
+	if(!m_pGameController.expired()) m_pGameController.lock()->PlayerOffMap();
+}
 void LevelComponent::Notify(EventType type, EventData* )
 {
 	switch (type)
 	{
-	case EventType::PlayerDamageTaken:
-		break;
 	case EventType::PlayerKilled:
 		for (auto& block : m_Level)
 		{

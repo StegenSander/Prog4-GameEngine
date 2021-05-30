@@ -16,6 +16,6 @@ void VoidBlockComponent::BlockTouched(const EntityInfo& info)
 {
 	if (info.Type == EntityType::QBert)
 	{
-		m_pLevel->PlayerDamaged();
+		m_pLevel->PlayerFallen();
 	}
 }

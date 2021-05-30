@@ -2,6 +2,7 @@
 #include "HealthComponent.h"
 #include "TextureComponent.h"
 #include "GameControllerComponent.h"
+#include "GameTime.h"
 
 HealthComponent::HealthComponent(int health,const std::weak_ptr<TextureComponent>& pTexture
 	, const std::weak_ptr<GameControllerComponent>& pGameController)
@@ -29,7 +30,10 @@ void HealthComponent::Damage()
 		m_pGameController.lock()->PlayerKilled();
 	}
 }
-
+void HealthComponent::Update()
+{
+	m_Timer -= GameTime::GetInstance().GetDeltaTime();
+}
 void HealthComponent::ResetHealth()
 {
 	m_Health = m_InitialHealth;
@@ -47,6 +51,10 @@ void HealthComponent::Notify(EventType type, EventData*)
 {
 	if (type == EventType::PlayerFallen || type == EventType::PlayerDamageTaken)
 	{
-		Damage();
+		if (m_Timer < 0.f)
+		{
+			Damage();
+			m_Timer = m_MinTimeBetweenDamage;
+		}
 	}
 }
