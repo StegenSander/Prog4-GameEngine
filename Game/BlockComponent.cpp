@@ -3,13 +3,14 @@
 #include "LevelComponent.h"
 #include "EntityComponent.h"
 
-BlockComponent::BlockComponent(int row, int column, const glm::vec2& blockPos,int blockSize, bool QBertWalkable, bool enemyWalkable)
+BlockComponent::BlockComponent(int row, int column, const glm::vec2& blockPos,int blockSize, LevelComponent* pLevel, bool QBertWalkable, bool enemyWalkable)
 	: m_Row {row}
 	, m_Column {column}
 	, m_QBertWalkable {QBertWalkable}
 	, m_EnemyWalkable {enemyWalkable}
 	, m_BlockPosition{blockPos}
 	, m_BlockSize{blockSize}
+	, m_pLevel{pLevel}
 {
 }
 
@@ -17,7 +18,7 @@ BlockComponent::~BlockComponent()
 {
 }
 
-void BlockComponent::RegisterEntity(EntityInfo info)
+void BlockComponent::RegisterEntity(const EntityInfo& info)
 {
 	if (m_CurrentEntity.Behaviour == nullptr)
 	{
@@ -28,6 +29,7 @@ void BlockComponent::RegisterEntity(EntityInfo info)
 		//m_CurrentEntity = info;
 		//Collision
 		std::cout << "Collision Detected\n";
+		m_pLevel->HandleCollision(m_CurrentEntity, info);
 	}
 }
 
@@ -36,7 +38,7 @@ void BlockComponent::UnRegisterEntity()
 	m_CurrentEntity.Behaviour = nullptr;
 }
 
-bool BlockComponent::IsOccupied(EntityInfo info)
+bool BlockComponent::IsOccupied(const EntityInfo& info)
 {
 	if (m_CurrentEntity.Behaviour == nullptr) return false;
 	if (info.Type == EntityType::QBert)
@@ -44,15 +46,11 @@ bool BlockComponent::IsOccupied(EntityInfo info)
 		//The player can move to any square except a square where another QBERT is
 		return m_CurrentEntity.Type == EntityType::QBert;
 	}
-	else //All AI's, Enemies can move to any square that's free or where a Qbert is
-	{
-		if (m_CurrentEntity.Type == EntityType::QBert) return false;
-		return true;
-	}
+	return (m_CurrentEntity.Type != EntityType::QBert);
 	//return false;
 }
 
-bool BlockComponent::IsWalkable(EntityInfo info)
+bool BlockComponent::IsWalkable(const EntityInfo& info)
 {
 	switch (info.Type)
 	{

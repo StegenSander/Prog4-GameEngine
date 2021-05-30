@@ -3,11 +3,12 @@
 #include "EntityComponent.h"
 #include "DataStructures.h"
 
+class LevelComponent;
 class BlockComponent : public BaseComponent
 {
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
-	BlockComponent(int row, int column,const glm::vec2& blockPos, int blockSize, bool QBertWalkable = true, bool enemyWalkable = true);
+	BlockComponent(int row, int column,const glm::vec2& blockPos, int blockSize, LevelComponent* pLevel, bool QBertWalkable = true, bool enemyWalkable = true);
 	virtual ~BlockComponent();
 
 	//------COPY CONSTRUCTORS------
@@ -18,11 +19,11 @@ public:
 	BlockComponent& operator=(BlockComponent&&) = delete;
 
 	//------PUBLIC FUNCTIONS------
-	virtual void BlockTouched(EntityInfo info) = 0;
-	virtual void RegisterEntity(EntityInfo info);
+	virtual void BlockTouched(const EntityInfo& info) = 0;
+	virtual void RegisterEntity(const EntityInfo& info);
 	virtual void UnRegisterEntity();
-	bool IsOccupied(EntityInfo info);
-	bool IsWalkable(EntityInfo info);
+	bool IsOccupied(const EntityInfo& info);
+	bool IsWalkable(const EntityInfo& info);
 	virtual bool IsCompleted() { return true; };
 	virtual void Update() override {};
 	virtual void Render() override {};
@@ -34,6 +35,7 @@ protected:
 	//------PROTECTED FUNCTIONS------
 
 	//------PROTECTED VARIABLES------	
+	LevelComponent* m_pLevel{};
 private:
 	//------PRIVATE FUNCTIONS------
 

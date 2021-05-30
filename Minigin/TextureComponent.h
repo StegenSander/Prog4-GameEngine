@@ -18,10 +18,7 @@ public:
 	TextureComponent(const std::string& filename);
 	TextureComponent(const std::string& filename, const glm::vec2& positionOffset);
 	TextureComponent(const std::string& filename, const glm::vec2& positionOffset, const glm::vec2& size);
-	virtual ~TextureComponent() {
-		std::cout << "Texture Component deleted\n";
-	}
-	;;
+	virtual ~TextureComponent() {}
 
 	//------COPY CONSTRUCTORS------
 	TextureComponent(const TextureComponent&) = delete;

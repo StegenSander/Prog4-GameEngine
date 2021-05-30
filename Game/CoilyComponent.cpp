@@ -68,10 +68,10 @@ void CoilyComponent::Update()
 	}
 }
 
-void CoilyComponent::Reset()
+MoveResult CoilyComponent::Reset()
 {
-	m_pNavigator.lock()->MoveToSquare(m_SpawnIndex, this);
 	Transform(true);
+	return m_pNavigator.lock()->MoveToSquare(m_SpawnIndex, this);
 }
 
 void CoilyComponent::Despawn()

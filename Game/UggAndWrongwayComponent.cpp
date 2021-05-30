@@ -42,9 +42,9 @@ void UggAndWrongwayComponent::Update()
 	}
 }
 
-void UggAndWrongwayComponent::Reset()
+MoveResult UggAndWrongwayComponent::Reset()
 {
-	m_pNavigator.lock()->MoveToSquare(m_SpawnIndex, this);
+	return m_pNavigator.lock()->MoveToSquare(m_SpawnIndex, this);
 }
 
 void UggAndWrongwayComponent::Despawn()

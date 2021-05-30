@@ -35,8 +35,12 @@ void SpawnerComponent::Update()
 
 void SpawnerComponent::Spawn()
 {
-
 	std::shared_ptr<dae::GameObject> obj = m_SpawnFunction();
+	if (obj->IsMarkedForDelete())
+	{
+		SetNextSpawnTime();
+		return;
+	}
 	std::shared_ptr<SpawnedObjectComponent> spawnedObjComp(new SpawnedObjectComponent(this));
 	obj->AddComponent(spawnedObjComp);
 

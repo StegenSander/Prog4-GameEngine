@@ -19,7 +19,7 @@ public:
 	ColorCubeComponent& operator=(ColorCubeComponent&&) = delete;
 
 	//------PUBLIC FUNCTIONS------
-	void BlockTouched(EntityInfo info) override;
+	void BlockTouched(const EntityInfo& info) override;
 	bool IsCompleted() override;
 	void Update() override;
 	void Reset() override;
@@ -36,7 +36,6 @@ private:
 	void UpdateTexture();
 
 	//------PRIVATE VARIABLES------	
-	LevelComponent* m_pLevel{};
 	std::weak_ptr<TextureComponent> m_pTexture{};
 
 	int m_ColorLevel = 0;

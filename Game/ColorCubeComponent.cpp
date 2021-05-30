@@ -6,8 +6,7 @@
 
 
 ColorCubeComponent::ColorCubeComponent(int row, int column, const glm::vec2& blockPos, int blockSize, LevelComponent* pLevel, const std::weak_ptr<TextureComponent>& pTexture)
-	: BlockComponent(row,column, blockPos,blockSize,true,true)
-	, m_pLevel{ pLevel }
+	: BlockComponent(row,column, blockPos,blockSize,pLevel,true,true)
 	, m_pTexture{pTexture}
 {
 }
@@ -16,7 +15,7 @@ ColorCubeComponent::~ColorCubeComponent()
 {
 }
 
-void ColorCubeComponent::BlockTouched(EntityInfo info)
+void ColorCubeComponent::BlockTouched(const EntityInfo& info)
 {
 	switch (info.Type)
 	{

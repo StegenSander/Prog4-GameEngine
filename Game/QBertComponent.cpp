@@ -56,9 +56,9 @@ void QBertComponent::Update()
 	}
 }
 
-void QBertComponent::Reset()
+MoveResult QBertComponent::Reset()
 {
-	m_pNavigator.lock()->MoveToSquare(m_SpawnIndex,this);
+	return m_pNavigator.lock()->MoveToSquare(m_SpawnIndex,this);
 }
 
 void QBertComponent::Notify(EventType type, EventData*)

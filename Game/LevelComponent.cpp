@@ -85,7 +85,7 @@ std::weak_ptr<BlockComponent> LevelComponent::GetBlockAtIndex(int index)
 	return m_Level[index];
 }
 
-void LevelComponent::BlockTouched(int row, int column, EntityInfo info)
+void LevelComponent::BlockTouched(int row, int column, const EntityInfo& info)
 {
 	BlockTouched(ExtraMath::PyramidAmountOfBlockUntil(row, column),info);
 
@@ -100,7 +100,7 @@ void LevelComponent::BlockTouched(int row, int column, EntityInfo info)
 	}
 }
 
-void LevelComponent::BlockTouched(int index, EntityInfo info)
+void LevelComponent::BlockTouched(int index, const EntityInfo& info)
 {
 	assert(index < m_Level.size());
 	assert(index >= 0);
@@ -135,6 +135,40 @@ void LevelComponent::Notify(EventType type, EventData* )
 		break;
 	}
 }
+void LevelComponent::HandleCollision(const EntityInfo& firstObject, const EntityInfo& secondObject)
+{
+	//Find Which object is qbert and which the other one
+	EntityInfo QBertInfo;
+	EntityInfo otherInfo;
+	if (firstObject.Type == EntityType::QBert)
+	{
+		QBertInfo = firstObject;
+		otherInfo = secondObject;
+	}
+	else if (secondObject.Type == EntityType::QBert)
+	{
+		QBertInfo = secondObject;
+		otherInfo = firstObject;
+	}
+	else //No Qbert part of the collision
+	{
+		std::cout << "No collision with QBert happened\n";
+		return;
+	}
+
+	//Check Collision
+	switch (otherInfo.Type)
+	{
+	case EntityType::Coily:
+	case EntityType::UggAndWrongway:
+		PlayerDamaged();
+		break;
+	case EntityType::SlickAndSam:
+		otherInfo.Behaviour->Despawn();
+		break;
+	}
+}
+
 LevelComponent::~LevelComponent()
 {
 }

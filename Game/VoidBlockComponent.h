@@ -18,7 +18,7 @@ public:
 	VoidBlockComponent& operator=(VoidBlockComponent&&) = delete;
 
 	//------PUBLIC FUNCTIONS------
-	void BlockTouched(EntityInfo info) override;
+	void BlockTouched(const EntityInfo& info) override;
 
 	//------PUBLIC VARIABLES------
 protected:
@@ -29,6 +29,5 @@ private:
 	//------PRIVATE FUNCTIONS------
 
 	//------PRIVATE VARIABLES------
-	LevelComponent* m_pLevel{};
 };
 

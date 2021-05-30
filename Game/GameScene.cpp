@@ -143,7 +143,9 @@ std::shared_ptr<dae::GameObject> GameScene::SpawnSlickAndSam()
 	obj->AddComponent(levelNavComponent);
 	obj->AddComponent(SandSComponent);
 	obj->AddComponent(textureComponent);
-	SandSComponent->Reset();
+	
+	MoveResult result = SandSComponent->Reset();
+	if (!result.didMove) obj->MarkForDelete();
 	return obj;
 }
 
@@ -177,7 +179,10 @@ std::shared_ptr<dae::GameObject> GameScene::SpawnUggAndWrongway()
 	obj->AddComponent(levelNavComponent);
 	obj->AddComponent(UandWComponent);
 	obj->AddComponent(textureComponent);
-	UandWComponent->Reset();
+
+	MoveResult result = UandWComponent->Reset();
+	if (!result.didMove) obj->MarkForDelete();
+
 	return obj;
 }
 
@@ -195,6 +200,9 @@ std::shared_ptr<dae::GameObject> GameScene::SpawnCoily()
 	obj->AddComponent(levelNavComponent);
 	obj->AddComponent(coilyComponent);
 	obj->AddComponent(textureComponent);
-	coilyComponent->Reset();
+
+	MoveResult result = coilyComponent->Reset();
+	if (!result.didMove) obj->MarkForDelete();
+
 	return obj;
 }

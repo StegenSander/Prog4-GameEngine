@@ -30,12 +30,16 @@ public:
 	std::weak_ptr<BlockComponent> GetBlockAtIndex(int index);
 	size_t AmountOfBlocks() { return m_Level.size(); }
 	int AmountOfRows() { return m_Rows; }
-	void BlockTouched(int row, int column, EntityInfo info);
-	void BlockTouched(int index, EntityInfo info);
+
+	void BlockTouched(int row, int column, const EntityInfo& info);
+	void BlockTouched(int index,const EntityInfo& info);
+
 	bool IsLevelFinished();
 	void PlayerDamaged();
 
 	void Notify(EventType type, EventData* eventData) override;
+
+	void HandleCollision(const EntityInfo& firstObject, const EntityInfo& secondObject);
 
 	//------PUBLIC VARIABLES------
 protected:

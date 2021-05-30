@@ -21,7 +21,7 @@ public:
 
 	//------PUBLIC FUNCTIONS------
 	void Update() override;
-	void Reset() override;
+	MoveResult Reset() override;
 	void Notify(EventType type, EventData* eventData) override;
 
 	//------PUBLIC VARIABLES------
