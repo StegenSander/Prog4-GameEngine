@@ -42,9 +42,6 @@
     <ClCompile Include="..\Minigin\MiniginPCH.cpp">
       <Filter>PCH</Filter>
     </ClCompile>
-    <ClCompile Include="..\Minigin\TestScene.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="GameScene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
@@ -100,9 +97,6 @@
   <ItemGroup>
     <ClInclude Include="..\Minigin\MiniginPCH.h">
       <Filter>PCH</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Minigin\TestScene.h">
-      <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="GameScene.h">
       <Filter>Scenes</Filter>

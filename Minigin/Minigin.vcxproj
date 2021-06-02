@@ -259,8 +259,6 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)*.dll" "$(OutputPath
     <ClInclude Include="SpawnedObjectComponent.h" />
     <ClInclude Include="SpawnerComponent.h" />
     <ClInclude Include="StaticObserver.h" />
-    <ClInclude Include="PlayerComponent.h" />
-    <ClInclude Include="PlayerUIComponent.h" />
     <ClInclude Include="SceneObject.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="ResourceManager.h" />
@@ -268,7 +266,6 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)*.dll" "$(OutputPath
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="Subject.h" />
-    <ClInclude Include="SubjectComponent.h" />
     <ClInclude Include="TextComponent.h" />
     <ClInclude Include="TextObject.h" />
     <ClInclude Include="Texture2D.h" />
@@ -345,14 +342,11 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)*.dll" "$(OutputPath
     <ClCompile Include="SpawnedObjectComponent.cpp" />
     <ClCompile Include="SpawnerComponent.cpp" />
     <ClCompile Include="StaticObserver.cpp" />
-    <ClCompile Include="PlayerComponent.cpp" />
-    <ClCompile Include="PlayerUIComponent.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Subject.cpp" />
-    <ClCompile Include="SubjectComponent.cpp" />
     <ClCompile Include="TextComponent.cpp" />
     <ClCompile Include="TextObject.cpp" />
     <ClCompile Include="Texture2D.cpp" />

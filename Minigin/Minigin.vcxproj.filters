@@ -138,12 +138,6 @@
     <ClInclude Include="Controller.h">
       <Filter>Input</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerUIComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Gameobjects</Filter>
     </ClInclude>
@@ -167,9 +161,6 @@
     </ClInclude>
     <ClInclude Include="Subject.h">
       <Filter>Observer</Filter>
-    </ClInclude>
-    <ClInclude Include="SubjectComponent.h">
-      <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="StaticObserver.h">
       <Filter>Depricated</Filter>
@@ -272,12 +263,6 @@
     <ClCompile Include="Renderer.cpp">
       <Filter>RenderClasses</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerUIComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>Gameobjects</Filter>
     </ClCompile>
@@ -298,9 +283,6 @@
     </ClCompile>
     <ClCompile Include="Subject.cpp">
       <Filter>Observer</Filter>
-    </ClCompile>
-    <ClCompile Include="SubjectComponent.cpp">
-      <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="StaticObserver.cpp">
       <Filter>Depricated</Filter>

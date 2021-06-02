@@ -189,7 +189,6 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="..\Minigin\TestScene.cpp" />
     <ClCompile Include="BlockComponent.cpp" />
     <ClCompile Include="CoilyComponent.cpp" />
     <ClCompile Include="ColorCubeComponent.cpp" />
@@ -211,7 +210,6 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Minigin\MiniginPCH.h" />
-    <ClInclude Include="..\Minigin\TestScene.h" />
     <ClInclude Include="BlockComponent.h" />
     <ClInclude Include="CoilyComponent.h" />
     <ClInclude Include="ColorCubeComponent.h" />
