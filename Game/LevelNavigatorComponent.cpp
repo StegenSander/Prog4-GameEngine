@@ -32,12 +32,12 @@ MoveResult LevelNavigatorComponent::MoveToSquare(int row, int column, EntityComp
 
 	//Check if the block is walkable for the current Entity
 	if (!block.lock()->IsWalkable(entityComp->GetInfo())) return result;
-	result.validMove = true;
+	result.ValidMove = true;
 
 	//Check if the block is occupied for the current Entity
 	if (GetCorrectBlockAt(row,column).lock()->IsOccupied(entityComp->GetInfo()))
 	{
-		result.blockOccupied = true;
+		result.BlockOccupied = true;
 		return result;
 	}
 
@@ -55,8 +55,8 @@ MoveResult LevelNavigatorComponent::MoveToSquare(int row, int column, EntityComp
 	//fill in results
 	//Pointer is not dangling, Copy of the weak/shared pointer does get destroyed
 	//but the raw pointer which gets returned is still a valid pointer
-	result.blockTouched = block.lock().get();
-	result.didMove = true;
+	result.BlockTouched = block.lock().get();
+	result.DidMove = true;
 
 	return result;
 }
@@ -109,15 +109,23 @@ std::weak_ptr<BlockComponent> LevelNavigatorComponent::GetCorrectBlockAt(int row
 		index = ExtraMath::PyramidAmountOfBlockUntil(row, column);
 		break;
 	}
+	if (m_pLevel.expired())
+	{
+		return std::shared_ptr<BlockComponent>(nullptr);
+	}
 	return m_pLevel.lock()->GetBlockAtIndex(index);
 }
 
 void LevelNavigatorComponent::UnRegisterFromBlock()
 {
-	GetCorrectBlockAt(m_CurrentRow,m_CurrentColumn).lock()->UnRegisterEntity();
+	auto block = GetCorrectBlockAt(m_CurrentRow, m_CurrentColumn);
+	if (block.expired() || block.lock().get() ==nullptr) return;
+	block.lock()->UnRegisterEntity();
 }
 
 void LevelNavigatorComponent::RegisterOnBlock(EntityComponent* entityComp)
 {
-	GetCorrectBlockAt(m_CurrentRow,m_CurrentColumn).lock()->RegisterEntity(entityComp->GetInfo());
+	auto block = GetCorrectBlockAt(m_CurrentRow, m_CurrentColumn);
+	if (block.expired() || block.lock().get() == nullptr) return;
+	block.lock()->RegisterEntity(entityComp->GetInfo());
 }

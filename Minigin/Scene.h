@@ -2,6 +2,7 @@
 #include "SceneManager.h"
 
 #include "InputManager.h"
+#include "GameObject.h"
 struct SceneData
 {
 	dae::InputManager* pInputManager;
@@ -9,7 +10,6 @@ struct SceneData
 
 namespace dae
 {
-	class GameObject;
 	class Scene
 	{
 	public:
@@ -26,6 +26,9 @@ namespace dae
 		void Render() const;
 
 		void DestroyMarkedObjects();
+
+		template <typename T>
+		std::weak_ptr<T> FindObjectOfType();
 
 		virtual ~Scene();
 		
@@ -44,5 +47,16 @@ namespace dae
 		std::string m_Name;
 		std::vector <std::shared_ptr<GameObject>> m_Objects{};
 	};
+
+	template<typename T>
+	inline std::weak_ptr<T> Scene::FindObjectOfType()
+	{
+		for (const auto& obj : m_Objects )
+		{
+			std::weak_ptr<T> ptr = obj->GetComponent<T>();
+			if (!ptr.expired() && ptr.lock().get() != nullptr) return ptr;
+		}
+		return std::weak_ptr<T>();
+	}
 
 }

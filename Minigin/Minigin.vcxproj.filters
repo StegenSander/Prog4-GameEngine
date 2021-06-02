@@ -46,6 +46,12 @@
     <Filter Include="Scenes">
       <UniqueIdentifier>{36b60b6f-7299-4296-98d3-a12970871abc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="FileParsers">
+      <UniqueIdentifier>{09c730e1-1bc3-4e5d-8daa-30d3335a5de7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\SpawnComponents">
+      <UniqueIdentifier>{36c78c11-f5bb-4f12-8d1f-4ecf2069319a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Texture2D.h">
@@ -177,6 +183,18 @@
     <ClInclude Include="Scene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="BinaryReader.h">
+      <Filter>FileParsers</Filter>
+    </ClInclude>
+    <ClInclude Include="BinaryWriter.h">
+      <Filter>FileParsers</Filter>
+    </ClInclude>
+    <ClInclude Include="SpawnerComponent.h">
+      <Filter>Components\SpawnComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="SpawnedObjectComponent.h">
+      <Filter>Components\SpawnComponents</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MiniginPCH.cpp">
@@ -295,6 +313,12 @@
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="SpawnerComponent.cpp">
+      <Filter>Components\SpawnComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="SpawnedObjectComponent.cpp">
+      <Filter>Components\SpawnComponents</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

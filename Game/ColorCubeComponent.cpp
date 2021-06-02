@@ -5,9 +5,13 @@
 #include "EntityComponent.h"
 
 
-ColorCubeComponent::ColorCubeComponent(int row, int column, const glm::vec2& blockPos, int blockSize, LevelComponent* pLevel, const std::weak_ptr<TextureComponent>& pTexture)
+ColorCubeComponent::ColorCubeComponent(int row, int column, const glm::vec2& blockPos, int blockSize
+	, LevelComponent* pLevel, const std::weak_ptr<TextureComponent>& pTexture
+	, int maxColorLevel, bool revertible)
 	: BlockComponent(row,column, blockPos,blockSize,pLevel,true,true)
 	, m_pTexture{pTexture}
+	, m_MaxColorLevel{maxColorLevel}
+	, m_IsRevertable{revertible}
 {
 }
 

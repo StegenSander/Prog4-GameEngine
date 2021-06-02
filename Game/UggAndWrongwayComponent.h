@@ -9,8 +9,8 @@ class UggAndWrongwayComponent
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
 	UggAndWrongwayComponent(const std::weak_ptr<LevelNavigatorComponent>& pNavigator
-		, const std::weak_ptr<GameControllerComponent>& pGameController, int spawnIndex
-		, bool isLeftSide);
+		, const std::weak_ptr<GameControllerComponent>& pGameController
+		, int spawnIndex, bool isLeftSide, float timeBetweenMoves =1.f);
 	virtual ~UggAndWrongwayComponent();
 
 	//------COPY CONSTRUCTORS------

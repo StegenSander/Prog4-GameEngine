@@ -1,6 +1,5 @@
 #include "MiniginPCH.h"
 #include "SpawnerComponent.h"
-#include "ExtraMath.h"
 #include "GameTime.h"
 #include "GameObject.h"
 #include "SpawnedObjectComponent.h"
@@ -56,5 +55,5 @@ void SpawnerComponent::ObjectDestroyed()
 
 void SpawnerComponent::SetNextSpawnTime()
 {
-	m_SpawnTimer = ExtraMath::RandomFloat(m_MinSpawnTime, m_MaxSpawnTime);
+	m_SpawnTimer = (rand() % ((m_MaxSpawnTime - m_MinSpawnTime) * 1000)) / float(1000) + m_MinSpawnTime;
 }

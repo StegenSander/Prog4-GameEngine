@@ -7,10 +7,12 @@
 #include "LevelComponent.h"
 
 SlickAndSamComponent::SlickAndSamComponent(const std::weak_ptr<LevelNavigatorComponent>& pNavigator
-	, const std::weak_ptr<GameControllerComponent>& pGameController, int spawnIndex)
+	, const std::weak_ptr<GameControllerComponent>& pGameController
+	, int spawnIndex, float timeBetweenMoves)
 	: EntityComponent(pGameController,EntityType::SlickAndSam)
 	, m_pNavigator(pNavigator)
 	, m_SpawnIndex{spawnIndex}
+	, m_TimeBetweenMoves{timeBetweenMoves}
 {
 	m_TimeUntilNextMove = m_TimeBetweenMoves;
 }
@@ -32,14 +34,14 @@ void SlickAndSamComponent::Update()
 		if (moveLeft) moveResult =m_pNavigator.lock()->Move(Direction::SouthWest, this);
 		else moveResult =m_pNavigator.lock()->Move(Direction::SouthEast, this);
 
-		if (moveResult.blockOccupied)
+		if (moveResult.BlockOccupied)
 		{
 			moveLeft = !moveLeft;
 			if (moveLeft) moveResult = m_pNavigator.lock()->Move(Direction::SouthWest, this);
 			else moveResult = m_pNavigator.lock()->Move(Direction::SouthEast, this);
 		}
 		//Despawn if they did an invalid move (when they are at the bottom of the triangle)
-		if (!moveResult.validMove)
+		if (!moveResult.ValidMove)
 		{
 			Despawn();
 			return;

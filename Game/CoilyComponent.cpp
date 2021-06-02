@@ -6,18 +6,20 @@
 #include "BlockComponent.h"
 #include "TextureComponent.h"
 #include "LevelComponent.h"
+#include "ExtraMath.h"
 
 
 CoilyComponent::CoilyComponent(const std::weak_ptr<LevelNavigatorComponent>& pNavigator
 	, const std::weak_ptr<LevelNavigatorComponent>& pQBertNavigator
 	, const std::weak_ptr<GameControllerComponent>& pGameController
 	, const std::weak_ptr<TextureComponent>& pTexture
-	, int spawnIndex)
+	, int spawnIndex, float timeBetweenMoves)
 	: EntityComponent(pGameController,EntityType::Coily)
 	, m_SpawnIndex(spawnIndex)
 	, m_pNavigator{pNavigator}
 	, m_pQBertNavigator{pQBertNavigator}
 	, m_pTexture{pTexture}
+	, m_TimeBetweenMoves{timeBetweenMoves}
 {
 	m_TimeUntilNextMove = m_TimeBetweenMoves;
 }
@@ -40,50 +42,82 @@ void CoilyComponent::Update()
 			if (moveLeft) moveResult = m_pNavigator.lock()->Move(Direction::SouthWest,this);
 			else moveResult = m_pNavigator.lock()->Move(Direction::SouthEast, this);
 
-			if (moveResult.blockOccupied)
+			if (moveResult.BlockOccupied)
 			{
 				moveLeft = !moveLeft;
 				if (moveLeft) moveResult = m_pNavigator.lock()->Move(Direction::SouthWest, this);
 				else moveResult = m_pNavigator.lock()->Move(Direction::SouthEast, this);
 			}
 
-			if (!moveResult.validMove) Transform(false);
+			if (!moveResult.ValidMove) Transform(false);
 		}
 		else //Coily movement (chase player)
 		{
 			if (!m_pQBertNavigator.expired())
 			{
-				int qbertRow = m_pQBertNavigator.lock()->GetCurrentRow();
-				int qbertCol = m_pQBertNavigator.lock()->GetCurrentColumn();
+				int targetRow = 0;
+				int targetCol = 0;
+				if (m_IsMovingToTarget) // moving to specified target
+				{
+					targetRow = m_TargetRow;
+					targetCol = m_TargetColumn;
+				}
+				else //chasing Qbert
+				{
+					targetRow = m_pQBertNavigator.lock()->GetCurrentRow();
+					targetCol = m_pQBertNavigator.lock()->GetCurrentColumn();
+				}
 
 				int coilyRow = m_pNavigator.lock()->GetCurrentRow();
 				int coilyCol = m_pNavigator.lock()->GetCurrentColumn();
+				int distanceToTargetStart = ExtraMath::DistanceFromTo(coilyRow, coilyCol, targetRow, targetCol);
 
-				int rowDif = qbertRow - coilyRow;
-				int colDif = qbertCol - coilyCol;
+
+				int rowDif = targetRow - coilyRow;
+				int colDif = targetCol - coilyCol;
+				if (abs(rowDif) + abs(colDif) == 0 && m_IsMovingToTarget) m_IsMovingToTarget = false;
 
 				MoveResult moveResult;
-				if (colDif == 0 && rowDif < 0) m_pNavigator.lock()->Move(Direction::NorthEast, this);
-				if (colDif == 0 && rowDif > 0) m_pNavigator.lock()->Move(Direction::SouthWest, this);
-				if (rowDif <= 0 && colDif > 0)
+				if (colDif == 0 && rowDif < 0)
+				{
+					m_pNavigator.lock()->Move(Direction::NorthEast, this);
+				}
+				else if (colDif == 0 && rowDif > 0)
+				{
+					m_pNavigator.lock()->Move(Direction::SouthWest, this);
+				}
+				else if (rowDif <= 0 && colDif > 0)
 				{
 					moveResult  = m_pNavigator.lock()->Move(Direction::NorthEast, this);
-					if (moveResult.blockOccupied) m_pNavigator.lock()->Move(Direction::SouthEast, this);
+					if (moveResult.BlockOccupied || !moveResult.ValidMove) 
+						moveResult = m_pNavigator.lock()->Move(Direction::SouthEast, this);
 				}
-				if (rowDif <= 0 && colDif < 0)
+				else if (rowDif < 0 && colDif < 0)
 				{
 					moveResult = m_pNavigator.lock()->Move(Direction::NorthWest, this);
-					if (moveResult.blockOccupied) m_pNavigator.lock()->Move(Direction::NorthEast, this);
+					if (moveResult.BlockOccupied || !moveResult.ValidMove) 
+						moveResult = m_pNavigator.lock()->Move(Direction::NorthEast, this);
 				}
-				if (rowDif > 0 && colDif > 0)  
+				else if (rowDif > 0 && colDif > 0)
 				{
 					moveResult = m_pNavigator.lock()->Move(Direction::SouthEast, this);
-					if (moveResult.blockOccupied)m_pNavigator.lock()->Move(Direction::SouthWest, this);
+					if (moveResult.BlockOccupied || !moveResult.ValidMove)
+						moveResult = m_pNavigator.lock()->Move(Direction::SouthWest, this);
 				}
-				if (rowDif > 0 && colDif < 0)
+				else if (rowDif >= 0 && colDif < 0)
 				{
 					moveResult =  m_pNavigator.lock()->Move(Direction::SouthWest, this);
-					if (moveResult.blockOccupied) m_pNavigator.lock()->Move(Direction::NorthWest, this);
+					if (moveResult.BlockOccupied || !moveResult.ValidMove)
+						moveResult = m_pNavigator.lock()->Move(Direction::NorthWest, this);
+				}
+
+				coilyRow = m_pNavigator.lock()->GetCurrentRow();
+				coilyCol = m_pNavigator.lock()->GetCurrentColumn();
+				int distanceToTargetEnd = ExtraMath::DistanceFromTo(coilyRow, coilyCol, targetRow, targetCol);
+
+				if ((!moveResult.ValidMove && m_IsMovingToTarget) || (m_IsMovingToTarget && distanceToTargetEnd > distanceToTargetStart))
+				{
+					Despawn();
 				}
 			}
 		}
@@ -113,6 +147,19 @@ void CoilyComponent::Notify(EventType type, EventData*)
 		Despawn();
 		break;
 	}
+}
+
+void CoilyComponent::DiscTriggered()
+{
+	if (m_pQBertNavigator.expired()) return;
+	m_TargetRow = m_pQBertNavigator.lock()->GetCurrentRow();
+	m_TargetColumn = m_pQBertNavigator.lock()->GetCurrentColumn();
+
+	int distanceToTarget = ExtraMath::DistanceFromTo(m_pNavigator.lock()->GetCurrentRow()
+		, m_pNavigator.lock()->GetCurrentColumn()
+		, m_TargetRow, m_TargetColumn);
+
+	if (m_HasTransformed && distanceToTarget <= m_MaxDistanceToTarget) m_IsMovingToTarget = true;
 }
 
 void CoilyComponent::Transform(bool isEgg)

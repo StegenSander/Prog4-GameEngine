@@ -238,6 +238,8 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)*.dll" "$(OutputPath
     <ClInclude Include="..\3rdParty\imgui-master\imstb_textedit.h" />
     <ClInclude Include="..\3rdParty\imgui-master\imstb_truetype.h" />
     <ClInclude Include="BaseComponent.h" />
+    <ClInclude Include="BinaryReader.h" />
+    <ClInclude Include="BinaryWriter.h" />
     <ClInclude Include="Commands.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="Destroyable.h" />
@@ -254,6 +256,8 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)*.dll" "$(OutputPath
     <ClInclude Include="SDLSoundSystem.h" />
     <ClInclude Include="ServiceLocator.h" />
     <ClInclude Include="SoundSystemInterface.h" />
+    <ClInclude Include="SpawnedObjectComponent.h" />
+    <ClInclude Include="SpawnerComponent.h" />
     <ClInclude Include="StaticObserver.h" />
     <ClInclude Include="PlayerComponent.h" />
     <ClInclude Include="PlayerUIComponent.h" />
@@ -338,6 +342,8 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)*.dll" "$(OutputPath
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MiniginPCH.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="SDLSoundSystem.cpp" />
+    <ClCompile Include="SpawnedObjectComponent.cpp" />
+    <ClCompile Include="SpawnerComponent.cpp" />
     <ClCompile Include="StaticObserver.cpp" />
     <ClCompile Include="PlayerComponent.cpp" />
     <ClCompile Include="PlayerUIComponent.cpp" />

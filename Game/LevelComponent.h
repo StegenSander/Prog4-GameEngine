@@ -11,7 +11,9 @@ class LevelComponent
 {
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
-	LevelComponent(int rows, int blockSize,const std::weak_ptr<GameControllerComponent>& pGameController);
+	LevelComponent(int rows, int blockSize, int discRow
+		,const std::weak_ptr<GameControllerComponent>& pGameController
+		, int maxColorLeverl, bool revertible);
 	virtual ~LevelComponent();
 
 	//------COPY CONSTRUCTORS------
@@ -60,7 +62,10 @@ private:
 	//------PRIVATE VARIABLES------	
 	int m_Rows;
 	int m_BlockSize;
+	int m_DiscRow;
+	int m_MaxColorLevel;
 	std::vector<std::shared_ptr<BlockComponent>> m_Level;
 	std::weak_ptr<GameControllerComponent> m_pGameController;
+	bool m_Revertible;
 };
 

@@ -16,11 +16,16 @@
 #include "EntityComponent.h"
 #include "DiscComponent.h"
 
-LevelComponent::LevelComponent(int rows, int blockSize, const std::weak_ptr<GameControllerComponent>& pGameController)
+LevelComponent::LevelComponent(int rows, int blockSize, int discRow
+	, const std::weak_ptr<GameControllerComponent>& pGameController
+	, int maxColorLevel, bool revertible)
 	: m_Rows{rows +2}
 	, m_BlockSize{blockSize}
 	, m_pGameController(pGameController)
 	, Listener(pGameController)
+	, m_DiscRow{discRow}
+	, m_MaxColorLevel{maxColorLevel}
+	, m_Revertible{revertible}
 {
 }
 
@@ -40,7 +45,7 @@ void LevelComponent::CreateLevel()
 		else CreateColorCube(rowColumn,pos);
 	}
 
-	InitiliazeDiscs(6);
+	InitiliazeDiscs(m_DiscRow);
 }
 
 
@@ -58,7 +63,9 @@ void LevelComponent::CreateColorCube(const std::pair<int, int>& rowColumn,const 
 	block->GetTransform().SetPosition(blockPos);
 
 
-	std::shared_ptr<BlockComponent> blockComponent(new ColorCubeComponent{ rowColumn.first,rowColumn.second,{blockPos.x + m_BlockSize / 4,blockPos.y - m_BlockSize / 4},m_BlockSize,this,textureComponent });
+	std::shared_ptr<BlockComponent> blockComponent(
+		new ColorCubeComponent{ rowColumn.first,rowColumn.second,{blockPos.x + m_BlockSize / 4,blockPos.y - m_BlockSize / 4}
+		,m_BlockSize,this,textureComponent, m_MaxColorLevel,m_Revertible });
 	block->AddComponent(blockComponent);
 	m_Level.push_back(blockComponent);
 }
@@ -175,6 +182,8 @@ void LevelComponent::BlockTouched(int row, int column, const EntityInfo& info)
 		{
 			block->Reset();
 		}
+
+		InitiliazeDiscs(m_DiscRow);
 	}
 }
 

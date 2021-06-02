@@ -66,13 +66,7 @@
     <ClCompile Include="VoidBlockComponent.cpp">
       <Filter>Components\LevelBlocks</Filter>
     </ClCompile>
-    <ClCompile Include="SpawnerComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="GameControllerComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="SpawnedObjectComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="QBertComponent.cpp">
@@ -95,6 +89,12 @@
     </ClCompile>
     <ClCompile Include="DiscComponent.cpp">
       <Filter>Components\LevelBlocks</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelLoader.cpp">
+      <Filter>Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="FileWriteScene.cpp">
+      <Filter>Scenes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -128,13 +128,7 @@
     <ClInclude Include="VoidBlockComponent.h">
       <Filter>Components\LevelBlocks</Filter>
     </ClInclude>
-    <ClInclude Include="SpawnerComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="GameControllerComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="SpawnedObjectComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="QBertComponent.h">
@@ -155,11 +149,17 @@
     <ClInclude Include="EntityComponent.h">
       <Filter>Components\LevelEntities</Filter>
     </ClInclude>
+    <ClInclude Include="DiscComponent.h">
+      <Filter>Components\LevelBlocks</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelLoader.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
     <ClInclude Include="DataStructures.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DiscComponent.h">
-      <Filter>Components\LevelBlocks</Filter>
+    <ClInclude Include="FileWriteScene.h">
+      <Filter>Scenes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

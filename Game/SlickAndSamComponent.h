@@ -9,7 +9,8 @@ class SlickAndSamComponent final
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
 	SlickAndSamComponent(const std::weak_ptr<LevelNavigatorComponent>& pNavigator
-		,const std::weak_ptr<GameControllerComponent>& pGameController, int spawnIndex);
+		,const std::weak_ptr<GameControllerComponent>& pGameController
+		, int spawnIndex, float timeBetweenMoves =0.5f);
 	virtual ~SlickAndSamComponent();
 
 	//------COPY CONSTRUCTORS------

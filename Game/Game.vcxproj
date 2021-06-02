@@ -196,16 +196,16 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClCompile Include="DiscComponent.cpp" />
     <ClCompile Include="EntityComponent.cpp" />
     <ClCompile Include="ExtraMath.cpp" />
+    <ClCompile Include="FileWriteScene.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="HealthComponent.cpp" />
     <ClCompile Include="LevelComponent.cpp" />
+    <ClCompile Include="LevelLoader.cpp" />
     <ClCompile Include="LevelNavigatorComponent.cpp" />
     <ClCompile Include="GameControllerComponent.cpp" />
     <ClCompile Include="QBertComponent.cpp" />
     <ClCompile Include="SlickAndSamComponent.cpp" />
-    <ClCompile Include="SpawnedObjectComponent.cpp" />
-    <ClCompile Include="SpawnerComponent.cpp" />
     <ClCompile Include="UggAndWrongwayComponent.cpp" />
     <ClCompile Include="VoidBlockComponent.cpp" />
   </ItemGroup>
@@ -219,16 +219,16 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClInclude Include="DiscComponent.h" />
     <ClInclude Include="EntityComponent.h" />
     <ClInclude Include="ExtraMath.h" />
+    <ClInclude Include="FileWriteScene.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="HealthEvents.h" />
     <ClInclude Include="LevelComponent.h" />
+    <ClInclude Include="LevelLoader.h" />
     <ClInclude Include="LevelNavigatorComponent.h" />
     <ClInclude Include="GameControllerComponent.h" />
     <ClInclude Include="QBertComponent.h" />
     <ClInclude Include="SlickAndSamComponent.h" />
-    <ClInclude Include="SpawnedObjectComponent.h" />
-    <ClInclude Include="SpawnerComponent.h" />
     <ClInclude Include="UggAndWrongwayComponent.h" />
     <ClInclude Include="VoidBlockComponent.h" />
   </ItemGroup>

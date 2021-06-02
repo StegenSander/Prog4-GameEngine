@@ -9,10 +9,15 @@
 #include "TestScene.h"
 #include "GameScene.h"
 #include <Scene.h>
+#include "FileWriteScene.h"
 
 int main()
 {
-	std::shared_ptr<dae::Scene> scene{ new GameScene() };
+	//std::shared_ptr<dae::Scene> scene{ new FileWriteScene() };
+	//dae::SceneManager::GetInstance().RegisterScene(scene);
+	//dae::SceneManager::GetInstance().SetActiveScene(scene->GetName());
+
+	std::shared_ptr<dae::Scene> scene{ new GameScene("../Data/level3.bin")};
 	dae::SceneManager::GetInstance().RegisterScene(scene);
 	dae::SceneManager::GetInstance().SetActiveScene(scene->GetName());
 

@@ -13,7 +13,7 @@ public:
 		, const std::weak_ptr<LevelNavigatorComponent>& pQBertNavigator
 		, const std::weak_ptr<GameControllerComponent>& pGameController
 		, const std::weak_ptr<TextureComponent>& pTexture
-		, int spawnIndex);
+		, int spawnIndex, float timeBetweenMoves = 1.f);
 	virtual ~CoilyComponent();
 
 	//------COPY CONSTRUCTORS------
@@ -30,6 +30,8 @@ public:
 	void Despawn() override;
 	void Notify(EventType type, EventData* eventData) override;
 
+	void DiscTriggered();
+
 	//------PUBLIC VARIABLES------
 protected:
 	//------PROTECTED FUNCTIONS------
@@ -43,9 +45,16 @@ private:
 	std::weak_ptr<LevelNavigatorComponent> m_pNavigator;
 	std::weak_ptr<LevelNavigatorComponent> m_pQBertNavigator;
 	std::weak_ptr<TextureComponent> m_pTexture;
-	const float m_TimeBetweenMoves = 1.f;
+	const float m_TimeBetweenMoves;
 	float m_TimeUntilNextMove;
 	int m_SpawnIndex;
+
+	//Move To Target Data
+	int m_MaxDistanceToTarget = 3;
+	int m_TargetRow;
+	int m_TargetColumn;
+	bool m_IsMovingToTarget;
+
 	bool m_HasTransformed;
 };
 

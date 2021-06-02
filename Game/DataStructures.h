@@ -1,4 +1,5 @@
 #pragma once
+#include "Transform.h"
 
 
 enum class Direction
@@ -33,8 +34,35 @@ struct EntityInfo
 class BlockComponent;
 struct MoveResult
 {
-	BlockComponent* blockTouched = nullptr;
-	bool blockOccupied = false;
-	bool didMove = false;
-	bool validMove = false;
+	BlockComponent* BlockTouched = nullptr;
+	bool BlockOccupied = false;
+	bool DidMove = false;
+	bool ValidMove = false;
+};
+
+struct GameRules
+{
+	int AmountOfColorChanges{};
+	bool Revertible{};
+};
+
+struct LevelData
+{
+	int LevelSize{};
+	int RowOfDiscs{};
+	glm::vec3 LevelPosition{};
+};
+
+struct QBertData
+{
+	int Lives{};
+	float TimeBetweenMoves{};
+};
+
+struct EntityData
+{
+	int MaxEntitiesAlive{};
+	int MinSpawnDuration{};
+	int MaxSpawnDuration{};
+	float TimeBetweenMoves{};
 };

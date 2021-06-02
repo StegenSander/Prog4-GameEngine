@@ -10,13 +10,15 @@
 
 
 QBertComponent::QBertComponent(const std::weak_ptr<LevelNavigatorComponent>& pNavigator
-	, DWORD gamepadIndex, const std::weak_ptr<GameControllerComponent>& pGameController, int spawnIndex)
+	, DWORD gamepadIndex, const std::weak_ptr<GameControllerComponent>& pGameController
+	, int spawnIndex, float timeBetweenMoves)
 	: EntityComponent(pGameController,EntityType::QBert)
 	, m_pNavigator{pNavigator}
 	, m_GamepadIndex{ gamepadIndex }
 	, m_SpawnIndex{spawnIndex}
+	, m_TimeBetweenMoves{timeBetweenMoves}
 {
-	m_Timer = m_MoveCooldown;
+	m_Timer = m_TimeBetweenMoves;
 }
 
 QBertComponent::~QBertComponent()
@@ -37,25 +39,25 @@ void QBertComponent::Update()
 	if (value.x > threshhold && value.y > threshhold && m_Timer < 0)
 	{
 		m_pNavigator.lock()->Move(Direction::NorthEast, this);
-		m_Timer = m_MoveCooldown;
+		m_Timer = m_TimeBetweenMoves;
 	}
 
 	else if (value.x < -threshhold && value.y >threshhold && m_Timer < 0)
 	{
 		m_pNavigator.lock()->Move(Direction::NorthWest, this);
-		m_Timer = m_MoveCooldown;
+		m_Timer = m_TimeBetweenMoves;
 	}
 
 	else if (value.x < -threshhold && value.y < -threshhold && m_Timer < 0)
 	{
 		m_pNavigator.lock()->Move(Direction::SouthWest, this);
-		m_Timer = m_MoveCooldown;
+		m_Timer = m_TimeBetweenMoves;
 	}
 
 	else if (value.x > threshhold && value.y < -threshhold && m_Timer < 0)
 	{
 		m_pNavigator.lock()->Move(Direction::SouthEast, this);
-		m_Timer = m_MoveCooldown;
+		m_Timer = m_TimeBetweenMoves;
 	}
 }
 

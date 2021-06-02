@@ -9,7 +9,8 @@ class QBertComponent final:
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
 	QBertComponent(const std::weak_ptr<LevelNavigatorComponent>& pNavigator
-		, DWORD gamepadIndex, const std::weak_ptr<GameControllerComponent>& pGameController, int spawnIndex);
+		, DWORD gamepadIndex, const std::weak_ptr<GameControllerComponent>& pGameController
+		, int spawnIndex, float timeBetweenMoves = 0.4f);
 	virtual ~QBertComponent();
 
 	//------COPY CONSTRUCTORS------
@@ -36,7 +37,7 @@ private:
 	std::weak_ptr<LevelNavigatorComponent> m_pNavigator;
 	DWORD m_GamepadIndex;
 	float m_Timer;
-	float m_MoveCooldown{ 0.4f };
+	float m_TimeBetweenMoves{ 0.4f };
 	int m_SpawnIndex;
 };
 
