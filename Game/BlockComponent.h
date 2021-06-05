@@ -27,7 +27,7 @@ public:
 	virtual bool IsCompleted() { return true; };
 	virtual void Update() override {};
 	virtual void Render() override {};
-	virtual void Reset() {};
+	virtual void FullReset() {};
 	glm::vec2 GetStandPosition(BlockSide side = BlockSide::Top);
 
 	//------PUBLIC VARIABLES------

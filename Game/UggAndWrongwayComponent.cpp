@@ -49,7 +49,7 @@ void UggAndWrongwayComponent::Update()
 	}
 }
 
-MoveResult UggAndWrongwayComponent::Reset()
+MoveResult UggAndWrongwayComponent::FullReset()
 {
 	return m_pNavigator.lock()->MoveToSquare(m_SpawnIndex, this);
 }

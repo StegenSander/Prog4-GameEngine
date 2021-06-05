@@ -7,6 +7,12 @@
 
 #include "Controller.h"
 
+
+#pragma warning(push)
+#pragma warning (disable:4201)
+#include <glm/glm.hpp>
+#pragma warning(pop)
+
 namespace dae
 {
 
@@ -35,6 +41,9 @@ namespace dae
         //KeyBoard functions
         bool IsKeyDown(int SDLScancode);
 
+        //left =1, middle =2, right =3
+        bool IsMouseButtonDown(int MouseButton);
+
         //Command functions
 		void AddCommand(ControllerButtonData buttonData, Command* pCommand,DWORD controllerIndex = 0);
         void AddCommand(KeyboardKeyData keyData, Command* pCommand);
@@ -44,6 +53,8 @@ namespace dae
         void SetAmountOfControllers(DWORD amount);
 
         JoystickValue GetJoystickValue(DWORD index, bool isLeft = true);
+
+       glm::vec2 GetMousePosition();
 
 	private:
 
@@ -56,6 +67,8 @@ namespace dae
         KeyboardCommandMap m_KeyboardCommandMap{};
 
         DWORD m_AmountOfControllers = 0;
+
+        glm::vec2 m_MousePosition;
 	};
 
 }

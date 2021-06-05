@@ -3,7 +3,7 @@
 
 Command::~Command()
 {
-	std::cout << "Command Destructor\n";
+	//std::cout << "Command Destructor\n";
 }
 
 void Command::Execute()

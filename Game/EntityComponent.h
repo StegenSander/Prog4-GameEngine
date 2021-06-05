@@ -22,7 +22,7 @@ public:
 
 	//------PUBLIC FUNCTIONS------
 	virtual void Update() override = 0;
-	virtual MoveResult Reset() = 0;
+	virtual MoveResult FullReset() = 0;
 	virtual void Despawn() {};
 	virtual void Notify(EventType type, EventData* eventData) override = 0;
 	EntityInfo GetInfo();

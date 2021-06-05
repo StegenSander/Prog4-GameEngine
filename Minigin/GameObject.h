@@ -27,14 +27,14 @@ namespace dae
 		template <typename T>
 		std::weak_ptr<T> GetComponent();
 
-		void RemoveComponents();
+		void PostUpdate();
 
 		void SetScene(Scene* pScene) { m_pScene = pScene; }
 		Scene* GetScene() { return m_pScene; }
 	private:
 		Transform m_Transform{};
-		Scene* m_pScene{};
 		std::vector<std::shared_ptr<BaseComponent>> m_Components;
+		Scene* m_pScene{};
 
 	};
 

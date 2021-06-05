@@ -13,16 +13,21 @@ namespace dae
 		void Initialise();
 		void Update();
 		void Render();
-		void SetActiveScene(const std::string& name);
-		dae::Scene& GetActiveScene();
+		bool SetActiveScene(const std::string& name);
+		dae::Scene* GetActiveScene();
 
 		void RegisterScene(const std::shared_ptr<Scene>& scene);
 
-		void DestroyMarkedObjects();
+		void PostUpdate();
 	private:
+		struct ReplaceSceneData {
+			std::string name;
+			std::shared_ptr<Scene> newScene;
+		};
 		friend class Singleton<SceneManager>;
 		SceneManager() = default;
 		std::shared_ptr<Scene> m_ActiveScene;
 		std::map<std::string, std::shared_ptr<Scene>> m_SceneMap;
+		bool m_IsInitialized{ false };
 	};
 }

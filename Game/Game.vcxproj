@@ -191,6 +191,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     </ClCompile>
     <ClCompile Include="BlockComponent.cpp" />
     <ClCompile Include="CoilyComponent.cpp" />
+    <ClCompile Include="CoilyPlayerComponent.cpp" />
     <ClCompile Include="ColorCubeComponent.cpp" />
     <ClCompile Include="DiscComponent.cpp" />
     <ClCompile Include="EntityComponent.cpp" />
@@ -203,7 +204,9 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClCompile Include="LevelLoader.cpp" />
     <ClCompile Include="LevelNavigatorComponent.cpp" />
     <ClCompile Include="GameControllerComponent.cpp" />
+    <ClCompile Include="MainMenuScene.cpp" />
     <ClCompile Include="QBertComponent.cpp" />
+    <ClCompile Include="ScoreComponent.cpp" />
     <ClCompile Include="SlickAndSamComponent.cpp" />
     <ClCompile Include="UggAndWrongwayComponent.cpp" />
     <ClCompile Include="VoidBlockComponent.cpp" />
@@ -212,6 +215,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClInclude Include="..\Minigin\MiniginPCH.h" />
     <ClInclude Include="BlockComponent.h" />
     <ClInclude Include="CoilyComponent.h" />
+    <ClInclude Include="CoilyPlayerComponent.h" />
     <ClInclude Include="ColorCubeComponent.h" />
     <ClInclude Include="DataStructures.h" />
     <ClInclude Include="DiscComponent.h" />
@@ -225,7 +229,9 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClInclude Include="LevelLoader.h" />
     <ClInclude Include="LevelNavigatorComponent.h" />
     <ClInclude Include="GameControllerComponent.h" />
+    <ClInclude Include="MainMenuScene.h" />
     <ClInclude Include="QBertComponent.h" />
+    <ClInclude Include="ScoreComponent.h" />
     <ClInclude Include="SlickAndSamComponent.h" />
     <ClInclude Include="UggAndWrongwayComponent.h" />
     <ClInclude Include="VoidBlockComponent.h" />

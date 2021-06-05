@@ -3,6 +3,8 @@
 #include "LevelComponent.h"
 #include "TextureComponent.h"
 #include "EntityComponent.h"
+#include "Scene.h"
+#include "ScoreComponent.h"
 
 
 ColorCubeComponent::ColorCubeComponent(int row, int column, const glm::vec2& blockPos, int blockSize
@@ -43,7 +45,7 @@ void ColorCubeComponent::Update()
 {
 }
 
-void ColorCubeComponent::Reset()
+void ColorCubeComponent::FullReset()
 {
 	m_ColorLevel = 0;
 	UpdateTexture();
@@ -54,6 +56,11 @@ void ColorCubeComponent::ColorCube()
 	if (m_ColorLevel < m_MaxColorLevel)
 	{
 		m_ColorLevel++;
+		auto score = m_pGameObject->GetScene()->FindObjectOfType<ScoreComponent>();
+		if (!score.expired() && score.lock().get() != nullptr)
+		{
+			score.lock()->AddScore(25);
+		}
 		UpdateTexture();
 	}
 	else if (m_IsRevertable)

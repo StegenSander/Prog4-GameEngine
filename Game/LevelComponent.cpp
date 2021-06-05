@@ -3,6 +3,7 @@
 #include "ExtraMath.h"
 #include "GameObject.h"
 #include "Scene.h"
+#include "GameScene.h"
 
 //Component
 #include "TextureComponent.h"
@@ -15,6 +16,8 @@
 #include "GameControllerComponent.h"
 #include "EntityComponent.h"
 #include "DiscComponent.h"
+#include "ScoreComponent.h"
+
 
 LevelComponent::LevelComponent(int rows, int blockSize, int discRow
 	, const std::weak_ptr<GameControllerComponent>& pGameController
@@ -112,7 +115,7 @@ void LevelComponent::CreateDisc(const std::pair<int, int>& rowColumn, const glm:
 
 std::weak_ptr<BlockComponent> LevelComponent::GetBlockAtIndex(int index)
 {
-	assert(index < m_Level.size());
+	assert(size_t(index) < m_Level.size());
 	assert(index >= 0);
 	return m_Level[index];
 }
@@ -176,20 +179,14 @@ void LevelComponent::BlockTouched(int row, int column, const EntityInfo& info)
 
 	if (IsLevelFinished())
 	{
-		std::cout << "Level Finished\n";
-
-		for (auto& block : m_Level)
-		{
-			block->Reset();
-		}
-
-		InitiliazeDiscs(m_DiscRow);
+		LevelFinished();
+		
 	}
 }
 
 void LevelComponent::BlockTouched(int index, const EntityInfo& info)
 {
-	assert(index < m_Level.size());
+	assert(size_t(index) < m_Level.size());
 	assert(index >= 0);
 	m_Level[index]->BlockTouched(info);
 }
@@ -203,10 +200,63 @@ bool LevelComponent::IsLevelFinished()
 	return true;
 }
 
+void LevelComponent::LevelFinished()
+{
+	std::cout << "Level Finished\n";
+
+	//Score
+	{
+		int discsRemaining = 0;
+
+		//Check left Disc
+		auto block = GetBlockAtIndex(ExtraMath::PyramidAmountOfBlockUntil(m_DiscRow, 1));
+		auto discComp = block.lock()->GetGameObject()->GetComponent<DiscComponent>();
+		if (!discComp.expired() && discComp.lock().get() != nullptr)
+		{
+			discsRemaining++;
+		}
+
+		//Check rightDisc
+		block = GetBlockAtIndex(ExtraMath::PyramidAmountOfBlockUntil(m_DiscRow, m_DiscRow));
+		discComp = block.lock()->GetGameObject()->GetComponent<DiscComponent>();
+		if (!discComp.expired() && discComp.lock().get() != nullptr)
+		{
+			discsRemaining++;
+		}
+
+		//Add Score for remainingDiscs
+		auto score = m_pGameObject->GetScene()->FindObjectOfType<ScoreComponent>();
+		if (!score.expired() && score.lock().get() != nullptr)
+		{
+			score.lock()->AddScore(50 * discsRemaining);
+		}
+	}
+
+	FullReset();
+
+	GameScene* gameScene = dynamic_cast<GameScene*>( m_pGameObject->GetScene());
+	if (gameScene)
+	{
+		gameScene->LoadNextLevel();
+	}
+}
+
+void LevelComponent::FullReset()
+{
+	//Reset Blocks
+	for (auto& block : m_Level)
+	{
+		block->FullReset();
+	}
+
+	//Reset Discs
+	InitiliazeDiscs(m_DiscRow);
+}
+
+
 void LevelComponent::PlayerDamaged()
 {
-	std::cout << "player hit\n";
-	m_pGameController.lock()->PlayerDamaged();
+	if (!m_pGameController.expired()) m_pGameController.lock()->PlayerDamaged();
 }
 void LevelComponent::PlayerFallen()
 {
@@ -217,11 +267,13 @@ void LevelComponent::Notify(EventType type, EventData* )
 	switch (type)
 	{
 	case EventType::PlayerKilled:
-		for (auto& block : m_Level)
+		FullReset();
+
+		GameScene* gameScene = dynamic_cast<GameScene*>(m_pGameObject->GetScene());
+		if (gameScene)
 		{
-			block->Reset();
+			gameScene->LoadMainMenu();
 		}
-		InitiliazeDiscs(6);
 		break;
 	}
 }
@@ -255,6 +307,11 @@ void LevelComponent::HandleCollision(const EntityInfo& firstObject, const Entity
 		break;
 	case EntityType::SlickAndSam:
 		otherInfo.Behaviour->Despawn();
+		auto score = m_pGameObject->GetScene()->FindObjectOfType<ScoreComponent>();
+		if (!score.expired() && score.lock().get() != nullptr)
+		{
+			score.lock()->AddScore(300);
+		}
 		break;
 	}
 }

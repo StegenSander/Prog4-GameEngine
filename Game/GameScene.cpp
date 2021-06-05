@@ -1,6 +1,10 @@
 #include "MiniginPCH.h"
 #include "GameScene.h"
 #include "GameObject.h"
+#include "ResourceManager.h"
+#include "LevelLoader.h"
+#include "ExtraMath.h"
+#include <SDL_scancode.h>
 
 
 //Components
@@ -8,9 +12,7 @@
 #include "LevelComponent.h"
 #include "LevelNavigatorComponent.h"
 #include "QBertComponent.h"
-#include <SDL_scancode.h>
 #include "HealthComponent.h"
-#include "ExtraMath.h"
 #include "SpawnerComponent.h"
 #include "GameControllerComponent.h"
 #include "LevelNavigatorComponent.h"
@@ -18,11 +20,15 @@
 #include "UggAndWrongwayComponent.h"
 #include "BlockComponent.h"
 #include "CoilyComponent.h"
-#include "LevelLoader.h"
+#include "ScoreComponent.h"
+#include "TextComponent.h"
+#include "CoilyPlayerComponent.h"
+#include "ButtonComponent.h"
 
-GameScene::GameScene(const std::string& filePath)
+GameScene::GameScene(int levelIndex)
 	: Scene("GameScene")
-	, m_LevelFilePath{filePath}
+	, m_LevelFilePath{"../Data/level" + std::to_string(levelIndex) + ".bin"}
+	, m_LevelIndex{levelIndex}
 {
 }
 
@@ -31,6 +37,10 @@ void GameScene::Initialise()
 	using namespace dae;
 	std::cout << "GameScene Initialised\n";
 
+	//m_SceneData->pInputManager->AddCommand(KeyboardKeyData{ SDL_SCANCODE_R, ButtonState::OnPress }
+	//, new Command(std::bind(&dae::Scene::Reset, this), this));
+
+	const auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
 	//LoadLevel
 	LevelLoader::LoadLevel(m_LevelFilePath,m_GameRules, m_LevelData, m_QBertData
 		, m_SlickAndSameData, m_UggAndWrongwayData, m_CoilyData);
@@ -41,6 +51,23 @@ void GameScene::Initialise()
 		std::shared_ptr<TextureComponent> backgroundTexture(new TextureComponent{ "background.jpg" });
 		background->AddComponent(backgroundTexture);
 		AddObject(background);
+	}
+
+	//Button MainMenu
+	{
+		std::shared_ptr<GameObject> button{ new GameObject() };
+		std::shared_ptr<TextureComponent> buttonTexture(new TextureComponent{ "Button.png" });
+		std::shared_ptr<TextComponent> buttonText(new TextComponent("Back", font));
+		std::shared_ptr<ButtonComponent> buttonComp(
+			new ButtonComponent({ 0,0 }, { 128,48 }
+		, std::bind(&GameScene::LoadMainMenu, this)));
+		buttonText->SetRelativeOffset({ 28, 6 });
+		button->AddComponent(buttonTexture);
+		button->AddComponent(buttonText);
+		button->AddComponent(buttonComp);
+		button->GetTransform().SetPosition({ 0,420,0 });
+		buttonTexture->SetSize({ 128,48 });
+		AddObject(button);
 	}
 
 	//Game Controller
@@ -54,11 +81,28 @@ void GameScene::Initialise()
 	{
 		std::shared_ptr<GameObject> health{ new GameObject() };
 		std::shared_ptr<TextureComponent> healthTextureComponent(new TextureComponent{ "Health/Health_3.png" });
-		std::shared_ptr<HealthComponent> healthComponent(
-			new HealthComponent(m_QBertData.Lives, healthTextureComponent, gameControllerComponent));
+
+		if (m_LastLevelHealth == -1) m_LastLevelHealth = m_QBertData.Lives;
+		std::shared_ptr<HealthComponent> healthComp(
+				new HealthComponent(m_LastLevelHealth, m_QBertData.Lives, healthTextureComponent, gameControllerComponent));
+		m_pHealth = healthComp;
+
 		health->AddComponent(healthTextureComponent);
-		health->AddComponent(healthComponent);
+		health->AddComponent(healthComp);
 		AddObject(health);
+	}
+
+	//Score
+	{
+		std::shared_ptr<GameObject> score{ new GameObject() };
+		std::shared_ptr<TextComponent> scoreTextComponent(new TextComponent{"0",font});
+		scoreTextComponent->SetRelativeOffset({ 0,40 });
+		
+		std::shared_ptr<ScoreComponent>scoreComp (new ScoreComponent(scoreTextComponent, m_LastLevelScore));
+		m_pScore = scoreComp;
+		score->AddComponent(scoreTextComponent);
+		score->AddComponent(scoreComp);
+		AddObject(score);
 	}
 
 	//Level
@@ -79,31 +123,15 @@ void GameScene::Initialise()
 
 	//QBert
 	{
-		using namespace dae;
-		std::shared_ptr<GameObject> qBert{ new GameObject() };
-		std::shared_ptr<LevelNavigatorComponent> navigatorComponent(new LevelNavigatorComponent(levelComponent));
-		m_pQbertNavigator = navigatorComponent;
-		int spawnIndexQBert = ExtraMath::PyramidAmountOfBlockUntil(3, 2);
-		std::shared_ptr<QBertComponent> qbertComponent(
-			new QBertComponent(navigatorComponent,0, gameControllerComponent,spawnIndexQBert,m_QBertData.TimeBetweenMoves));
-		std::shared_ptr<TextureComponent> textureComponent(new TextureComponent{ "QBert.png",{0,0},{m_BlockSize / 2,m_BlockSize / 2} });
-		AddObject(qBert);
-		qBert->AddComponent(textureComponent);
-		qBert->AddComponent(navigatorComponent);
-		qBert->AddComponent(qbertComponent);
-		qbertComponent->Reset();
-
-		m_SceneData->pInputManager->AddCommand(KeyboardKeyData{ SDL_SCANCODE_W, ButtonState::OnPress }
-		, new Command(std::bind(&LevelNavigatorComponent::Move, navigatorComponent, Direction::NorthEast, qbertComponent.get()), qBert.get()));
-
-		m_SceneData->pInputManager->AddCommand(KeyboardKeyData{ SDL_SCANCODE_A, ButtonState::OnPress }
-		, new Command(std::bind(&LevelNavigatorComponent::Move, navigatorComponent, Direction::NorthWest, qbertComponent.get()), qBert.get()));
-
-		m_SceneData->pInputManager->AddCommand(KeyboardKeyData{ SDL_SCANCODE_S, ButtonState::OnPress }
-		, new Command(std::bind(&LevelNavigatorComponent::Move, navigatorComponent, Direction::SouthWest, qbertComponent.get()), qBert.get()));
-
-		m_SceneData->pInputManager->AddCommand(KeyboardKeyData{ SDL_SCANCODE_D, ButtonState::OnPress }
-		, new Command(std::bind(&LevelNavigatorComponent::Move, navigatorComponent, Direction::SouthEast, qbertComponent.get()), qBert.get()));
+		if (m_GameMode == GameMode::Coop)
+		{
+			CreateQbert(ExtraMath::PyramidAmountOfBlockUntil(m_LevelData.LevelSize +1, 2), 0);
+			CreateQbert(ExtraMath::PyramidAmountOfBlockUntil(m_LevelData.LevelSize +1, m_LevelData.LevelSize), 1);
+		}
+		else
+		{
+			CreateQbert(ExtraMath::PyramidAmountOfBlockUntil(3, 2), 0);
+		}
 	}
 
 	//Spawners
@@ -142,7 +170,7 @@ void GameScene::Initialise()
 
 std::shared_ptr<dae::GameObject> GameScene::SpawnSlickAndSam()
 {
-	std::cout << "Spawn Slick And Sam called\n";
+	//std::cout << "Spawn Slick And Sam called\n";
 	std::shared_ptr<dae::GameObject> obj{ new dae::GameObject };
 	std::shared_ptr<LevelNavigatorComponent> levelNavComponent(new LevelNavigatorComponent(m_pLevel));
 	int spawnOffset = rand() % 2;
@@ -160,14 +188,13 @@ std::shared_ptr<dae::GameObject> GameScene::SpawnSlickAndSam()
 	obj->AddComponent(SandSComponent);
 	obj->AddComponent(textureComponent);
 	
-	MoveResult result = SandSComponent->Reset();
+	MoveResult result = SandSComponent->FullReset();
 	if (!result.DidMove) obj->MarkForDelete();
 	return obj;
 }
-
 std::shared_ptr<dae::GameObject> GameScene::SpawnUggAndWrongway()
 {
-	std::cout << "Spawn Ugg And Wrongway called\n";
+	//std::cout << "Spawn Ugg And Wrongway called\n";
 	std::shared_ptr<dae::GameObject> obj{ new dae::GameObject };
 
 	std::shared_ptr<LevelNavigatorComponent> levelNavComponent{};
@@ -200,30 +227,142 @@ std::shared_ptr<dae::GameObject> GameScene::SpawnUggAndWrongway()
 	obj->AddComponent(UandWComponent);
 	obj->AddComponent(textureComponent);
 
-	MoveResult result = UandWComponent->Reset();
+	MoveResult result = UandWComponent->FullReset();
 	if (!result.DidMove) obj->MarkForDelete();
 
 	return obj;
 }
-
 std::shared_ptr<dae::GameObject> GameScene::SpawnCoily()
 {
-	std::cout << "Spawn Coily called\n";
+	//std::cout << "Spawn Coily called\n";
 	std::shared_ptr<dae::GameObject> obj{ new dae::GameObject };
 	std::shared_ptr<LevelNavigatorComponent> levelNavComponent(new LevelNavigatorComponent(m_pLevel));
 	int spawnIndexColiy = ExtraMath::PyramidAmountOfBlockUntil(3, 2);
 
 	std::shared_ptr<TextureComponent> textureComponent 
 		= std::shared_ptr<TextureComponent>(new TextureComponent{ "Enemies/Coily1.png",{0,0},{m_BlockSize / 2,m_BlockSize / 2} });
-	std::shared_ptr<CoilyComponent> coilyComponent(
-		new CoilyComponent(levelNavComponent, m_pQbertNavigator, m_pGameController
-			,textureComponent, spawnIndexColiy,m_CoilyData.TimeBetweenMoves));
+	
 	obj->AddComponent(levelNavComponent);
-	obj->AddComponent(coilyComponent);
 	obj->AddComponent(textureComponent);
 
-	MoveResult result = coilyComponent->Reset();
-	if (!result.DidMove) obj->MarkForDelete();
+
+	if (m_GameMode == GameMode::Versus)
+	{
+		std::shared_ptr<CoilyPlayerComponent> coilyComponent(
+			new CoilyPlayerComponent(levelNavComponent, m_pGameController
+				, textureComponent, spawnIndexColiy,1, m_CoilyData.TimeBetweenMoves));
+		obj->AddComponent(coilyComponent);
+		MoveResult result = coilyComponent->FullReset();
+		if (!result.DidMove) obj->MarkForDelete();
+
+		using namespace dae;
+		m_SceneData->pInputManager->AddCommand(KeyboardKeyData{ SDL_SCANCODE_I, ButtonState::Down }
+		, new Command(std::bind(&CoilyPlayerComponent::Move, coilyComponent.get(), Direction::NorthEast), coilyComponent.get()));
+
+		m_SceneData->pInputManager->AddCommand(KeyboardKeyData{ SDL_SCANCODE_J, ButtonState::Down }
+		, new Command(std::bind(&CoilyPlayerComponent::Move, coilyComponent.get(), Direction::NorthWest), coilyComponent.get()));
+
+		m_SceneData->pInputManager->AddCommand(KeyboardKeyData{ SDL_SCANCODE_K, ButtonState::Down }
+		, new Command(std::bind(&CoilyPlayerComponent::Move, coilyComponent.get(), Direction::SouthWest), coilyComponent.get()));
+
+		m_SceneData->pInputManager->AddCommand(KeyboardKeyData{ SDL_SCANCODE_L, ButtonState::Down }
+		, new Command(std::bind(&CoilyPlayerComponent::Move, coilyComponent.get(), Direction::SouthEast), coilyComponent.get()));
+	}
+	else
+	{
+		std::shared_ptr<CoilyComponent> coilyComponent(
+			new CoilyComponent(levelNavComponent, m_pGameController
+				, textureComponent, spawnIndexColiy, m_CoilyData.TimeBetweenMoves));
+		obj->AddComponent(coilyComponent);
+		MoveResult result = coilyComponent->FullReset();
+		if (!result.DidMove) obj->MarkForDelete();
+	}
 
 	return obj;
 }
+
+void GameScene::CreateQbert(int spawnIndex, int controlsIndex)
+{
+	using namespace dae;
+	std::shared_ptr<GameObject> qBert{ new GameObject() };
+	std::shared_ptr<LevelNavigatorComponent> navigatorComponent(new LevelNavigatorComponent(m_pLevel));
+	m_pQbertNavigator = navigatorComponent;
+	std::shared_ptr<QBertComponent> qbertComponent(
+		new QBertComponent(navigatorComponent, DWORD(controlsIndex), m_pGameController, spawnIndex, m_QBertData.TimeBetweenMoves));
+	std::shared_ptr<TextureComponent> textureComponent(new TextureComponent{ "QBert.png",{0,0},{m_BlockSize / 2,m_BlockSize / 2} });
+	AddObject(qBert);
+	qBert->AddComponent(textureComponent);
+	qBert->AddComponent(navigatorComponent);
+	qBert->AddComponent(qbertComponent);
+	qbertComponent->FullReset();
+
+	if (controlsIndex == 0)
+	{
+		m_SceneData->pInputManager->AddCommand(KeyboardKeyData{ SDL_SCANCODE_W, ButtonState::Down }
+		, new Command(std::bind(&QBertComponent::Move, qbertComponent, Direction::NorthEast), qbertComponent.get()));
+
+		m_SceneData->pInputManager->AddCommand(KeyboardKeyData{ SDL_SCANCODE_A, ButtonState::Down }
+		, new Command(std::bind(&QBertComponent::Move, qbertComponent, Direction::NorthWest), qbertComponent.get()));
+
+		m_SceneData->pInputManager->AddCommand(KeyboardKeyData{ SDL_SCANCODE_S, ButtonState::Down }
+		, new Command(std::bind(&QBertComponent::Move, qbertComponent, Direction::SouthWest), qbertComponent.get()));
+
+		m_SceneData->pInputManager->AddCommand(KeyboardKeyData{ SDL_SCANCODE_D, ButtonState::Down }
+		, new Command(std::bind(&QBertComponent::Move, qbertComponent, Direction::SouthEast), qbertComponent.get()));
+	}
+	else if (controlsIndex == 1)
+	{
+		m_SceneData->pInputManager->AddCommand(KeyboardKeyData{ SDL_SCANCODE_I, ButtonState::Down }
+		, new Command(std::bind(&QBertComponent::Move, qbertComponent, Direction::NorthEast), qbertComponent.get()));
+
+		m_SceneData->pInputManager->AddCommand(KeyboardKeyData{ SDL_SCANCODE_J, ButtonState::Down }
+		, new Command(std::bind(&QBertComponent::Move, qbertComponent, Direction::NorthWest), qbertComponent.get()));
+
+		m_SceneData->pInputManager->AddCommand(KeyboardKeyData{ SDL_SCANCODE_K, ButtonState::Down }
+		, new Command(std::bind(&QBertComponent::Move, qbertComponent, Direction::SouthWest), qbertComponent.get()));
+
+		m_SceneData->pInputManager->AddCommand(KeyboardKeyData{ SDL_SCANCODE_L, ButtonState::Down }
+		, new Command(std::bind(&QBertComponent::Move, qbertComponent, Direction::SouthEast), qbertComponent.get()));
+	}
+}
+void GameScene::SetLevelIndex(int index)
+{
+	m_LevelIndex = index;
+	m_LevelFilePath = std::string{ "../Data/level" + std::to_string(m_LevelIndex) + ".bin" };
+}
+void GameScene::SafeLastVariables()
+{
+	if (!m_pHealth.expired())
+	{
+		m_LastLevelHealth = m_pHealth.lock()->GetHealth();
+		std::cout << "heatlh:" << m_LastLevelHealth << std::endl;
+	}
+	if (!m_pScore.expired())
+	{
+		m_LastLevelScore = m_pScore.lock()->GetScore();
+		std::cout << "score: " << m_LastLevelScore << std::endl;
+	}
+}
+void GameScene::LoadNextLevel()
+{
+	SafeLastVariables();
+	int newIndex = ++m_LevelIndex;
+	if (newIndex >m_AmountOfLevels || newIndex < 1)
+	{
+		LoadMainMenu();
+	}
+	else
+	{
+		SetLevelIndex(newIndex);
+		Reset();
+	}
+}
+
+void GameScene::LoadMainMenu()
+{
+	m_LastLevelHealth = -1;
+	m_LastLevelScore = 0;
+	SetLevelIndex(1);
+	dae::SceneManager::GetInstance().SetActiveScene("MainMenuScene");
+}
+

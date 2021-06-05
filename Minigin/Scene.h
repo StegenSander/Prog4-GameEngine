@@ -22,13 +22,24 @@ namespace dae
 
 		virtual void OnSceneLoad() {};
 		virtual void OnSceneUnload() {};
+		//Use this function to clean necessary data
+		virtual void OnReset() {}
 		void Update();
 		void Render() const;
+		/// <summary>
+		/// Reset will not clean everything
+		/// Reset cleans up all GameObject and Components and then calls Initialise again
+		/// Some member variables might not get resetted
+		/// Use OnReset() override to reset these if necessary
+		/// </summary>
+		void Reset();
 
-		void DestroyMarkedObjects();
+		void PostUpdate();
 
 		template <typename T>
 		std::weak_ptr<T> FindObjectOfType();
+		template <typename T>
+		std::vector<std::weak_ptr<T>> FindObjectsOfType();
 
 		virtual ~Scene();
 		
@@ -46,6 +57,7 @@ namespace dae
 	private: 
 		std::string m_Name;
 		std::vector <std::shared_ptr<GameObject>> m_Objects{};
+		bool m_MustReset;
 	};
 
 	template<typename T>
@@ -57,6 +69,18 @@ namespace dae
 			if (!ptr.expired() && ptr.lock().get() != nullptr) return ptr;
 		}
 		return std::weak_ptr<T>();
+	}
+
+	template<typename T>
+	inline std::vector<std::weak_ptr<T>> Scene::FindObjectsOfType()
+	{
+		std::vector<std::weak_ptr<T>> result{};
+		for (const auto& obj : m_Objects)
+		{
+			std::weak_ptr<T> ptr = obj->GetComponent<T>();
+			if (!ptr.expired() && ptr.lock().get() != nullptr) result.push_back(ptr);
+		}
+		return result;
 	}
 
 }

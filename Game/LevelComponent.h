@@ -58,6 +58,8 @@ private:
 	void CreateColorCube(const std::pair<int,int>& rowColumn, const glm::vec3& pos);
 	void CreateVoidBlock(const std::pair<int, int>& rowColumn, const glm::vec3& pos);
 	void CreateDisc(const std::pair<int, int>& rowColumn, const glm::vec3& pos);
+	void LevelFinished();
+	void FullReset();
 
 	//------PRIVATE VARIABLES------	
 	int m_Rows;

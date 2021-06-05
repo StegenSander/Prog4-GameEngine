@@ -1,6 +1,7 @@
 #include "MiniginPCH.h"
 #include "GameControllerComponent.h"
 #include "HealthEvents.h"
+#include "SceneManager.h"
 
 GameControllerComponent::GameControllerComponent()
 	: Subject()

@@ -36,32 +36,37 @@ void QBertComponent::Update()
 	m_Timer -= GameTime::GetInstance().GetDeltaTime();
 	
 	const float threshhold = 0.3f;
-	if (value.x > threshhold && value.y > threshhold && m_Timer < 0)
+	if (value.x > threshhold && value.y > threshhold)
 	{
-		m_pNavigator.lock()->Move(Direction::NorthEast, this);
-		m_Timer = m_TimeBetweenMoves;
+		Move(Direction::NorthEast);
 	}
 
-	else if (value.x < -threshhold && value.y >threshhold && m_Timer < 0)
+	else if (value.x < -threshhold && value.y >threshhold)
 	{
-		m_pNavigator.lock()->Move(Direction::NorthWest, this);
-		m_Timer = m_TimeBetweenMoves;
+		Move(Direction::NorthWest);
 	}
 
-	else if (value.x < -threshhold && value.y < -threshhold && m_Timer < 0)
+	else if (value.x < -threshhold && value.y < -threshhold)
 	{
-		m_pNavigator.lock()->Move(Direction::SouthWest, this);
-		m_Timer = m_TimeBetweenMoves;
+		Move(Direction::SouthWest);
 	}
 
-	else if (value.x > threshhold && value.y < -threshhold && m_Timer < 0)
+	else if (value.x > threshhold && value.y < -threshhold)
 	{
-		m_pNavigator.lock()->Move(Direction::SouthEast, this);
+		Move(Direction::SouthEast);
+	}
+}
+
+void QBertComponent::Move(Direction direction)
+{
+	if (m_Timer <0)
+	{
+		m_pNavigator.lock()->Move(direction, this);
 		m_Timer = m_TimeBetweenMoves;
 	}
 }
 
-MoveResult QBertComponent::Reset()
+MoveResult QBertComponent::FullReset()
 {
 	return m_pNavigator.lock()->MoveToSquare(m_SpawnIndex,this);
 }
@@ -73,10 +78,10 @@ void QBertComponent::Notify(EventType type, EventData*)
 	case EventType::PlayerDamageTaken:
 		break;
 	case EventType::PlayerKilled:
-		Reset();
+		FullReset();
 		break;
 	case EventType::PlayerFallen:
-		Reset();
+		FullReset();
 		break;
 	}
 }

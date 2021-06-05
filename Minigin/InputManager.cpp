@@ -43,11 +43,12 @@ bool dae::InputManager::ProcessSDLInput()
 		}
 
 		if (e.type == SDL_MOUSEBUTTONDOWN) {
-
+			
 		}
 		if (e.type == SDL_MOUSEMOTION)
 		{
-
+			m_MousePosition.x = float(int(e.motion.x));
+			m_MousePosition.y = float(int(e.motion.y)); //windowheight
 		}
 	}
 
@@ -80,6 +81,12 @@ bool dae::InputManager::IsKeyDown(int SDLScancode)
 {
 	const Uint8* pStates = SDL_GetKeyboardState(nullptr);
 	return pStates[SDLScancode];
+}
+
+bool dae::InputManager::IsMouseButtonDown(int MouseButton)
+{
+	auto state = SDL_GetMouseState(NULL, NULL);
+	return bool(state & SDL_BUTTON(MouseButton));
 }
 
 void dae::InputManager::AddCommand(ControllerButtonData buttonData, Command* pCommand, DWORD controllerIndex)
@@ -129,7 +136,8 @@ void dae::InputManager::RemoveMarkedCommands()
 	{
 		if (pair.second->IsMarkedForDelete())
 		{
-			m_KeyboardCommandMap.erase(pair.first);
+			keysToDelete.push_back(pair.first);
+			std::cout << "Command deleted\n";
 		}
 	}
 
@@ -156,6 +164,14 @@ void dae::InputManager::SetAmountOfControllers(DWORD amount)
 JoystickValue dae::InputManager::GetJoystickValue(DWORD index, bool isLeft)
 {
 	return m_pControllers[index]->GetJoystickValues(isLeft);
+}
+
+glm::vec2 dae::InputManager::GetMousePosition()
+{
+	int x;
+	int y;
+	SDL_GetMouseState(&x,&y);
+	return { x,y };
 }
 
 void dae::InputManager::HandleKeyPressed(int SDLScancode)

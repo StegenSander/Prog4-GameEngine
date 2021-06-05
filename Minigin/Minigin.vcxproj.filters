@@ -78,17 +78,11 @@
     <ClInclude Include="TextureComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="TextObject.h">
-      <Filter>Depricated</Filter>
-    </ClInclude>
     <ClInclude Include="FPSDisplayScript.h">
       <Filter>Components\Scripts</Filter>
     </ClInclude>
     <ClInclude Include="Singleton.h">
       <Filter>Singletons</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneObject.h">
-      <Filter>Depricated</Filter>
     </ClInclude>
     <ClInclude Include="Font.h">
       <Filter>RenderClasses</Filter>
@@ -162,9 +156,6 @@
     <ClInclude Include="Subject.h">
       <Filter>Observer</Filter>
     </ClInclude>
-    <ClInclude Include="StaticObserver.h">
-      <Filter>Depricated</Filter>
-    </ClInclude>
     <ClInclude Include="Destroyable.h">
       <Filter>Gameobjects</Filter>
     </ClInclude>
@@ -185,6 +176,9 @@
     </ClInclude>
     <ClInclude Include="SpawnedObjectComponent.h">
       <Filter>Components\SpawnComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonComponent.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -220,9 +214,6 @@
     </ClCompile>
     <ClCompile Include="TextureComponent.cpp">
       <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="TextObject.cpp">
-      <Filter>Depricated</Filter>
     </ClCompile>
     <ClCompile Include="FPSDisplayScript.cpp">
       <Filter>Components\Scripts</Filter>
@@ -284,9 +275,6 @@
     <ClCompile Include="Subject.cpp">
       <Filter>Observer</Filter>
     </ClCompile>
-    <ClCompile Include="StaticObserver.cpp">
-      <Filter>Depricated</Filter>
-    </ClCompile>
     <ClCompile Include="Destroyable.cpp">
       <Filter>Gameobjects</Filter>
     </ClCompile>
@@ -301,6 +289,9 @@
     </ClCompile>
     <ClCompile Include="SpawnedObjectComponent.cpp">
       <Filter>Components\SpawnComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonComponent.cpp">
+      <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

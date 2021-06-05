@@ -15,16 +15,10 @@
 #include "TextComponent.h"
 #include "FPSDisplayScript.h"
 #include "UIButtonsScript.h"
-#include "PlayerComponent.h"
-#include "PlayerUIComponent.h"
 
 #include "ServiceLocator.h"
 #include "SDLSoundSystem.h"
 #include "LoggerSoundSystem.h"
-
-#include "SubjectComponent.h"
-
-#include "TestScene.h"
 
 
 using namespace std;
@@ -58,8 +52,6 @@ void dae::Minigin::Initialize()
 	//Serive Locator Initialise
 	//ServiceLocator::SetSoundSystem(new SDLSoundSystem(100));
 	ServiceLocator::SetSoundSystem(new SDLSoundSystem());
-
-
 	ResourceManager::GetInstance().Init("../Data/");
 }
 
@@ -76,6 +68,7 @@ void dae::Minigin::Cleanup()
 	m_Window = nullptr;
 	SDL_Quit();
 }
+
 void dae::Minigin::Run()
 {
 	Initialize();
@@ -94,7 +87,7 @@ void dae::Minigin::Run()
 	
 	//ServiceLocator::GetSoundSystem()->PlayEffect("../Data/door1.wav");
 
-	PrintHowToPlay();
+	//PrintHowToPlay();
 	{
 		Renderer& renderer = Renderer::GetInstance();
 		SceneManager& sceneManager = SceneManager::GetInstance();
@@ -103,7 +96,7 @@ void dae::Minigin::Run()
 		bool doContinue = true;
 		while (doContinue)
 		{
-			SceneData* sceneData = sceneManager.GetActiveScene().GetSceneData();
+			SceneData* sceneData = sceneManager.GetActiveScene()->GetSceneData();
 			GameTime::GetInstance().Update();
 			const auto currentTime = time.GetLatestTime();
 			
@@ -112,7 +105,7 @@ void dae::Minigin::Run()
 			sceneManager.Update();
 
 			sceneData->pInputManager->RemoveMarkedCommands();
-			sceneManager.DestroyMarkedObjects();
+			sceneManager.PostUpdate();
 
 			renderer.Render();
 			

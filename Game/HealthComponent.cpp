@@ -4,14 +4,16 @@
 #include "GameControllerComponent.h"
 #include "GameTime.h"
 
-HealthComponent::HealthComponent(int health,const std::weak_ptr<TextureComponent>& pTexture
+HealthComponent::HealthComponent(int initialHealth, int maxHealth,const std::weak_ptr<TextureComponent>& pTexture
 	, const std::weak_ptr<GameControllerComponent>& pGameController)
-	: m_InitialHealth{health}
-	, m_Health{health}
+	: m_MaxHealth{ maxHealth }
+	, m_Health{ initialHealth }
 	, m_pTexture{pTexture}
 	, m_pGameController{pGameController}
 	, Listener(pGameController)
 {
+	std::cout << "Health"<< initialHealth <<"\n";
+	UpdateTexture();
 }
 
 HealthComponent::~HealthComponent()
@@ -36,7 +38,7 @@ void HealthComponent::Update()
 }
 void HealthComponent::ResetHealth()
 {
-	m_Health = m_InitialHealth;
+	m_Health = m_MaxHealth;
 	UpdateTexture();
 }
 

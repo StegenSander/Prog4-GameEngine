@@ -1,6 +1,5 @@
 #include "MiniginPCH.h"
 #include "Listener.h"
-#include "StaticObserver.h"
 #include "Subject.h"
 
 Listener::Listener(const std::weak_ptr<Subject>& subject)

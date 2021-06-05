@@ -93,6 +93,15 @@
     <ClCompile Include="FileWriteScene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="ScoreComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenuScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="CoilyPlayerComponent.cpp">
+      <Filter>Components\LevelEntities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Minigin\MiniginPCH.h">
@@ -154,6 +163,15 @@
     </ClInclude>
     <ClInclude Include="FileWriteScene.h">
       <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenuScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="CoilyPlayerComponent.h">
+      <Filter>Components\LevelEntities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

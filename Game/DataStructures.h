@@ -24,6 +24,13 @@ enum class EntityType
 	SlickAndSam,
 };
 
+enum class GameMode
+{
+	Solo,
+	Coop,
+	Versus,
+};
+
 class EntityComponent;
 struct EntityInfo
 {

@@ -3,7 +3,6 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 
-#include "TextObject.h"
 #include "Renderer.h"
 #include "Font.h"
 #include "GameObject.h"

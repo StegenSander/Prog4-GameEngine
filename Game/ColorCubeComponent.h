@@ -24,7 +24,7 @@ public:
 	void BlockTouched(const EntityInfo& info) override;
 	bool IsCompleted() override;
 	void Update() override;
-	void Reset() override;
+	void FullReset() override;
 
 	//------PUBLIC VARIABLES------
 protected:

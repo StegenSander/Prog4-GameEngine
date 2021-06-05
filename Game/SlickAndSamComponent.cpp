@@ -51,7 +51,7 @@ void SlickAndSamComponent::Update()
 	}
 }
 
-MoveResult SlickAndSamComponent::Reset()
+MoveResult SlickAndSamComponent::FullReset()
 {
 	return m_pNavigator.lock()->MoveToSquare(m_SpawnIndex, this);
 }

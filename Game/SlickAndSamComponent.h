@@ -23,7 +23,7 @@ public:
 	//------PUBLIC FUNCTIONS------
 	void Update() override;
 
-	MoveResult Reset() override;
+	MoveResult FullReset() override;
 	void Despawn() override;
 	void Notify(EventType type, EventData* eventData) override;
 

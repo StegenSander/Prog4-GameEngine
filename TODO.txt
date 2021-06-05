@@ -1,6 +1,4 @@
--Score!!!!
 -Sound
--Make the 3 levels
 -Handle Level Ending
 -Make Co-op and versus
 

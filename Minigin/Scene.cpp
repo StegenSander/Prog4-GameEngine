@@ -8,6 +8,7 @@ using namespace dae;
 Scene::Scene(const std::string& name) 
 	: m_Name(name) 
 	, m_SceneData{ new SceneData() }
+	, m_MustReset{ false }
 {
 	m_SceneData->pInputManager = new InputManager();
 	m_SceneData->pInputManager->SetAmountOfControllers(2);
@@ -15,6 +16,9 @@ Scene::Scene(const std::string& name)
 
 Scene::~Scene()
 {
+	m_Objects.clear();
+	delete m_SceneData->pInputManager;
+	delete m_SceneData;
 	std::cout << "Scene Destructor\n";
 }
 
@@ -40,8 +44,36 @@ void Scene::Render() const
 	}
 }
 
-void Scene::DestroyMarkedObjects()
+void dae::Scene::Reset()
 {
+	m_MustReset = true;
+}
+
+void Scene::PostUpdate()
+{
+	if (m_MustReset)
+	{
+		for (const std::shared_ptr<GameObject>& object : m_Objects)
+		{
+			object->SetScene(nullptr);
+		}
+		{
+			std::cout << "resetting scene...\n";
+			m_Objects.clear();
+		}
+
+		OnReset();
+
+		delete m_SceneData->pInputManager;
+		m_SceneData->pInputManager = new InputManager();
+		m_SceneData->pInputManager->SetAmountOfControllers(2);
+
+		Initialise();
+
+		std::cout << "DONE resetting scene...\n";
+		m_MustReset = false;
+	}
+
 	m_Objects.erase(std::remove_if(m_Objects.begin()
 		, m_Objects.end(),
 		[](const std::shared_ptr<GameObject>& pGameObject)

@@ -4,23 +4,24 @@
 class LevelNavigatorComponent;
 class GameControllerComponent;
 class TextureComponent;
-class CoilyComponent
+
+class CoilyPlayerComponent
 	: public EntityComponent
 {
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
-	CoilyComponent(const std::weak_ptr<LevelNavigatorComponent>& pNavigator
+	CoilyPlayerComponent(const std::weak_ptr<LevelNavigatorComponent>& pNavigator
 		, const std::weak_ptr<GameControllerComponent>& pGameController
 		, const std::weak_ptr<TextureComponent>& pTexture
-		, int spawnIndex, float timeBetweenMoves = 1.f);
-	virtual ~CoilyComponent();
+		, int spawnIndex, DWORD gamePadIndex, float timeBetweenMoves = 1.f);
+	virtual ~CoilyPlayerComponent();
 
 	//------COPY CONSTRUCTORS------
-	CoilyComponent(const CoilyComponent&) = delete;
-	CoilyComponent(CoilyComponent&&) = delete;
+	CoilyPlayerComponent(const CoilyPlayerComponent&) = delete;
+	CoilyPlayerComponent(CoilyPlayerComponent&&) = delete;
 	//------ASSIGNMENT OPERATORS------
-	CoilyComponent operator=(const CoilyComponent&) = delete;
-	CoilyComponent& operator=(CoilyComponent&&) = delete;
+	CoilyPlayerComponent operator=(const CoilyPlayerComponent&) = delete;
+	CoilyPlayerComponent& operator=(CoilyPlayerComponent&&) = delete;
 
 	//------PUBLIC FUNCTIONS------
 	void Update() override;
@@ -29,7 +30,7 @@ public:
 	void Despawn() override;
 	void Notify(EventType type, EventData* eventData) override;
 
-	void DiscTriggered();
+	void Move(Direction direction);
 
 	//------PUBLIC VARIABLES------
 protected:
@@ -39,22 +40,15 @@ protected:
 private:
 	//------PRIVATE FUNCTIONS------
 	void Transform(bool isEgg);
-	std::weak_ptr<LevelNavigatorComponent> GetClosestQBert();
 
-	//------PRIVATE VARIABLES------	
+	//------PRIVATE VARIABLES------
 	std::weak_ptr<LevelNavigatorComponent> m_pNavigator;
-	std::weak_ptr<LevelNavigatorComponent> m_pQBertNavigator;
 	std::weak_ptr<TextureComponent> m_pTexture;
+
+	DWORD m_GamepadIndex;
 	const float m_TimeBetweenMoves;
 	float m_TimeUntilNextMove;
 	int m_SpawnIndex;
 
-	//Move To Target Data
-	int m_MaxDistanceToTarget = 3;
-	int m_TargetRow = 1;
-	int m_TargetColumn = 1;
-	bool m_IsMovingToTarget = false;
-
 	bool m_HasTransformed;
 };
-

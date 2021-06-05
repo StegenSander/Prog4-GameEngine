@@ -9,7 +9,7 @@ class HealthComponent
 {
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
-	HealthComponent(int health,const std::weak_ptr<TextureComponent>& pTexture
+	HealthComponent(int initialHealth, int maxHealth,const std::weak_ptr<TextureComponent>& pTexture
 		,const std::weak_ptr<GameControllerComponent>& pGameController);
 	virtual ~HealthComponent();
 
@@ -25,6 +25,7 @@ public:
 	void ResetHealth();
 	void Update() override;
 	void UpdateTexture();
+	int GetHealth()const { return m_Health; }
 
 	void Notify(EventType type, EventData* eventData) override;
 
@@ -40,8 +41,8 @@ private:
 	std::weak_ptr<TextureComponent> m_pTexture;
 	std::weak_ptr<GameControllerComponent> m_pGameController;
 	int m_Health;
-	int m_InitialHealth;
-	float m_MinTimeBetweenDamage = 0.2f;
+	int m_MaxHealth;
+	float m_MinTimeBetweenDamage = 0.5f;
 	float m_Timer = 0.f;
 };
 

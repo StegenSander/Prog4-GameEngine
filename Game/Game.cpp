@@ -2,24 +2,35 @@
 #include <iostream>
 #include <Minigin.h>
 
-#include <TextComponent.h>
-#include <ResourceManager.h>
-
 #include "SceneManager.h"
-#include "TestScene.h"
 #include "GameScene.h"
 #include <Scene.h>
 #include "FileWriteScene.h"
+#include "MainMenuScene.h"
 
 int main()
 {
 	//std::shared_ptr<dae::Scene> scene{ new FileWriteScene() };
 	//dae::SceneManager::GetInstance().RegisterScene(scene);
 	//dae::SceneManager::GetInstance().SetActiveScene(scene->GetName());
-
-	std::shared_ptr<dae::Scene> scene{ new GameScene("../Data/level3.bin")};
-	dae::SceneManager::GetInstance().RegisterScene(scene);
-	dae::SceneManager::GetInstance().SetActiveScene(scene->GetName());
+	{
+		std::shared_ptr<GameScene> scene{ new GameScene(1) };
+		scene->SetGameMode(GameMode::Coop);
+		dae::SceneManager::GetInstance().RegisterScene(scene);
+	}/*
+	{
+		std::shared_ptr<dae::Scene> scene{ new GameScene(2) };
+		dae::SceneManager::GetInstance().RegisterScene(scene);
+	}
+	{
+		std::shared_ptr<dae::Scene> scene{ new GameScene(3) };
+		dae::SceneManager::GetInstance().RegisterScene(scene);
+	}*/
+	{
+		std::shared_ptr<dae::Scene> scene{ new MainMenuScene() };
+		dae::SceneManager::GetInstance().RegisterScene(scene);
+		dae::SceneManager::GetInstance().SetActiveScene(scene->GetName());
+	}
 
 	dae::Minigin engine;
 	engine.Run();

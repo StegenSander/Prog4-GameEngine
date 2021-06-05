@@ -22,7 +22,8 @@ public:
 
 	//------PUBLIC FUNCTIONS------
 	void Update() override;
-	MoveResult Reset() override;
+	void Move(Direction direction);
+	MoveResult FullReset() override;
 	void Notify(EventType type, EventData* eventData) override;
 
 	//------PUBLIC VARIABLES------
@@ -37,7 +38,7 @@ private:
 	std::weak_ptr<LevelNavigatorComponent> m_pNavigator;
 	DWORD m_GamepadIndex;
 	float m_Timer;
-	float m_TimeBetweenMoves{ 0.4f };
+	float m_TimeBetweenMoves{ 0.3f };
 	int m_SpawnIndex;
 };
 

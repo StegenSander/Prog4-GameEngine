@@ -26,9 +26,6 @@ void BlockComponent::RegisterEntity(const EntityInfo& info)
 	}
 	else
 	{
-		//m_CurrentEntity = info;
-		//Collision
-		std::cout << "Collision Detected\n";
 		m_pLevel->HandleCollision(m_CurrentEntity, info);
 	}
 }

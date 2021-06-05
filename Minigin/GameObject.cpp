@@ -35,7 +35,7 @@ void dae::GameObject::AddComponent(const std::shared_ptr<BaseComponent>& pCompon
 	pComponent->m_pGameObject = this;
 }
 
-void dae::GameObject::RemoveComponents()
+void dae::GameObject::PostUpdate()
 {
 	m_Components.erase(std::remove_if(m_Components.begin()
 		, m_Components.end(),

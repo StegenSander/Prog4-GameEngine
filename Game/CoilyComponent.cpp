@@ -7,17 +7,18 @@
 #include "TextureComponent.h"
 #include "LevelComponent.h"
 #include "ExtraMath.h"
+#include "ScoreComponent.h"
+#include "Scene.h"
+#include "QBertComponent.h"
 
 
 CoilyComponent::CoilyComponent(const std::weak_ptr<LevelNavigatorComponent>& pNavigator
-	, const std::weak_ptr<LevelNavigatorComponent>& pQBertNavigator
 	, const std::weak_ptr<GameControllerComponent>& pGameController
 	, const std::weak_ptr<TextureComponent>& pTexture
 	, int spawnIndex, float timeBetweenMoves)
 	: EntityComponent(pGameController,EntityType::Coily)
 	, m_SpawnIndex(spawnIndex)
 	, m_pNavigator{pNavigator}
-	, m_pQBertNavigator{pQBertNavigator}
 	, m_pTexture{pTexture}
 	, m_TimeBetweenMoves{timeBetweenMoves}
 {
@@ -53,6 +54,7 @@ void CoilyComponent::Update()
 		}
 		else //Coily movement (chase player)
 		{
+			m_pQBertNavigator = GetClosestQBert();
 			if (!m_pQBertNavigator.expired())
 			{
 				int targetRow = 0;
@@ -117,6 +119,13 @@ void CoilyComponent::Update()
 
 				if ((!moveResult.ValidMove && m_IsMovingToTarget) || (m_IsMovingToTarget && distanceToTargetEnd > distanceToTargetStart))
 				{
+
+					auto score = m_pGameObject->GetScene()->FindObjectOfType<ScoreComponent>();
+					if (!score.expired() && score.lock().get() != nullptr)
+					{
+						score.lock()->AddScore(500);
+					}
+
 					Despawn();
 				}
 			}
@@ -126,7 +135,7 @@ void CoilyComponent::Update()
 	}
 }
 
-MoveResult CoilyComponent::Reset()
+MoveResult CoilyComponent::FullReset()
 {
 	Transform(true);
 	return m_pNavigator.lock()->MoveToSquare(m_SpawnIndex, this);
@@ -176,4 +185,28 @@ void CoilyComponent::Transform(bool isEgg)
 			m_pTexture.lock()->SetTexture("Enemies/coily2.png");
 		}
 	}
+}
+
+std::weak_ptr<LevelNavigatorComponent> CoilyComponent::GetClosestQBert()
+{
+	auto qbertComponents = m_pGameObject->GetScene()->FindObjectsOfType<QBertComponent>();
+	
+	std::weak_ptr<LevelNavigatorComponent> closestQBert;
+	int closestDistance = 2000;
+	for (auto qbert : qbertComponents)
+	{
+		auto qbertNavigator = qbert.lock()->GetGameObject()->GetComponent<LevelNavigatorComponent>();
+		int distance = ExtraMath::DistanceFromTo(
+			qbertNavigator.lock()->GetCurrentRow()
+			, qbertNavigator.lock()->GetCurrentColumn()
+			, m_pNavigator.lock()->GetCurrentRow()
+			, m_pNavigator.lock()->GetCurrentColumn());
+
+		if (distance < closestDistance)
+		{
+			closestQBert = qbertNavigator;
+			closestDistance = distance;
+		}
+	}
+	return closestQBert;
 }
