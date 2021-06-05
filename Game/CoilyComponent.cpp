@@ -10,6 +10,7 @@
 #include "ScoreComponent.h"
 #include "Scene.h"
 #include "QBertComponent.h"
+#include "ServiceLocator.h"
 
 
 CoilyComponent::CoilyComponent(const std::weak_ptr<LevelNavigatorComponent>& pNavigator
@@ -119,7 +120,7 @@ void CoilyComponent::Update()
 
 				if ((!moveResult.ValidMove && m_IsMovingToTarget) || (m_IsMovingToTarget && distanceToTargetEnd > distanceToTargetStart))
 				{
-
+					ServiceLocator::GetSoundSystem()->PlayEffect("../Data/Sound/SnakeFall.wav");
 					auto score = m_pGameObject->GetScene()->FindObjectOfType<ScoreComponent>();
 					if (!score.expired() && score.lock().get() != nullptr)
 					{

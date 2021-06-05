@@ -19,7 +19,6 @@ Scene::~Scene()
 	m_Objects.clear();
 	delete m_SceneData->pInputManager;
 	delete m_SceneData;
-	std::cout << "Scene Destructor\n";
 }
 
 void Scene::AddObject(const std::shared_ptr<GameObject>& object)
@@ -58,7 +57,6 @@ void Scene::PostUpdate()
 			object->SetScene(nullptr);
 		}
 		{
-			std::cout << "resetting scene...\n";
 			m_Objects.clear();
 		}
 
@@ -70,7 +68,6 @@ void Scene::PostUpdate()
 
 		Initialise();
 
-		std::cout << "DONE resetting scene...\n";
 		m_MustReset = false;
 	}
 

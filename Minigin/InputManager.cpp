@@ -18,6 +18,7 @@ bool dae::InputManager::ProcessInput()
 		if (pController)
 		{
 			pController->ProcessXINPUTInput();
+			if (pController->IsControllerButtonPressed(ControllerButton::Start)) return false;
 		}
 	}
 

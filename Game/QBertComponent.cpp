@@ -8,6 +8,9 @@
 #include "GameControllerComponent.h"
 #include "LevelComponent.h"
 
+#include "ServiceLocator.h"
+#include "SDLSoundSystem.h"
+
 
 QBertComponent::QBertComponent(const std::weak_ptr<LevelNavigatorComponent>& pNavigator
 	, DWORD gamepadIndex, const std::weak_ptr<GameControllerComponent>& pGameController
@@ -62,6 +65,7 @@ void QBertComponent::Move(Direction direction)
 	if (m_Timer <0)
 	{
 		m_pNavigator.lock()->Move(direction, this);
+		ServiceLocator::GetSoundSystem()->PlayEffect("../Data/Sound/Jump.wav");
 		m_Timer = m_TimeBetweenMoves;
 	}
 }
@@ -76,11 +80,13 @@ void QBertComponent::Notify(EventType type, EventData*)
 	switch (type)
 	{
 	case EventType::PlayerDamageTaken:
+		ServiceLocator::GetSoundSystem()->PlayEffect("../Data/Sound/Swear.wav");
 		break;
 	case EventType::PlayerKilled:
 		FullReset();
 		break;
 	case EventType::PlayerFallen:
+		ServiceLocator::GetSoundSystem()->PlayEffect("../Data/Sound/Fall.wav");
 		FullReset();
 		break;
 	}

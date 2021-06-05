@@ -35,7 +35,6 @@ GameScene::GameScene(int levelIndex)
 void GameScene::Initialise()
 {
 	using namespace dae;
-	std::cout << "GameScene Initialised\n";
 
 	//m_SceneData->pInputManager->AddCommand(KeyboardKeyData{ SDL_SCANCODE_R, ButtonState::OnPress }
 	//, new Command(std::bind(&dae::Scene::Reset, this), this));
@@ -68,6 +67,14 @@ void GameScene::Initialise()
 		button->GetTransform().SetPosition({ 0,420,0 });
 		buttonTexture->SetSize({ 128,48 });
 		AddObject(button);
+	}
+	{
+		std::shared_ptr<GameObject> controls{ new GameObject() };
+		std::shared_ptr<TextureComponent> controlsTexture(new TextureComponent{ "ButtonB.png" });
+		controls->GetTransform().SetPosition({ 100,440,0 });
+		controlsTexture->SetSize({ 32 ,32 });
+		controls->AddComponent(controlsTexture);
+		AddObject(controls);
 	}
 
 	//Game Controller
@@ -166,6 +173,10 @@ void GameScene::Initialise()
 			AddObject(spawner);
 		}
 	}
+
+
+	m_SceneData->pInputManager->AddCommand(ControllerButtonData(ControllerButton::ButtonB, ButtonState::Down)
+		, new Command(std::bind(&GameScene::LoadMainMenu, this), this));
 }
 
 std::shared_ptr<dae::GameObject> GameScene::SpawnSlickAndSam()
@@ -335,12 +346,10 @@ void GameScene::SafeLastVariables()
 	if (!m_pHealth.expired())
 	{
 		m_LastLevelHealth = m_pHealth.lock()->GetHealth();
-		std::cout << "heatlh:" << m_LastLevelHealth << std::endl;
 	}
 	if (!m_pScore.expired())
 	{
 		m_LastLevelScore = m_pScore.lock()->GetScore();
-		std::cout << "score: " << m_LastLevelScore << std::endl;
 	}
 }
 void GameScene::LoadNextLevel()

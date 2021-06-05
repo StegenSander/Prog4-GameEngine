@@ -5,6 +5,9 @@
 #include "Scene.h"
 #include "GameScene.h"
 
+#include "ServiceLocator.h"
+#include "SDLSoundSystem.h"
+
 //Component
 #include "TextureComponent.h"
 #include "Transform.h"
@@ -35,7 +38,6 @@ LevelComponent::LevelComponent(int rows, int blockSize, int discRow
 void LevelComponent::CreateLevel()
 {
 	int totalBlocks = ExtraMath::PyramidAmountOfBlockUntilRow(m_Rows);
-	std::cout << "Rows: " << m_Rows << " Totalblocks: " << totalBlocks << std::endl;
 
 	auto& pos =m_pGameObject->GetTransform().GetPosition();
 	for (int i = 0; i < totalBlocks; i++)
@@ -202,8 +204,8 @@ bool LevelComponent::IsLevelFinished()
 
 void LevelComponent::LevelFinished()
 {
-	std::cout << "Level Finished\n";
 
+	ServiceLocator::GetSoundSystem()->PlayEffect("../Data/Sound/Victory.wav");
 	//Score
 	{
 		int discsRemaining = 0;
@@ -306,6 +308,7 @@ void LevelComponent::HandleCollision(const EntityInfo& firstObject, const Entity
 		PlayerDamaged();
 		break;
 	case EntityType::SlickAndSam:
+		ServiceLocator::GetSoundSystem()->PlayEffect("../Data/Sound/Prize.wav");
 		otherInfo.Behaviour->Despawn();
 		auto score = m_pGameObject->GetScene()->FindObjectOfType<ScoreComponent>();
 		if (!score.expired() && score.lock().get() != nullptr)

@@ -26,6 +26,26 @@ void MainMenuScene::Initialise()
 		AddObject(background);
 	}
 
+	//Controls1
+	{
+		std::shared_ptr<GameObject> controls{ new GameObject() };
+		std::shared_ptr<TextureComponent> controlsTexture(new TextureComponent{ "Controls1.png" });
+		controls->GetTransform().SetPosition({35,150,0 });
+		controlsTexture->SetSize({ 180 ,236 });
+		controls->AddComponent(controlsTexture);
+		AddObject(controls);
+	}
+	//Controls2
+	{
+		std::shared_ptr<GameObject> controls{ new GameObject() };
+		std::shared_ptr<TextureComponent> controlsTexture(new TextureComponent{ "Controls2.png" });
+		controls->GetTransform().SetPosition({ 420,150,0 });
+		controlsTexture->SetSize({ 180 ,236 });
+		controls->AddComponent(controlsTexture);
+		AddObject(controls);
+	}
+
+
 	//Logo
 	{
 		std::shared_ptr<GameObject> logo{ new GameObject() };
@@ -86,23 +106,53 @@ void MainMenuScene::Initialise()
 		buttonTexture->SetSize({ 128,48 });
 		AddObject(button);
 	}
+	//Controls3
+	{
+		{
+			std::shared_ptr<GameObject> controls{ new GameObject() };
+			std::shared_ptr<TextureComponent> controlsTexture(new TextureComponent{ "ButtonA.png" });
+			controls->GetTransform().SetPosition({ 360,220,0 });
+			controlsTexture->SetSize({ 32 ,32 });
+			controls->AddComponent(controlsTexture);
+			AddObject(controls);
+		}
+		{
+			std::shared_ptr<GameObject> controls{ new GameObject() };
+			std::shared_ptr<TextureComponent> controlsTexture(new TextureComponent{ "ButtonB.png" });
+			controls->GetTransform().SetPosition({ 360,270,0 });
+			controlsTexture->SetSize({ 32 ,32 });
+			controls->AddComponent(controlsTexture);
+			AddObject(controls);
+		}
+		{
+			std::shared_ptr<GameObject> controls{ new GameObject() };
+			std::shared_ptr<TextureComponent> controlsTexture(new TextureComponent{ "ButtonY.png" });
+			controls->GetTransform().SetPosition({ 360,320,0 });
+			controlsTexture->SetSize({ 32 ,32 });
+			controls->AddComponent(controlsTexture);
+			AddObject(controls);
+		}
+	}
+	m_SceneData->pInputManager->AddCommand(ControllerButtonData(ControllerButton::ButtonA,ButtonState::Down)
+		, new Command(std::bind(&MainMenuScene::LoadSoloGame, this), this));
+	m_SceneData->pInputManager->AddCommand(ControllerButtonData(ControllerButton::ButtonB, ButtonState::Down)
+		, new Command(std::bind(&MainMenuScene::LoadCoopGame, this), this));
+	m_SceneData->pInputManager->AddCommand(ControllerButtonData(ControllerButton::ButtonY, ButtonState::Down)
+		, new Command(std::bind(&MainMenuScene::LoadVersusGame, this), this));
 }
 
 void MainMenuScene::LoadSoloGame()
 {
-	std::cout << "Solo game loaded\n";
 	LoadGame(GameMode::Solo);
 }
 
 void MainMenuScene::LoadCoopGame()
 {
-	std::cout << "Co-op game loaded\n";
 	LoadGame(GameMode::Coop);
 }
 
 void MainMenuScene::LoadVersusGame()
 {
-	std::cout << "Versus game loaded\n";
 	LoadGame(GameMode::Versus);
 }
 

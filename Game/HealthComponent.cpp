@@ -12,13 +12,11 @@ HealthComponent::HealthComponent(int initialHealth, int maxHealth,const std::wea
 	, m_pGameController{pGameController}
 	, Listener(pGameController)
 {
-	std::cout << "Health"<< initialHealth <<"\n";
 	UpdateTexture();
 }
 
 HealthComponent::~HealthComponent()
 {
-	std::cout << "Health component desturctor\n";
 }
 
 void HealthComponent::Damage()
