@@ -9,10 +9,6 @@ ScoreComponent::ScoreComponent(const std::weak_ptr<TextComponent>& textComp, int
 {
 }
 
-ScoreComponent::~ScoreComponent()
-{
-}
-
 void ScoreComponent::Update()
 {
 }
@@ -23,7 +19,7 @@ void ScoreComponent::AddScore(int amount)
 	UpdateText();
 }
 
-int ScoreComponent::GetScore()
+int ScoreComponent::GetScore() const
 {
 	return m_Score;
 }
@@ -34,7 +30,7 @@ void ScoreComponent::ResetScore()
 	UpdateText();
 }
 
-void ScoreComponent::UpdateText()
+void ScoreComponent::UpdateText() const
 {
 	if (m_TextComp.expired()) return;
 	m_TextComp.lock()->SetText(std::to_string(m_Score));

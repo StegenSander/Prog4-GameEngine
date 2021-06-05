@@ -12,7 +12,6 @@
 #include "TextureComponent.h"
 #include "Transform.h"
 #include "BlockComponent.h"
-#include "LevelNavigatorComponent.h"
 #include "ColorCubeComponent.h"
 #include "VoidBlockComponent.h"
 #include "HealthComponent.h"
@@ -37,9 +36,9 @@ LevelComponent::LevelComponent(int rows, int blockSize, int discRow
 
 void LevelComponent::CreateLevel()
 {
-	int totalBlocks = ExtraMath::PyramidAmountOfBlockUntilRow(m_Rows);
+	const int totalBlocks = ExtraMath::PyramidAmountOfBlockUntilRow(m_Rows);
 
-	auto& pos =m_pGameObject->GetTransform().GetPosition();
+	const auto& pos =m_pGameObject->GetTransform().GetPosition();
 	for (int i = 0; i < totalBlocks; i++)
 	{
 		auto rowColumn = ExtraMath::PyramidGetCoordFromIndex(i);
@@ -50,7 +49,7 @@ void LevelComponent::CreateLevel()
 		else CreateColorCube(rowColumn,pos);
 	}
 
-	InitiliazeDiscs(m_DiscRow);
+	InitializeDiscs(m_DiscRow);
 }
 
 
@@ -124,7 +123,7 @@ std::weak_ptr<BlockComponent> LevelComponent::GetBlockAtIndex(int index)
 
 void LevelComponent::SetBlockToVoid(int row, int column)
 {
-	auto& pos = m_pGameObject->GetTransform().GetPosition();
+	const auto& pos = m_pGameObject->GetTransform().GetPosition();
 
 	using namespace dae;
 	std::shared_ptr<GameObject> block{ new GameObject() };
@@ -144,7 +143,7 @@ void LevelComponent::SetBlockToVoid(int row, int column)
 
 void LevelComponent::SetBlockToDisc(int row, int column)
 {
-	auto& pos = m_pGameObject->GetTransform().GetPosition();
+	const auto& pos = m_pGameObject->GetTransform().GetPosition();
 
 	using namespace dae;
 	std::shared_ptr<GameObject> block{ new GameObject() };
@@ -169,7 +168,7 @@ void LevelComponent::SetBlockToDisc(int row, int column)
 	m_Level[index] = blockComponent;
 }
 
-void LevelComponent::InitiliazeDiscs(int row)
+void LevelComponent::InitializeDiscs(int row)
 {
 	SetBlockToDisc(row, 1);
 	SetBlockToDisc(row, row);
@@ -252,15 +251,15 @@ void LevelComponent::FullReset()
 	}
 
 	//Reset Discs
-	InitiliazeDiscs(m_DiscRow);
+	InitializeDiscs(m_DiscRow);
 }
 
 
-void LevelComponent::PlayerDamaged()
+void LevelComponent::PlayerDamaged() const
 {
 	if (!m_pGameController.expired()) m_pGameController.lock()->PlayerDamaged();
 }
-void LevelComponent::PlayerFallen()
+void LevelComponent::PlayerFallen() const
 {
 	if(!m_pGameController.expired()) m_pGameController.lock()->PlayerOffMap();
 }
@@ -279,7 +278,7 @@ void LevelComponent::Notify(EventType type, EventData* )
 		break;
 	}
 }
-void LevelComponent::HandleCollision(const EntityInfo& firstObject, const EntityInfo& secondObject)
+void LevelComponent::HandleCollision(const EntityInfo& firstObject, const EntityInfo& secondObject) const
 {
 	//Find Which object is qbert and which the other one
 	EntityInfo QBertInfo;
@@ -317,10 +316,6 @@ void LevelComponent::HandleCollision(const EntityInfo& firstObject, const Entity
 		}
 		break;
 	}
-}
-
-LevelComponent::~LevelComponent()
-{
 }
 
 void LevelComponent::Update()

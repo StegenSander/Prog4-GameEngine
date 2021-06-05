@@ -29,7 +29,7 @@ namespace dae
 		/// <summary>
 		/// Reset will not clean everything
 		/// Reset cleans up all GameObject and Components and then calls Initialise again
-		/// Some member variables might not get resetted
+		/// Some member variables might not get reset
 		/// Use OnReset() override to reset these if necessary
 		/// </summary>
 		void Reset();
@@ -48,8 +48,8 @@ namespace dae
 		Scene& operator=(const Scene& other) = delete;
 		Scene& operator=(Scene&& other) = delete;
 
-		std::string GetName() const { return m_Name; }
-		SceneData* GetSceneData() const { return m_SceneData; }
+		[[nodiscard]] const std::string& GetName() const { return m_Name; }
+		[[nodiscard]] SceneData* GetSceneData() const { return m_SceneData; }
 
 	protected:
 		SceneData* m_SceneData;

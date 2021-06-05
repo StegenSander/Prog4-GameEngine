@@ -18,7 +18,7 @@ public:
 	TextureComponent(const std::string& filename);
 	TextureComponent(const std::string& filename, const glm::vec2& positionOffset);
 	TextureComponent(const std::string& filename, const glm::vec2& positionOffset, const glm::vec2& size);
-	virtual ~TextureComponent() {}
+	virtual ~TextureComponent() = default;
 
 	//------COPY CONSTRUCTORS------
 	TextureComponent(const TextureComponent&) = delete;
@@ -36,15 +36,11 @@ public:
 	void SetPositionOffset(const glm::vec2& positionOffset);
 
 	//------PUBLIC VARIABLES------
-protected:
-	//------PROTECTED FUNCTIONS------
-
-	//------PROTECTED VARIABLES------
-	std::shared_ptr<dae::Texture2D> m_Texture {nullptr};
-	glm::vec2 m_PositionOffset {0,0};
-	glm::vec2 m_Size{ 0,0 };
 private:
 	//------PRIVATE FUNCTIONS------
 
 	//------PRIVATE VARIABLES------	
+	std::shared_ptr<dae::Texture2D> m_Texture{ nullptr };
+	glm::vec2 m_PositionOffset{ 0,0 };
+	glm::vec2 m_Size{ 0,0 };
 };

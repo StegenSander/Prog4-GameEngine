@@ -89,5 +89,5 @@ int ExtraMath::DistanceFromTo(int row1, int column1, int row2, int column2)
 
 float ExtraMath::RandomFloat(int min, int max, int precision)
 {
-	return	(rand() % ((max - min) * precision)) / float(precision) + min;
+	return	(rand() % ((max - min) * precision)) / static_cast<float>(precision) + min;
 }

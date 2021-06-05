@@ -36,7 +36,7 @@ void ColorCubeComponent::BlockTouched(const EntityInfo& info)
 	}
 }
 
-bool ColorCubeComponent::IsCompleted()
+bool ColorCubeComponent::IsCompleted() const
 {
 	return m_MaxColorLevel == m_ColorLevel;
 }
@@ -78,7 +78,7 @@ void ColorCubeComponent::UnColorCube()
 	}
 }
 
-void ColorCubeComponent::UpdateTexture()
+void ColorCubeComponent::UpdateTexture() const
 {
 	if (m_pTexture.expired()) return;
 

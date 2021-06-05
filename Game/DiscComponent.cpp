@@ -12,10 +12,6 @@ DiscComponent::DiscComponent(int row, int column, const glm::vec2& blockPos, int
 {
 }
 
-DiscComponent::~DiscComponent()
-{
-}
-
 void DiscComponent::BlockTouched(const EntityInfo& info)
 {
 	if (info.Type == EntityType::QBert)

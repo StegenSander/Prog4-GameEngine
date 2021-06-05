@@ -9,7 +9,7 @@ class ScoreComponent
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
 	ScoreComponent(const std::weak_ptr<TextComponent>& textComp, int initialScore);
-	virtual ~ScoreComponent();
+	virtual ~ScoreComponent() = default;
 
 	//------COPY CONSTRUCTORS------
 	ScoreComponent(const ScoreComponent&) = delete;
@@ -21,7 +21,7 @@ public:
 	//------PUBLIC FUNCTIONS------
 	virtual void Update() override;
 	void AddScore(int amount);
-	int GetScore();
+	int GetScore() const;
 	void ResetScore();
 
 	//------PUBLIC VARIABLES------
@@ -31,7 +31,7 @@ protected:
 	//------PROTECTED VARIABLES------	
 private:
 	//------PRIVATE FUNCTIONS------
-	void UpdateText();
+	void UpdateText() const;
 
 	//------PRIVATE VARIABLES------
 	std::weak_ptr<TextComponent> m_TextComp;

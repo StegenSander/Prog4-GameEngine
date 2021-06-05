@@ -4,7 +4,6 @@
 #include "LevelNavigatorComponent.h"
 #include "GameTime.h"
 #include "BlockComponent.h"
-#include "LevelComponent.h"
 
 SlickAndSamComponent::SlickAndSamComponent(const std::weak_ptr<LevelNavigatorComponent>& pNavigator
 	, const std::weak_ptr<GameControllerComponent>& pGameController
@@ -16,18 +15,13 @@ SlickAndSamComponent::SlickAndSamComponent(const std::weak_ptr<LevelNavigatorCom
 {
 	m_TimeUntilNextMove = m_TimeBetweenMoves;
 }
-
-SlickAndSamComponent::~SlickAndSamComponent()
-{
-}
-
 void SlickAndSamComponent::Update()
 {
-	float deltaTime = GameTime::GetInstance().GetDeltaTime();
+	const float deltaTime = GameTime::GetInstance().GetDeltaTime();
 	m_TimeUntilNextMove -= deltaTime;
 	if (m_TimeUntilNextMove < 0)
 	{
-		bool moveLeft = bool(rand() % 2); //is 0 or 1
+		bool moveLeft = static_cast<bool>(rand() % 2); //is 0 or 1
 
 		MoveResult moveResult;
 		//If statement can be removed with some bit magic

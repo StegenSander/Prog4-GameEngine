@@ -1,9 +1,6 @@
 #include "MiniginPCH.h"
 #include "Controller.h"
 
-
-
-
 bool Controller::ProcessXINPUTInput()
 {
 	DWORD result{};
@@ -104,18 +101,18 @@ void Controller::AddCommand(ControllerButtonData buttonData, Command* pCommand)
 	m_ControllerCommandMap.insert(std::make_pair(buttonData, pCommand));
 }
 
-JoystickValue Controller::GetJoystickValues(bool isLeft)
+JoystickValue Controller::GetJoystickValues(bool isLeft) const
 {
 	JoystickValue value;
 	if (isLeft)
 	{
-		value.x = m_pInputState.Gamepad.sThumbLX /float(32767);
-		value.y = m_pInputState.Gamepad.sThumbLY / float(32767);
+		value.x = m_pInputState.Gamepad.sThumbLX /static_cast<float>(32767);
+		value.y = m_pInputState.Gamepad.sThumbLY / static_cast<float>(32767);
 	}
 	else
 	{
-		value.x = m_pInputState.Gamepad.sThumbRX / float(32767);
-		value.y = m_pInputState.Gamepad.sThumbRY / float(32767);
+		value.x = m_pInputState.Gamepad.sThumbRX / static_cast<float>(32767);
+		value.y = m_pInputState.Gamepad.sThumbRY / static_cast<float>(32767);
 	}
 
 	return value;

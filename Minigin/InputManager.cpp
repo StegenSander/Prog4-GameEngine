@@ -48,8 +48,8 @@ bool dae::InputManager::ProcessSDLInput()
 		}
 		if (e.type == SDL_MOUSEMOTION)
 		{
-			m_MousePosition.x = float(int(e.motion.x));
-			m_MousePosition.y = float(int(e.motion.y)); //windowheight
+			m_MousePosition.x = static_cast<float>(static_cast<int>(e.motion.x));
+			m_MousePosition.y = static_cast<float>(static_cast<int>(e.motion.y)); //windowheight
 		}
 	}
 
@@ -87,7 +87,7 @@ bool dae::InputManager::IsKeyDown(int SDLScancode)
 bool dae::InputManager::IsMouseButtonDown(int MouseButton)
 {
 	auto state = SDL_GetMouseState(NULL, NULL);
-	return bool(state & SDL_BUTTON(MouseButton));
+	return static_cast<bool>(state & SDL_BUTTON(MouseButton));
 }
 
 void dae::InputManager::AddCommand(ControllerButtonData buttonData, Command* pCommand, DWORD controllerIndex)

@@ -14,7 +14,7 @@ public:
 	LevelComponent(int rows, int blockSize, int discRow
 		,const std::weak_ptr<GameControllerComponent>& pGameController
 		, int maxColorLeverl, bool revertible);
-	virtual ~LevelComponent();
+	virtual ~LevelComponent() = default;
 
 	//------COPY CONSTRUCTORS------
 	LevelComponent(const LevelComponent&) = delete;
@@ -35,18 +35,18 @@ public:
 	void SetBlockToVoid(int row, int column);
 	void SetBlockToDisc(int row, int column);
 
-	void InitiliazeDiscs(int row);
+	void InitializeDiscs(int row);
 
 	void BlockTouched(int row, int column, const EntityInfo& info);
 	void BlockTouched(int index,const EntityInfo& info);
 
 	bool IsLevelFinished();
-	void PlayerDamaged();
-	void PlayerFallen();
+	void PlayerDamaged() const;
+	void PlayerFallen() const;
 
 	void Notify(EventType type, EventData* eventData) override;
 
-	void HandleCollision(const EntityInfo& firstObject, const EntityInfo& secondObject);
+	void HandleCollision(const EntityInfo& firstObject, const EntityInfo& secondObject) const;
 
 	//------PUBLIC VARIABLES------
 protected:

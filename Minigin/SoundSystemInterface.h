@@ -11,7 +11,7 @@ public:
 	SoundSystemInterface(const SoundSystemInterface&) = delete;
 	SoundSystemInterface(SoundSystemInterface&&) = delete;
 	//------ASSIGNMENT OPERATORS------
-	SoundSystemInterface operator=(const SoundSystemInterface&) = delete;
+	SoundSystemInterface& operator=(const SoundSystemInterface&) = delete;
 	SoundSystemInterface& operator=(SoundSystemInterface&&) = delete;
 
 	//------PUBLIC FUNCTIONS------

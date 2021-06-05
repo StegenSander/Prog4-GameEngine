@@ -9,7 +9,7 @@ FileWriteScene::FileWriteScene()
 
 void FileWriteScene::Initialise()
 {
-	std::string filePath{"../Data/-----.bin"};
+	const std::string filePath{"../Data/-----.bin"};
 
 	{
 		GameRules gameRules;

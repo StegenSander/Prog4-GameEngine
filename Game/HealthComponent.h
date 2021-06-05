@@ -11,7 +11,7 @@ public:
 	//------CONSTRUCTOR/DESTRUCTOR------
 	HealthComponent(int initialHealth, int maxHealth,const std::weak_ptr<TextureComponent>& pTexture
 		,const std::weak_ptr<GameControllerComponent>& pGameController);
-	virtual ~HealthComponent();
+	virtual ~HealthComponent() = default;
 
 	//------COPY CONSTRUCTORS------
 	HealthComponent(const HealthComponent&) = delete;
@@ -24,16 +24,12 @@ public:
 	void Damage();
 	void ResetHealth();
 	void Update() override;
-	void UpdateTexture();
+	void UpdateTexture() const;
 	int GetHealth()const { return m_Health; }
 
 	void Notify(EventType type, EventData* eventData) override;
 
-	//------PUBLIC VARIABLES------
-protected:
-	//------PROTECTED FUNCTIONS------
-
-	//------PROTECTED VARIABLES------	
+	//------PUBLIC VARIABLES------	
 private:
 	//------PRIVATE FUNCTIONS------
 

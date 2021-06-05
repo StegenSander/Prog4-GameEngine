@@ -15,10 +15,6 @@ HealthComponent::HealthComponent(int initialHealth, int maxHealth,const std::wea
 	UpdateTexture();
 }
 
-HealthComponent::~HealthComponent()
-{
-}
-
 void HealthComponent::Damage()
 {
 	m_Health--;
@@ -40,7 +36,7 @@ void HealthComponent::ResetHealth()
 	UpdateTexture();
 }
 
-void HealthComponent::UpdateTexture()
+void HealthComponent::UpdateTexture() const
 {
 	if (m_pTexture.expired()) return;
 	if (m_Health < 1 || m_Health > 3) return;

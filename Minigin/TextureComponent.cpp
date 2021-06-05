@@ -48,8 +48,8 @@ void TextureComponent::SetSizeToTextureSize()
 {
 	int x, y;
 	SDL_QueryTexture(m_Texture->GetSDLTexture(), nullptr, nullptr, &x, &y);
-	m_Size.x = float(x);
-	m_Size.y = float(y);
+	m_Size.x = static_cast<float>(x);
+	m_Size.y = static_cast<float>(y);
 }
 
 void TextureComponent::SetPositionOffset(const glm::vec2& positionOffset)

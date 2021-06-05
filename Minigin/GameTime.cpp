@@ -16,7 +16,7 @@ void GameTime::Update()
 
 void GameTime::SetTargetFPS(int FPS)
 {
-	m_MsPerFrame =1.f / float(FPS) * 1000;
+	m_MsPerFrame =1.f / static_cast<float>(FPS) * 1000;
 }
 
 

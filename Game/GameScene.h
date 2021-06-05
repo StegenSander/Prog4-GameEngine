@@ -16,9 +16,9 @@ public:
 	GameScene(int levelIndex);
 	void Initialise() override;
 
-	std::shared_ptr<dae::GameObject> SpawnSlickAndSam();
+	std::shared_ptr<dae::GameObject> SpawnSlickAndSam() const;
 	std::shared_ptr<dae::GameObject> SpawnUggAndWrongway();
-	std::shared_ptr<dae::GameObject> SpawnCoily();
+	std::shared_ptr<dae::GameObject> SpawnCoily() const;
 	void LoadNextLevel();
 	void LoadMainMenu();
 	void SetGameMode(GameMode gameMode) { m_GameMode = gameMode; }

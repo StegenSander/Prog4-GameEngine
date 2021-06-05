@@ -9,9 +9,6 @@ GameControllerComponent::GameControllerComponent()
 {
 }
 
-GameControllerComponent::~GameControllerComponent()
-{
-}
 
 void GameControllerComponent::PlayerKilled()
 {

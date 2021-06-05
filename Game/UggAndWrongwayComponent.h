@@ -26,11 +26,7 @@ public:
 	void Despawn() override;
 	void Notify(EventType type, EventData* eventData) override;
 
-	//------PUBLIC VARIABLES------
-protected:
-	//------PROTECTED FUNCTIONS------
-
-	//------PROTECTED VARIABLES------	
+	//------PUBLIC VARIABLES------	
 private:
 	//------PRIVATE FUNCTIONS------
 

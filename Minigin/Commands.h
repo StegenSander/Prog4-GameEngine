@@ -15,7 +15,7 @@ public:
 		, m_Identifier{ identifier }
 	{}
 
-	virtual ~Command();
+	virtual ~Command() = default;
 
 	virtual void Execute();
 	virtual void* GetIdentifier() const { return m_Identifier; };

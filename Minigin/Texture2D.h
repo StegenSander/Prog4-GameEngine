@@ -8,7 +8,7 @@ namespace dae
 	class Texture2D
 	{
 	public:
-		SDL_Texture* GetSDLTexture() const;
+		[[nodiscard]] SDL_Texture* GetSDLTexture() const;
 		explicit Texture2D(SDL_Texture* texture);
 		~Texture2D();
 

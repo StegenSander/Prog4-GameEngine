@@ -8,7 +8,7 @@ class VoidBlockComponent
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
 	VoidBlockComponent(int row, int column, const glm::vec2& blockPos, int blockSize, LevelComponent* pLevel);
-	virtual ~VoidBlockComponent();
+	virtual ~VoidBlockComponent() = default;
 
 	//------COPY CONSTRUCTORS------
 	VoidBlockComponent(const VoidBlockComponent&) = delete;
@@ -21,13 +21,5 @@ public:
 	void BlockTouched(const EntityInfo& info) override;
 
 	//------PUBLIC VARIABLES------
-protected:
-	//------PROTECTED FUNCTIONS------
-
-	//------PROTECTED VARIABLES------	
-private:
-	//------PRIVATE FUNCTIONS------
-
-	//------PRIVATE VARIABLES------
 };
 

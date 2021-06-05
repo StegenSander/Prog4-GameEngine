@@ -39,10 +39,10 @@ namespace dae
         bool ProcessCommands();
 
         //KeyBoard functions
-        bool IsKeyDown(int SDLScancode);
+        static bool IsKeyDown(int SDLScancode);
 
         //left =1, middle =2, right =3
-        bool IsMouseButtonDown(int MouseButton);
+        static bool IsMouseButtonDown(int MouseButton);
 
         //Command functions
 		void AddCommand(ControllerButtonData buttonData, Command* pCommand,DWORD controllerIndex = 0);
@@ -54,7 +54,7 @@ namespace dae
 
         JoystickValue GetJoystickValue(DWORD index, bool isLeft = true);
 
-       glm::vec2 GetMousePosition();
+        static glm::vec2 GetMousePosition();
 
 	private:
 

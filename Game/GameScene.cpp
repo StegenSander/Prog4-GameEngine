@@ -15,10 +15,8 @@
 #include "HealthComponent.h"
 #include "SpawnerComponent.h"
 #include "GameControllerComponent.h"
-#include "LevelNavigatorComponent.h"
 #include "SlickAndSamComponent.h"
 #include "UggAndWrongwayComponent.h"
-#include "BlockComponent.h"
 #include "CoilyComponent.h"
 #include "ScoreComponent.h"
 #include "TextComponent.h"
@@ -35,10 +33,7 @@ GameScene::GameScene(int levelIndex)
 void GameScene::Initialise()
 {
 	using namespace dae;
-
-	//m_SceneData->pInputManager->AddCommand(KeyboardKeyData{ SDL_SCANCODE_R, ButtonState::OnPress }
-	//, new Command(std::bind(&dae::Scene::Reset, this), this));
-
+	
 	const auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
 	//LoadLevel
 	LevelLoader::LoadLevel(m_LevelFilePath,m_GameRules, m_LevelData, m_QBertData
@@ -179,7 +174,7 @@ void GameScene::Initialise()
 		, new Command(std::bind(&GameScene::LoadMainMenu, this), this));
 }
 
-std::shared_ptr<dae::GameObject> GameScene::SpawnSlickAndSam()
+std::shared_ptr<dae::GameObject> GameScene::SpawnSlickAndSam() const
 {
 	//std::cout << "Spawn Slick And Sam called\n";
 	std::shared_ptr<dae::GameObject> obj{ new dae::GameObject };
@@ -243,7 +238,7 @@ std::shared_ptr<dae::GameObject> GameScene::SpawnUggAndWrongway()
 
 	return obj;
 }
-std::shared_ptr<dae::GameObject> GameScene::SpawnCoily()
+std::shared_ptr<dae::GameObject> GameScene::SpawnCoily() const
 {
 	//std::cout << "Spawn Coily called\n";
 	std::shared_ptr<dae::GameObject> obj{ new dae::GameObject };

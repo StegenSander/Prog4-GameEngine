@@ -21,9 +21,6 @@
     <Filter Include="Depricated">
       <UniqueIdentifier>{e7c02b76-7fc4-48e7-8fd6-42a791650b69}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Components\Scripts">
-      <UniqueIdentifier>{a8633d09-c315-432d-ab50-79a44907d997}</UniqueIdentifier>
-    </Filter>
     <Filter Include="IMGUI">
       <UniqueIdentifier>{9ff32409-02bb-4655-a4e8-152e1d6dc4d0}</UniqueIdentifier>
     </Filter>
@@ -78,9 +75,6 @@
     <ClInclude Include="TextureComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="FPSDisplayScript.h">
-      <Filter>Components\Scripts</Filter>
-    </ClInclude>
     <ClInclude Include="Singleton.h">
       <Filter>Singletons</Filter>
     </ClInclude>
@@ -119,9 +113,6 @@
     </ClInclude>
     <ClInclude Include="..\3rdParty\imgui-master\imconfig.h">
       <Filter>IMGUI</Filter>
-    </ClInclude>
-    <ClInclude Include="UIButtonsScript.h">
-      <Filter>Components\Scripts</Filter>
     </ClInclude>
     <ClInclude Include="InputManager.h">
       <Filter>Input</Filter>
@@ -215,9 +206,6 @@
     <ClCompile Include="TextureComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="FPSDisplayScript.cpp">
-      <Filter>Components\Scripts</Filter>
-    </ClCompile>
     <ClCompile Include="Font.cpp">
       <Filter>RenderClasses</Filter>
     </ClCompile>
@@ -241,9 +229,6 @@
     </ClCompile>
     <ClCompile Include="..\3rdParty\imgui-master\imgui_widgets.cpp">
       <Filter>IMGUI</Filter>
-    </ClCompile>
-    <ClCompile Include="UIButtonsScript.cpp">
-      <Filter>Components\Scripts</Filter>
     </ClCompile>
     <ClCompile Include="InputManager.cpp">
       <Filter>Input</Filter>

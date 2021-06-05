@@ -5,7 +5,6 @@
 #include "GameTime.h"
 #include "BlockComponent.h"
 #include "TextureComponent.h"
-#include "LevelComponent.h"
 #include "ExtraMath.h"
 #include "ScoreComponent.h"
 #include "Scene.h"
@@ -38,103 +37,116 @@ void CoilyComponent::Update()
 	{
 		if (!m_HasTransformed) //Egg Movement
 		{
-			bool moveLeft = bool(rand() % 2); //is 0 or 1
-
-			MoveResult moveResult;
-			if (moveLeft) moveResult = m_pNavigator.lock()->Move(Direction::SouthWest,this);
-			else moveResult = m_pNavigator.lock()->Move(Direction::SouthEast, this);
-
-			if (moveResult.BlockOccupied)
-			{
-				moveLeft = !moveLeft;
-				if (moveLeft) moveResult = m_pNavigator.lock()->Move(Direction::SouthWest, this);
-				else moveResult = m_pNavigator.lock()->Move(Direction::SouthEast, this);
-			}
-
-			if (!moveResult.ValidMove) Transform(false);
+			EggMove();
 		}
 		else //Coily movement (chase player)
 		{
 			m_pQBertNavigator = GetClosestQBert();
 			if (!m_pQBertNavigator.expired())
 			{
-				int targetRow = 0;
-				int targetCol = 0;
-				if (m_IsMovingToTarget) // moving to specified target
-				{
-					targetRow = m_TargetRow;
-					targetCol = m_TargetColumn;
-				}
-				else //chasing Qbert
-				{
-					targetRow = m_pQBertNavigator.lock()->GetCurrentRow();
-					targetCol = m_pQBertNavigator.lock()->GetCurrentColumn();
-				}
-
-				int coilyRow = m_pNavigator.lock()->GetCurrentRow();
-				int coilyCol = m_pNavigator.lock()->GetCurrentColumn();
-				int distanceToTargetStart = ExtraMath::DistanceFromTo(coilyRow, coilyCol, targetRow, targetCol);
-
-
-				int rowDif = targetRow - coilyRow;
-				int colDif = targetCol - coilyCol;
-				if (abs(rowDif) + abs(colDif) == 0 && m_IsMovingToTarget) m_IsMovingToTarget = false;
-
-				MoveResult moveResult;
-				if (colDif == 0 && rowDif < 0)
-				{
-					m_pNavigator.lock()->Move(Direction::NorthEast, this);
-				}
-				else if (colDif == 0 && rowDif > 0)
-				{
-					m_pNavigator.lock()->Move(Direction::SouthWest, this);
-				}
-				else if (rowDif <= 0 && colDif > 0)
-				{
-					moveResult  = m_pNavigator.lock()->Move(Direction::NorthEast, this);
-					if (moveResult.BlockOccupied || !moveResult.ValidMove) 
-						moveResult = m_pNavigator.lock()->Move(Direction::SouthEast, this);
-				}
-				else if (rowDif < 0 && colDif < 0)
-				{
-					moveResult = m_pNavigator.lock()->Move(Direction::NorthWest, this);
-					if (moveResult.BlockOccupied || !moveResult.ValidMove) 
-						moveResult = m_pNavigator.lock()->Move(Direction::NorthEast, this);
-				}
-				else if (rowDif > 0 && colDif > 0)
-				{
-					moveResult = m_pNavigator.lock()->Move(Direction::SouthEast, this);
-					if (moveResult.BlockOccupied || !moveResult.ValidMove)
-						moveResult = m_pNavigator.lock()->Move(Direction::SouthWest, this);
-				}
-				else if (rowDif >= 0 && colDif < 0)
-				{
-					moveResult =  m_pNavigator.lock()->Move(Direction::SouthWest, this);
-					if (moveResult.BlockOccupied || !moveResult.ValidMove)
-						moveResult = m_pNavigator.lock()->Move(Direction::NorthWest, this);
-				}
-
-				coilyRow = m_pNavigator.lock()->GetCurrentRow();
-				coilyCol = m_pNavigator.lock()->GetCurrentColumn();
-				int distanceToTargetEnd = ExtraMath::DistanceFromTo(coilyRow, coilyCol, targetRow, targetCol);
-
-				if ((!moveResult.ValidMove && m_IsMovingToTarget) || (m_IsMovingToTarget && distanceToTargetEnd > distanceToTargetStart))
-				{
-					ServiceLocator::GetSoundSystem()->PlayEffect("../Data/Sound/SnakeFall.wav");
-					auto score = m_pGameObject->GetScene()->FindObjectOfType<ScoreComponent>();
-					if (!score.expired() && score.lock().get() != nullptr)
-					{
-						score.lock()->AddScore(500);
-					}
-
-					Despawn();
-				}
+				
 			}
 		}
 
 		m_TimeUntilNextMove = m_TimeBetweenMoves;
 	}
 }
+
+void CoilyComponent::EggMove()
+{
+	bool moveLeft = static_cast<bool>(rand() % 2); //is 0 or 1
+
+	MoveResult moveResult;
+	if (moveLeft) moveResult = m_pNavigator.lock()->Move(Direction::SouthWest, this);
+	else moveResult = m_pNavigator.lock()->Move(Direction::SouthEast, this);
+
+	if (moveResult.BlockOccupied)
+	{
+		moveLeft = !moveLeft;
+		if (moveLeft) moveResult = m_pNavigator.lock()->Move(Direction::SouthWest, this);
+		else moveResult = m_pNavigator.lock()->Move(Direction::SouthEast, this);
+	}
+
+	if (!moveResult.ValidMove) Transform(false);
+}
+
+void CoilyComponent::CoilyMove()
+{
+	int targetRow = 0;
+	int targetCol = 0;
+	if (m_IsMovingToTarget) // moving to specified target
+	{
+		targetRow = m_TargetRow;
+		targetCol = m_TargetColumn;
+	}
+	else //chasing Qbert
+	{
+		targetRow = m_pQBertNavigator.lock()->GetCurrentRow();
+		targetCol = m_pQBertNavigator.lock()->GetCurrentColumn();
+	}
+
+	int coilyRow = m_pNavigator.lock()->GetCurrentRow();
+	int coilyCol = m_pNavigator.lock()->GetCurrentColumn();
+	const int distanceToTargetStart = ExtraMath::DistanceFromTo(coilyRow, coilyCol, targetRow, targetCol);
+
+
+	const int rowDif = targetRow - coilyRow;
+	const int colDif = targetCol - coilyCol;
+	if (abs(rowDif) + abs(colDif) == 0 && m_IsMovingToTarget) m_IsMovingToTarget = false;
+
+	//Actually move
+	MoveResult moveResult;
+	if (colDif == 0 && rowDif < 0)
+	{
+		m_pNavigator.lock()->Move(Direction::NorthEast, this);
+	}
+	else if (colDif == 0 && rowDif > 0)
+	{
+		m_pNavigator.lock()->Move(Direction::SouthWest, this);
+	}
+	else if (rowDif <= 0 && colDif > 0)
+	{
+		moveResult = m_pNavigator.lock()->Move(Direction::NorthEast, this);
+		if (moveResult.BlockOccupied || !moveResult.ValidMove)
+			moveResult = m_pNavigator.lock()->Move(Direction::SouthEast, this);
+	}
+	else if (rowDif < 0 && colDif < 0)
+	{
+		moveResult = m_pNavigator.lock()->Move(Direction::NorthWest, this);
+		if (moveResult.BlockOccupied || !moveResult.ValidMove)
+			moveResult = m_pNavigator.lock()->Move(Direction::NorthEast, this);
+	}
+	else if (rowDif > 0 && colDif > 0)
+	{
+		moveResult = m_pNavigator.lock()->Move(Direction::SouthEast, this);
+		if (moveResult.BlockOccupied || !moveResult.ValidMove)
+			moveResult = m_pNavigator.lock()->Move(Direction::SouthWest, this);
+	}
+	else if (rowDif >= 0 && colDif < 0)
+	{
+		moveResult = m_pNavigator.lock()->Move(Direction::SouthWest, this);
+		if (moveResult.BlockOccupied || !moveResult.ValidMove)
+			moveResult = m_pNavigator.lock()->Move(Direction::NorthWest, this);
+	}
+
+	coilyRow = m_pNavigator.lock()->GetCurrentRow();
+	coilyCol = m_pNavigator.lock()->GetCurrentColumn();
+	const int distanceToTargetEnd = ExtraMath::DistanceFromTo(coilyRow, coilyCol, targetRow, targetCol);
+
+	//Check if coily jumped of the map
+	if ((!moveResult.ValidMove && m_IsMovingToTarget) || (m_IsMovingToTarget && distanceToTargetEnd > distanceToTargetStart))
+	{
+		ServiceLocator::GetSoundSystem()->PlayEffect("../Data/Sound/SnakeFall.wav");
+		const auto score = m_pGameObject->GetScene()->FindObjectOfType<ScoreComponent>();
+		if (!score.expired() && score.lock().get() != nullptr)
+		{
+			score.lock()->AddScore(500);
+		}
+
+		Despawn();
+	}
+}
+
 
 MoveResult CoilyComponent::FullReset()
 {
@@ -187,8 +199,7 @@ void CoilyComponent::Transform(bool isEgg)
 		}
 	}
 }
-
-std::weak_ptr<LevelNavigatorComponent> CoilyComponent::GetClosestQBert()
+std::weak_ptr<LevelNavigatorComponent> CoilyComponent::GetClosestQBert() const
 {
 	auto qbertComponents = m_pGameObject->GetScene()->FindObjectsOfType<QBertComponent>();
 	

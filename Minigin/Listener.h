@@ -13,7 +13,7 @@ public:
 	Listener(const Listener&) = delete;
 	Listener(Listener&&) = delete;
 	//------ASSIGNMENT OPERATORS------
-	Listener operator=(const Listener&) = delete;
+	Listener& operator=(const Listener&) = delete;
 	Listener& operator=(Listener&&) = delete;
 
 	//------PUBLIC FUNCTIONS------

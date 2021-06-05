@@ -11,13 +11,13 @@ class EntityComponent
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
 	EntityComponent(const std::weak_ptr<GameControllerComponent>& pGameController,EntityType type);
-	virtual ~EntityComponent();
+	virtual ~EntityComponent() = default;
 
 	//------COPY CONSTRUCTORS------
 	EntityComponent(const EntityComponent&) = delete;
 	EntityComponent(EntityComponent&&) = delete;
 	//------ASSIGNMENT OPERATORS------
-	EntityComponent operator=(const EntityComponent&) = delete;
+	EntityComponent& operator=(const EntityComponent&) = delete;
 	EntityComponent& operator=(EntityComponent&&) = delete;
 
 	//------PUBLIC FUNCTIONS------
@@ -28,10 +28,6 @@ public:
 	EntityInfo GetInfo();
 
 	//------PUBLIC VARIABLES------
-protected:
-	//------PROTECTED FUNCTIONS------
-
-	//------PROTECTED VARIABLES------	
 private:
 	//------PRIVATE FUNCTIONS------
 

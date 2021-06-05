@@ -246,7 +246,6 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)*.dll" "$(OutputPath
     <ClInclude Include="Destroyable.h" />
     <ClInclude Include="Events.h" />
     <ClInclude Include="Font.h" />
-    <ClInclude Include="FPSDisplayScript.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Listener.h" />
@@ -270,7 +269,6 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)*.dll" "$(OutputPath
     <ClInclude Include="TextureComponent.h" />
     <ClInclude Include="GameTime.h" />
     <ClInclude Include="Transform.h" />
-    <ClInclude Include="UIButtonsScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\3rdParty\imgui-master\backends\imgui_impl_opengl2.cpp">
@@ -323,7 +321,6 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)*.dll" "$(OutputPath
     <ClCompile Include="NullSoundSystem.cpp" />
     <ClCompile Include="ServiceLocator.cpp" />
     <ClCompile Include="Font.cpp" />
-    <ClCompile Include="FPSDisplayScript.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Listener.cpp" />
@@ -350,7 +347,6 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)*.dll" "$(OutputPath
     <ClCompile Include="TextureComponent.cpp" />
     <ClCompile Include="GameTime.cpp" />
     <ClCompile Include="Transform.cpp" />
-    <ClCompile Include="UIButtonsScript.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

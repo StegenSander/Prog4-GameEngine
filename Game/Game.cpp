@@ -1,5 +1,4 @@
 #include "MiniginPCH.h"
-#include <iostream>
 #include <Minigin.h>
 
 #include "SceneManager.h"
@@ -17,15 +16,7 @@ int main()
 		std::shared_ptr<GameScene> scene{ new GameScene(1) };
 		scene->SetGameMode(GameMode::Coop);
 		dae::SceneManager::GetInstance().RegisterScene(scene);
-	}/*
-	{
-		std::shared_ptr<dae::Scene> scene{ new GameScene(2) };
-		dae::SceneManager::GetInstance().RegisterScene(scene);
 	}
-	{
-		std::shared_ptr<dae::Scene> scene{ new GameScene(3) };
-		dae::SceneManager::GetInstance().RegisterScene(scene);
-	}*/
 	{
 		std::shared_ptr<dae::Scene> scene{ new MainMenuScene() };
 		dae::SceneManager::GetInstance().RegisterScene(scene);

@@ -6,7 +6,7 @@
 class BinaryReader
 {
 public:
-	BinaryReader() {};
+	BinaryReader() =default;
 	~BinaryReader() { closeFile(); };
 
 	void openFile(const std::string& filepath)
@@ -30,7 +30,7 @@ public:
 
 		if (std::is_pod<T>())
 		{
-			m_File.read((char*)&data, sizeof(data));
+			m_File.read((char*)(&data), sizeof(data));
 		}
 		else
 		{

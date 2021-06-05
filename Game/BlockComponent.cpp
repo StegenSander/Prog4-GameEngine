@@ -14,10 +14,6 @@ BlockComponent::BlockComponent(int row, int column, const glm::vec2& blockPos,in
 {
 }
 
-BlockComponent::~BlockComponent()
-{
-}
-
 void BlockComponent::RegisterEntity(const EntityInfo& info)
 {
 	if (m_CurrentEntity.Behaviour == nullptr)
@@ -35,7 +31,7 @@ void BlockComponent::UnRegisterEntity()
 	m_CurrentEntity.Behaviour = nullptr;
 }
 
-bool BlockComponent::IsOccupied(const EntityInfo& info)
+bool BlockComponent::IsOccupied(const EntityInfo& info) const
 {
 	if (m_CurrentEntity.Behaviour == nullptr) return false;
 	if (info.Type == EntityType::QBert)
@@ -47,7 +43,7 @@ bool BlockComponent::IsOccupied(const EntityInfo& info)
 	//return false;
 }
 
-bool BlockComponent::IsWalkable(const EntityInfo& info)
+bool BlockComponent::IsWalkable(const EntityInfo& info) const
 {
 	switch (info.Type)
 	{
@@ -65,7 +61,7 @@ bool BlockComponent::IsWalkable(const EntityInfo& info)
 	return false;
 }
 
-glm::vec2 BlockComponent::GetStandPosition(BlockSide side)
+glm::vec2 BlockComponent::GetStandPosition(BlockSide side) const
 {
 	switch (side)
 	{

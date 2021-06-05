@@ -19,16 +19,12 @@ public:
 	void SetTargetFPS(int FPS);
 
 	//------PUBLIC GETTERS------
-	float GetDeltaTime() const {return m_DeltaTime;};
-	float GetFPS() const { return 1 / m_DeltaTime; };
-	float GetMsPerFrame() const { return m_MsPerFrame; };
-	std::chrono::time_point<std::chrono::steady_clock> GetLatestTime() const { return m_LastTimePoint; };
+	[[nodiscard]] float GetDeltaTime() const {return m_DeltaTime;};
+	[[nodiscard]] float GetFPS() const { return 1 / m_DeltaTime; };
+	[[nodiscard]] float GetMsPerFrame() const { return m_MsPerFrame; };
+	[[nodiscard]] std::chrono::time_point<std::chrono::steady_clock> GetLatestTime() const { return m_LastTimePoint; };
 
-	//------PUBLIC VARIABLES------
-protected:
-	//------PROTECTED FUNCTIONS------
-
-	//------PROTECTED VARIABLES------	
+	//------PUBLIC VARIABLES------	
 private:
 	//------PRIVATE FUNCTIONS------
 	GameTime();

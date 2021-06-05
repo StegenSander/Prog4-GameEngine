@@ -18,15 +18,12 @@ QBertComponent::QBertComponent(const std::weak_ptr<LevelNavigatorComponent>& pNa
 	: EntityComponent(pGameController,EntityType::QBert)
 	, m_pNavigator{pNavigator}
 	, m_GamepadIndex{ gamepadIndex }
-	, m_SpawnIndex{spawnIndex}
 	, m_TimeBetweenMoves{timeBetweenMoves}
+	, m_SpawnIndex{spawnIndex}
 {
 	m_Timer = m_TimeBetweenMoves;
 }
 
-QBertComponent::~QBertComponent()
-{
-}
 
 void QBertComponent::Update()
 {
@@ -34,27 +31,27 @@ void QBertComponent::Update()
 	m_pNavigator.lock()->RegisterOnBlock(this);
 
 	auto sceneData = m_pGameObject->GetScene()->GetSceneData();
-	JoystickValue value = sceneData->pInputManager->GetJoystickValue(m_GamepadIndex, true);
+	const JoystickValue value = sceneData->pInputManager->GetJoystickValue(m_GamepadIndex, true);
 
 	m_Timer -= GameTime::GetInstance().GetDeltaTime();
 	
-	const float threshhold = 0.3f;
-	if (value.x > threshhold && value.y > threshhold)
+	const float threshold = 0.3f;
+	if (value.x > threshold && value.y > threshold)
 	{
 		Move(Direction::NorthEast);
 	}
 
-	else if (value.x < -threshhold && value.y >threshhold)
+	else if (value.x < -threshold && value.y >threshold)
 	{
 		Move(Direction::NorthWest);
 	}
 
-	else if (value.x < -threshhold && value.y < -threshhold)
+	else if (value.x < -threshold && value.y < -threshold)
 	{
 		Move(Direction::SouthWest);
 	}
 
-	else if (value.x > threshhold && value.y < -threshhold)
+	else if (value.x > threshold && value.y < -threshold)
 	{
 		Move(Direction::SouthEast);
 	}

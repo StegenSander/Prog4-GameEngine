@@ -33,13 +33,12 @@ public:
 	void Move(Direction direction);
 
 	//------PUBLIC VARIABLES------
-protected:
-	//------PROTECTED FUNCTIONS------
-
-	//------PROTECTED VARIABLES------	
 private:
 	//------PRIVATE FUNCTIONS------
 	void Transform(bool isEgg);
+	void EggMove();
+
+	void PlayerMove();
 
 	//------PRIVATE VARIABLES------
 	std::weak_ptr<LevelNavigatorComponent> m_pNavigator;

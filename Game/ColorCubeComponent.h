@@ -22,7 +22,7 @@ public:
 
 	//------PUBLIC FUNCTIONS------
 	void BlockTouched(const EntityInfo& info) override;
-	bool IsCompleted() override;
+	bool IsCompleted() const override;
 	void Update() override;
 	void FullReset() override;
 
@@ -35,7 +35,7 @@ private:
 	//------PRIVATE FUNCTIONS------
 	void ColorCube();
 	void UnColorCube();
-	void UpdateTexture();
+	void UpdateTexture() const;
 
 	//------PRIVATE VARIABLES------	
 	std::weak_ptr<TextureComponent> m_pTexture{};

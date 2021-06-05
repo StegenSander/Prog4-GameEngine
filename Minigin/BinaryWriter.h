@@ -30,7 +30,7 @@ public:
 
 		if (std::is_pod<T>())
 		{
-			m_File.write((const char*)&data, sizeof(data));
+			m_File.write((const char*)(&data), sizeof(data));
 		}
 		else
 		{
@@ -46,7 +46,7 @@ public:
 		}
 
 		size_t size = data.size();
-		m_File.write((const char*)&size, sizeof(size));
+		m_File.write(reinterpret_cast<const char*>(&size), sizeof(size));
 		m_File.write(data.c_str(), size);
 	}
 

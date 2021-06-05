@@ -11,7 +11,7 @@ namespace dae
 	{
 	public:
 		GameObject();
-		virtual ~GameObject();
+		virtual ~GameObject() = default;
 
 		GameObject(const GameObject& other) = delete;
 		GameObject(GameObject&& other) = delete;

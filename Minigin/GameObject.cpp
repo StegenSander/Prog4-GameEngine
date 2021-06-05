@@ -8,10 +8,6 @@ dae::GameObject::GameObject()
 {
 }
 
-dae::GameObject::~GameObject()
-{
-}
-
 void dae::GameObject::Update()
 {
 	for (const std::shared_ptr<BaseComponent>& pComponent : m_Components)

@@ -11,7 +11,7 @@ public:
 	ButtonComponent(const glm::vec2& buttonOffset
 		, const glm::vec2& buttonSize
 		, const std::function<void()>& function);
-	virtual ~ButtonComponent();
+	virtual ~ButtonComponent() = default;
 
 	//------COPY CONSTRUCTORS------
 	ButtonComponent(const ButtonComponent&) = delete;
@@ -30,7 +30,7 @@ protected:
 	//------PROTECTED VARIABLES------	
 private:
 	//------PRIVATE FUNCTIONS------
-	bool IsPressed(const glm::vec2& mousePos);
+	bool IsPressed(const glm::vec2& mousePos) const;
 
 	//------PRIVATE VARIABLES------	
 	std::function<void()> m_Function;

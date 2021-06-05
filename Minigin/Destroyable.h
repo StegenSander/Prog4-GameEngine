@@ -15,7 +15,7 @@ public:
 
 	//------PUBLIC FUNCTIONS------
 	void MarkForDelete() { m_IsMarkedForDelete = true; };
-	bool IsMarkedForDelete() const { return m_IsMarkedForDelete; };
+	[[nodiscard]] bool IsMarkedForDelete() const { return m_IsMarkedForDelete; };
 
 protected:
 	//------PROTECTED VARIABLES------

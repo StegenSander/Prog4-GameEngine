@@ -17,10 +17,6 @@ SpawnerComponent::SpawnerComponent(std::function<std::shared_ptr<dae::GameObject
 	SetNextSpawnTime();
 }
 
-SpawnerComponent::~SpawnerComponent()
-{
-}
-
 void SpawnerComponent::Update()
 {
 	if (!(m_CurrentObjectsAlive < m_MaxObjectsAlive)) return;

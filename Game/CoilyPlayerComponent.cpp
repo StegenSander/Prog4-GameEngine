@@ -37,48 +37,11 @@ void CoilyPlayerComponent::Update()
 	
 	if (!m_HasTransformed && m_TimeUntilNextMove < 0) //Egg Movement
 	{
-		bool moveLeft = bool(rand() % 2); //is 0 or 1
-
-		MoveResult moveResult;
-		if (moveLeft) moveResult = m_pNavigator.lock()->Move(Direction::SouthWest, this);
-		else moveResult = m_pNavigator.lock()->Move(Direction::SouthEast, this);
-
-		if (moveResult.BlockOccupied)
-		{
-			moveLeft = !moveLeft;
-			if (moveLeft) moveResult = m_pNavigator.lock()->Move(Direction::SouthWest, this);
-			else moveResult = m_pNavigator.lock()->Move(Direction::SouthEast, this);
-		}
-
-		if (!moveResult.ValidMove) Transform(false);
-
-		m_TimeUntilNextMove = m_TimeBetweenMoves;
+		EggMove();
 	}
 	else //Free player movement
 	{
-		auto sceneData = m_pGameObject->GetScene()->GetSceneData();
-		JoystickValue value = sceneData->pInputManager->GetJoystickValue(m_GamepadIndex, true);
-
-		const float threshhold = 0.3f;
-		if (value.x > threshhold && value.y > threshhold)
-		{
-			Move(Direction::NorthEast);
-		}
-
-		else if (value.x < -threshhold && value.y >threshhold)
-		{
-			Move(Direction::NorthWest);
-		}
-
-		else if (value.x < -threshhold && value.y < -threshhold)
-		{
-			Move(Direction::SouthWest);
-		}
-
-		else if (value.x > threshhold && value.y < -threshhold)
-		{
-			Move(Direction::SouthEast);
-		}
+		PlayerMove();
 	}
 	
 }
@@ -128,5 +91,52 @@ void CoilyPlayerComponent::Transform(bool isEgg)
 		{
 			m_pTexture.lock()->SetTexture("Enemies/coily2.png");
 		}
+	}
+}
+
+void CoilyPlayerComponent::EggMove()
+{
+	bool moveLeft = bool(rand() % 2); //is 0 or 1
+
+	MoveResult moveResult;
+	if (moveLeft) moveResult = m_pNavigator.lock()->Move(Direction::SouthWest, this);
+	else moveResult = m_pNavigator.lock()->Move(Direction::SouthEast, this);
+
+	if (moveResult.BlockOccupied)
+	{
+		moveLeft = !moveLeft;
+		if (moveLeft) moveResult = m_pNavigator.lock()->Move(Direction::SouthWest, this);
+		else moveResult = m_pNavigator.lock()->Move(Direction::SouthEast, this);
+	}
+
+	if (!moveResult.ValidMove) Transform(false);
+
+	m_TimeUntilNextMove = m_TimeBetweenMoves;
+}
+
+void CoilyPlayerComponent::PlayerMove()
+{
+	auto sceneData = m_pGameObject->GetScene()->GetSceneData();
+	JoystickValue value = sceneData->pInputManager->GetJoystickValue(m_GamepadIndex, true);
+
+	const float threshhold = 0.3f;
+	if (value.x > threshhold && value.y > threshhold)
+	{
+		Move(Direction::NorthEast);
+	}
+
+	else if (value.x < -threshhold && value.y >threshhold)
+	{
+		Move(Direction::NorthWest);
+	}
+
+	else if (value.x < -threshhold && value.y < -threshhold)
+	{
+		Move(Direction::SouthWest);
+	}
+
+	else if (value.x > threshhold && value.y < -threshhold)
+	{
+		Move(Direction::SouthEast);
 	}
 }

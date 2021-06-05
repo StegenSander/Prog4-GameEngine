@@ -52,7 +52,7 @@ struct ControllerButtonData
 //We are using map so comparison needs to be supported
 inline bool operator< (const ControllerButtonData& lhs, const ControllerButtonData& rhs)
 {
-    return WORD(lhs.buttonType) < WORD(rhs.buttonType);
+    return static_cast<WORD>(lhs.buttonType) < static_cast<WORD>(rhs.buttonType);
 }
 
 class Controller
@@ -70,15 +70,13 @@ public:
     void RemoveMarkedCommands();
 
     //Controller functions
-    bool IsControllerButtonPressed(ControllerButton button) const;
-    bool IsControllerButtonReleased(ControllerButton button) const;
-    bool IsControllerButtonDown(ControllerButton button) const;
+    [[nodiscard]] bool IsControllerButtonPressed(ControllerButton button) const;
+    [[nodiscard]] bool IsControllerButtonReleased(ControllerButton button) const;
+    [[nodiscard]] bool IsControllerButtonDown(ControllerButton button) const;
 
     void AddCommand(ControllerButtonData buttonData, Command* pCommand);
 
-    JoystickValue GetJoystickValues(bool isLeft = true);
-
-protected:
+    JoystickValue GetJoystickValues(bool isLeft = true) const;
 
 private:
     DWORD m_ControllerIndex;

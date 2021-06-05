@@ -11,7 +11,7 @@ public:
 	QBertComponent(const std::weak_ptr<LevelNavigatorComponent>& pNavigator
 		, DWORD gamepadIndex, const std::weak_ptr<GameControllerComponent>& pGameController
 		, int spawnIndex, float timeBetweenMoves = 0.4f);
-	virtual ~QBertComponent();
+	virtual ~QBertComponent() = default;
 
 	//------COPY CONSTRUCTORS------
 	QBertComponent(const QBertComponent&) = delete;

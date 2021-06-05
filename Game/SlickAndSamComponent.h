@@ -11,7 +11,7 @@ public:
 	SlickAndSamComponent(const std::weak_ptr<LevelNavigatorComponent>& pNavigator
 		,const std::weak_ptr<GameControllerComponent>& pGameController
 		, int spawnIndex, float timeBetweenMoves =0.5f);
-	virtual ~SlickAndSamComponent();
+	virtual ~SlickAndSamComponent() = default;
 
 	//------COPY CONSTRUCTORS------
 	SlickAndSamComponent(const SlickAndSamComponent&) = delete;
@@ -27,11 +27,7 @@ public:
 	void Despawn() override;
 	void Notify(EventType type, EventData* eventData) override;
 
-	//------PUBLIC VARIABLES------
-protected:
-	//------PROTECTED FUNCTIONS------
-
-	//------PROTECTED VARIABLES------	
+	//------PUBLIC VARIABLES------	
 private:
 	//------PRIVATE FUNCTIONS------
 

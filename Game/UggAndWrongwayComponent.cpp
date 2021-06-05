@@ -4,7 +4,6 @@
 #include "LevelNavigatorComponent.h"
 #include "GameTime.h"
 #include "BlockComponent.h"
-#include "LevelComponent.h"
 
 UggAndWrongwayComponent::UggAndWrongwayComponent(const std::weak_ptr<LevelNavigatorComponent>& pNavigator
 	, const std::weak_ptr<GameControllerComponent>& pGameController

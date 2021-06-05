@@ -8,10 +8,6 @@ EntityComponent::EntityComponent(const std::weak_ptr<GameControllerComponent>& p
 {
 }
 
-EntityComponent::~EntityComponent()
-{
-}
-
 EntityInfo EntityComponent::GetInfo()
 {
 	EntityInfo info;

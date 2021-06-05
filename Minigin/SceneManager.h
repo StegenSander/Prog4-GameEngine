@@ -12,9 +12,9 @@ namespace dae
 
 		void Initialise();
 		void Update();
-		void Render();
+		void Render() const;
 		bool SetActiveScene(const std::string& name);
-		dae::Scene* GetActiveScene();
+		dae::Scene* GetActiveScene() const;
 
 		void RegisterScene(const std::shared_ptr<Scene>& scene);
 

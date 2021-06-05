@@ -8,7 +8,7 @@ class Subject
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
 	Subject() = default;
-	virtual ~Subject() {};
+	virtual ~Subject() = default;;
 
 	//------PUBLIC FUNCTIONS------
 	void Notify(EventType type, EventData* eventData = nullptr);

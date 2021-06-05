@@ -4,7 +4,6 @@
 #include "ExtraMath.h"
 #include "Transform.h"
 #include "BlockComponent.h"
-#include "VoidBlockComponent.h"
 #include "EntityComponent.h"
 
 LevelNavigatorComponent::LevelNavigatorComponent(const std::weak_ptr<LevelComponent>& pLevel, BlockSide blockside)
@@ -87,14 +86,14 @@ MoveResult LevelNavigatorComponent::Move(Direction dir, EntityComponent* entityC
 	return MoveResult(); //Will return an invalid pointer/nullptr
 }
 
-bool LevelNavigatorComponent::IsValidPyramidCoord(int row, int column) noexcept
+bool LevelNavigatorComponent::IsValidPyramidCoord(int row, int column) const noexcept
 {
 	return !(row < 1
 		|| column < 1
 		|| row > m_pLevel.lock().get()->AmountOfRows()
 		|| column > row);
 }
-std::weak_ptr<BlockComponent> LevelNavigatorComponent::GetCorrectBlockAt(int row, int column)
+std::weak_ptr<BlockComponent> LevelNavigatorComponent::GetCorrectBlockAt(int row, int column) const
 {
 	int index{};
 	switch (m_BlockSide)
@@ -116,14 +115,14 @@ std::weak_ptr<BlockComponent> LevelNavigatorComponent::GetCorrectBlockAt(int row
 	return m_pLevel.lock()->GetBlockAtIndex(index);
 }
 
-void LevelNavigatorComponent::UnRegisterFromBlock()
+void LevelNavigatorComponent::UnRegisterFromBlock() const
 {
 	auto block = GetCorrectBlockAt(m_CurrentRow, m_CurrentColumn);
 	if (block.expired() || block.lock().get() ==nullptr) return;
 	block.lock()->UnRegisterEntity();
 }
 
-void LevelNavigatorComponent::RegisterOnBlock(EntityComponent* entityComp)
+void LevelNavigatorComponent::RegisterOnBlock(EntityComponent* entityComp) const
 {
 	auto block = GetCorrectBlockAt(m_CurrentRow, m_CurrentColumn);
 	if (block.expired() || block.lock().get() == nullptr) return;

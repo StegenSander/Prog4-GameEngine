@@ -21,26 +21,26 @@ public:
 	LevelNavigatorComponent& operator=(LevelNavigatorComponent&&) = delete;
 
 	//------PUBLIC FUNCTIONS------
-	//Return if move was succesfull or not
+	//Return if move was successful or not
 	virtual MoveResult MoveToSquare(int row, int column, EntityComponent* entityComp);
-	//Return if move was succesfull or not
+	//Return if move was successful or not
 	MoveResult MoveToSquare(int index, EntityComponent* entityComp);
-	//Return if move was succesfull or not
+	//Return if move was successful or not
 	MoveResult Move(Direction dir, EntityComponent* entityComp);
 
 	void Update() override {};
-	bool IsValidPyramidCoord(int row, int column) noexcept;
+	bool IsValidPyramidCoord(int row, int column) const noexcept;
 
-	int GetCurrentRow() { return m_CurrentRow; }
-	int GetCurrentColumn() { return m_CurrentColumn; }
+	int GetCurrentRow() const { return m_CurrentRow; }
+	int GetCurrentColumn() const { return m_CurrentColumn; }
 
-	void UnRegisterFromBlock();
-	void RegisterOnBlock(EntityComponent* entityComp);
+	void UnRegisterFromBlock() const;
+	void RegisterOnBlock(EntityComponent* entityComp) const;
 
 	//------PUBLIC VARIABLES------
 protected:
 	//------PROTECTED FUNCTIONS------
-	std::weak_ptr<BlockComponent> GetCorrectBlockAt(int row, int column);
+	std::weak_ptr<BlockComponent> GetCorrectBlockAt(int row, int column) const;
 
 	//------PROTECTED VARIABLES------	
 	std::weak_ptr<LevelComponent> m_pLevel{};

@@ -7,7 +7,7 @@ class DiscComponent
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
 	DiscComponent(int row, int column, const glm::vec2& blockPos, int blockSize, LevelComponent* pLevel);
-	virtual ~DiscComponent();
+	virtual ~DiscComponent() = default;
 
 	//------COPY CONSTRUCTORS------
 	DiscComponent(const DiscComponent&) = delete;
@@ -18,14 +18,4 @@ public:
 
 	//------PUBLIC FUNCTIONS------
 	void BlockTouched(const EntityInfo& info) override;
-
-	//------PUBLIC VARIABLES------
-protected:
-	//------PROTECTED FUNCTIONS------
-
-	//------PROTECTED VARIABLES------	
-private:
-	//------PRIVATE FUNCTIONS------
-
-	//------PRIVATE VARIABLES------	
 };

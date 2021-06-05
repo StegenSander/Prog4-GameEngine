@@ -19,7 +19,7 @@ void dae::SceneManager::Update()
 	m_ActiveScene->Update();
 }
 
-void dae::SceneManager::Render()
+void dae::SceneManager::Render() const
 {
 	assert(m_ActiveScene);
 	m_ActiveScene->Render();
@@ -37,14 +37,14 @@ bool dae::SceneManager::SetActiveScene(const std::string& name)
 	return false;
 }
 
-dae::Scene* dae::SceneManager::GetActiveScene()
+dae::Scene* dae::SceneManager::GetActiveScene() const
 {
 	return m_ActiveScene.get();
 }
 
 void dae::SceneManager::RegisterScene(const std::shared_ptr<Scene>& scene)
 {
-	std::string sceneName = scene->GetName();
+	const std::string& sceneName = scene->GetName();
 	if (m_SceneMap.find(sceneName) == m_SceneMap.end())
 	{
 		m_SceneMap[sceneName] = scene;

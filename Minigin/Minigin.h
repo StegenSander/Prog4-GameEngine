@@ -11,8 +11,6 @@ namespace dae
 		void LoadGame();
 		void Cleanup();
 		void Run();
-
-		void PrintHowToPlay() const;
 	private:
 		SDL_Window* m_Window{};
 	};

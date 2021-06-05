@@ -32,14 +32,12 @@ public:
 	void DiscTriggered();
 
 	//------PUBLIC VARIABLES------
-protected:
-	//------PROTECTED FUNCTIONS------
-
-	//------PROTECTED VARIABLES------	
 private:
 	//------PRIVATE FUNCTIONS------
 	void Transform(bool isEgg);
-	std::weak_ptr<LevelNavigatorComponent> GetClosestQBert();
+	void EggMove();
+	void CoilyMove();
+	std::weak_ptr<LevelNavigatorComponent> GetClosestQBert() const;
 
 	//------PRIVATE VARIABLES------	
 	std::weak_ptr<LevelNavigatorComponent> m_pNavigator;

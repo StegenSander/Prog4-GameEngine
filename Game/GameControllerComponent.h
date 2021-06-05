@@ -9,7 +9,7 @@ class GameControllerComponent
 public:
 	//------CONSTRUCTOR/DESTRUCTOR------
 	GameControllerComponent();
-	virtual ~GameControllerComponent();
+	virtual ~GameControllerComponent() = default;
 
 	//------COPY CONSTRUCTORS------
 	GameControllerComponent(const GameControllerComponent&) = delete;
@@ -23,16 +23,6 @@ public:
 	void PlayerDamaged();
 	void PlayerOffMap();
 
-	void Update() override {};
-
-	//------PUBLIC VARIABLES------
-protected:
-	//------PROTECTED FUNCTIONS------
-
-	//------PROTECTED VARIABLES------	
-private:
-	//------PRIVATE FUNCTIONS------
-
-	//------PRIVATE VARIABLES------	
+	void Update() override {}
 };
 

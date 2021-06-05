@@ -13,8 +13,6 @@
 
 #include "TextureComponent.h"
 #include "TextComponent.h"
-#include "FPSDisplayScript.h"
-#include "UIButtonsScript.h"
 
 #include "ServiceLocator.h"
 #include "SDLSoundSystem.h"
@@ -73,21 +71,7 @@ void dae::Minigin::Run()
 {
 	Initialize();
 
-	//example on how to create a input command
-	/*InputManager::GetInstance().AddCommand(KeyboardKeyData{ SDL_SCANCODE_B,ButtonState::OnPressAndRelease }
-	, new Command(&Commands::Spawn));
-
-	InputManager::GetInstance().AddCommand(ControllerButtonData{ControllerButton::ButtonB,ButtonState::OnPressAndRelease }
-	, new Command(&Commands::Spawn));*/
-
-	// tell the resource manager where he can find the game data
-
-
 	LoadGame();
-	
-	//ServiceLocator::GetSoundSystem()->PlayEffect("../Data/door1.wav");
-
-	//PrintHowToPlay();
 	{
 		Renderer& renderer = Renderer::GetInstance();
 		SceneManager& sceneManager = SceneManager::GetInstance();
@@ -116,14 +100,4 @@ void dae::Minigin::Run()
 	}
 
 	Cleanup();
-}
-
-void dae::Minigin::PrintHowToPlay() const
-{
-	std::cout << "-----QBERT-----\nHow to play:\n";
-	std::cout << "Deal damage to the player: Controller button A\n";
-	std::cout << "Score points:\n";
-	std::cout << "\tController button B: 10 points\n";
-	std::cout << "\tController button X: 50 points\n";
-	std::cout << "\tController button Y: 100 points\n";
 }

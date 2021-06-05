@@ -39,10 +39,6 @@ public:
 
 
 	//------PUBLIC VARIABLES------
-protected:
-	//------PROTECTED FUNCTIONS------
-
-	//------PROTECTED VARIABLES------	
 private:
 	//------PRIVATE FUNCTIONS------
 

@@ -15,11 +15,14 @@ public:
 	///
 	/// </summary>
 	/// <param name="spawnFunction">: The spawnfunction should return a GameObject ready to be added to the current scene</param>
+	/// <param name="maxObjectsAlive"></param>
+	/// <param name="minSpawnTime"></param>
+	/// <param name="maxSpawnTime"></param>
 	SpawnerComponent(std::function<std::shared_ptr<dae::GameObject>()> spawnFunction
 		, int maxObjectsAlive = 1
 		, int minSpawnTime = 0
 		, int maxSpawnTime = 1);
-	virtual ~SpawnerComponent();
+	virtual ~SpawnerComponent() =default;
 
 	//------COPY CONSTRUCTORS------
 	SpawnerComponent(const SpawnerComponent&) = delete;
@@ -34,10 +37,6 @@ public:
 	void ObjectDestroyed();
 
 	//------PUBLIC VARIABLES------
-protected:
-	//------PROTECTED FUNCTIONS------
-
-	//------PROTECTED VARIABLES------	
 private:
 	//------PRIVATE FUNCTIONS------
 	void SetNextSpawnTime();

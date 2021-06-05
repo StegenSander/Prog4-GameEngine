@@ -18,13 +18,9 @@ public:
 	SpawnedObjectComponent& operator=(SpawnedObjectComponent&&) = delete;
 
 	//------PUBLIC FUNCTIONS------
-	void Update() {};
+	void Update() override {};
 
-	//------PUBLIC VARIABLES------
-protected:
-	//------PROTECTED FUNCTIONS------
-
-	//------PROTECTED VARIABLES------	
+	//------PUBLIC VARIABLES------	
 private:
 	//------PRIVATE FUNCTIONS------
 
