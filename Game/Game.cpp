@@ -7,6 +7,12 @@
 #include "FileWriteScene.h"
 #include "MainMenuScene.h"
 
+
+#if _DEBUG
+// ReSharper disable once CppUnusedIncludeDirective
+#include <vld.h>
+#endif
+
 int main()
 {
 	//std::shared_ptr<dae::Scene> scene{ new FileWriteScene() };
